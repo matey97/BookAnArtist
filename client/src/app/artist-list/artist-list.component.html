@@ -3,11 +3,11 @@
   <mat-card-content>
     <mat-list>
       <mat-list-item *ngFor="let artist of artists">
-        <img mat-list-avatar src="../../favicon.ico" alt="{{artist.name}}">
-        <h3 mat-line>{{artist.name}}</h3>
+        <img mat-list-avatar src="../../favicon.ico" alt="{{artist.artisticName}}">
+        <h3 mat-line>{{artist.artisticName}}</h3>
         <h4>
           <label>name:
-            <input [(ngModel)]="artist.name" placeholder="name">
+            <input [(ngModel)]="artist.artisticName" placeholder="name">
           </label>
         </h4>
       </mat-list-item>

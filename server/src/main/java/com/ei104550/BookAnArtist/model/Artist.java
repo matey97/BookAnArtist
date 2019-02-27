@@ -1,39 +1,85 @@
 package com.ei104550.BookAnArtist.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.type.ClobType;
+
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
-public class Artist {
+public class Artist extends User{
 
-    @Id @GeneratedValue
-    private Long id;
-    private String name;
+    private String artisticName;
+    private String description;
+    private Double price;
+    private Double puntuation;
+    @ElementCollection()
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<ClobType> images;
+    @ElementCollection()
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<ClobType> videos;
 
     public Artist(){}
 
-    public Long getId() {
-        return id;
+    public String getArtisticName() {
+        return artisticName;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setArtisticName(String artisticName) {
+        this.artisticName = artisticName;
     }
 
-    public String getName() {
-        return name;
+    public String getDescription() {
+        return description;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public Double getPuntuation() {
+        return puntuation;
+    }
+
+    public void setPuntuation(Double puntuation) {
+        this.puntuation = puntuation;
+    }
+
+    public List<ClobType> getImages() {
+        return images;
+    }
+
+    public void setImages(List<ClobType> images) {
+        this.images = images;
+    }
+
+    public List<ClobType> getVideos() {
+        return videos;
+    }
+
+    public void setVideos(List<ClobType> videos) {
+        this.videos = videos;
     }
 
     @Override
     public String toString() {
         return "Artist{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
+                "artisticName='" + artisticName + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", puntuation=" + puntuation +
+                ", images=" + images +
+                ", videos=" + videos +
                 '}';
     }
 }
