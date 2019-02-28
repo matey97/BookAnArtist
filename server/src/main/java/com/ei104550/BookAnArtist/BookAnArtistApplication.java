@@ -20,10 +20,13 @@ public class BookAnArtistApplication {
 	@Bean
 	ApplicationRunner init(ArtistRepository repository){
 		return args -> {
-			Stream.of("Serz", "Dj. X").forEach(name -> {
+			Stream.of("Serz", "Dj. X").forEach((name) -> {
 				Artist user = new Artist();
 				user.setUsername(name);
 				user.setArtisticName(name);
+				user.setDescription("Es un tio muy majo que solo quiere ganarse la vida disfrutando del musicote");
+				user.setPrice((double) 5000);
+				user.setPuntuation((double) 8);
 				repository.save(user);
 			});
 			repository.findAll().forEach(System.out::println);
