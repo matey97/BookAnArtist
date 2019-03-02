@@ -1,7 +1,28 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<mat-toolbar color="primary">
-  <span>Welcome to {{ title }}! </span>
-</mat-toolbar>
-<h1>WORK IN PROGRESS</h1>
-<a routerLink="/artistList">Acceder a la lista de artistas</a>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">BNA</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Inicio <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/artistList">Acceder a la lista de artistas</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Buscar</a>
+      </li>
+    </ul>
+    <span class="navbar-text">
+    </span>
+  </div>
+</nav>
 <router-outlet></router-outlet>
+
+
+
+
