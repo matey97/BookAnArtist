@@ -19,7 +19,9 @@ import {VgBufferingModule} from 'videogular2/buffering';
 @NgModule({
   declarations: [
     AppComponent,
-    ArtistListComponent
+    ArtistListComponent,
+    HomeComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +38,10 @@ import {VgBufferingModule} from 'videogular2/buffering';
     VgCoreModule,
     VgControlsModule,
     VgOverlayPlayModule,
-    VgBufferingModule
+    VgBufferingModule,
+    FormsModule,
+  //  HttpModule,
+  //  routing
   ],
   providers: [],
   bootstrap: [AppComponent]

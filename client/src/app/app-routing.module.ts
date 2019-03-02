@@ -3,7 +3,10 @@ import { Routes, RouterModule } from '@angular/router';
 import { ArtistListComponent } from './artist-list/artist-list.component';
 
 const routes: Routes = [
-  { path: 'artistList', component: ArtistListComponent }
+  { path: 'artistList', component: ArtistListComponent },
+  { path: '', component: HomeComponent },
+  { path: 'login', component: LoginComponent },
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({
