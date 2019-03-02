@@ -10,6 +10,6 @@ export class ArtistService {
   constructor(private http: HttpClient) { }
 
   getAll(): Observable<any> {
-    return this.http.get('//localhost:8080/artistas');
+    return this.http.get('api/artistas');
   }
 }
