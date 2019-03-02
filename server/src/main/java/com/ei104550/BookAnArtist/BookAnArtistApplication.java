@@ -56,18 +56,22 @@ public class BookAnArtistApplication {
 				ArrayList<Long> auxImg = new ArrayList<>();
                 ArrayList<Long> auxVid = new ArrayList<>();
                 ArtistImage auxImage = new ArtistImage();
-                ArtistVideo auxVideo = new ArtistVideo();
+				ArtistImage auxImage2 = new ArtistImage();
+				ArtistVideo auxVideo = new ArtistVideo();
                 try{
 					new FileInputStream(file).read(bFile);
 					new FileInputStream(fileVideo).read(vFile);
                     auxImage.setImage(bFile);
+                    auxImage2.setImage(bFile);
                     auxVideo.setVideo(vFile);
                 }catch (Exception ex){
 					ex.printStackTrace();
 				}
                 imageRepository.save(auxImage);
-                videoRepository.save(auxVideo);
+				imageRepository.save(auxImage2);
+				videoRepository.save(auxVideo);
                 auxImg.add(auxImage.getId());
+                auxImg.add(auxImage2.getId());
                 auxVid.add(auxVideo.getId());
 				user.setImage(bFile);
                 user.setImages(auxImg);

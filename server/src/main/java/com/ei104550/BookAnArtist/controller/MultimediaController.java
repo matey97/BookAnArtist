@@ -4,12 +4,10 @@ import com.ei104550.BookAnArtist.model.ArtistImage;
 import com.ei104550.BookAnArtist.model.ArtistVideo;
 import com.ei104550.BookAnArtist.repositories.ArtistImageRepository;
 import com.ei104550.BookAnArtist.repositories.ArtistVideoRepository;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("resources/")
 public class MultimediaController {
 
     private ArtistImageRepository imageRepository;
@@ -21,14 +19,14 @@ public class MultimediaController {
         this.videoRepository = videoRepository;
     }
 
-    @GetMapping("/image/{id}")
-    @CrossOrigin("http://localhost:4200")
+    @GetMapping("image/{id}")
+    //@CrossOrigin("http://localhost:4200")
     public ArtistImage image(@PathVariable Long id){
         return imageRepository.findById(id).get();
     }
 
-    @GetMapping("/video/{id}")
-    @CrossOrigin("http://localhost:4200")
+    @GetMapping("video/{id}")
+    //@CrossOrigin("http://localhost:4200")
     public ArtistVideo video(@PathVariable Long id){
         return videoRepository.findById(id).get();
     }
