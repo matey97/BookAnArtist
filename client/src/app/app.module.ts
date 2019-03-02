@@ -9,6 +9,12 @@ import { ArtistListComponent } from './artist-list/artist-list.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatButtonModule, MatCardModule, MatInputModule, MatListModule, MatToolbarModule} from '@angular/material';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {VgCoreModule} from 'videogular2/core';
+import {VgControlsModule} from 'videogular2/controls';
+import {VgOverlayPlayModule} from 'videogular2/overlay-play';
+import {VgBufferingModule} from 'videogular2/buffering';
+
+
 
 @NgModule({
   declarations: [
@@ -26,7 +32,11 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     MatListModule,
     MatToolbarModule,
     FormsModule,
-    NgbModule
+    NgbModule,
+    VgCoreModule,
+    VgControlsModule,
+    VgOverlayPlayModule,
+    VgBufferingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

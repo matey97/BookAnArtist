@@ -2,9 +2,11 @@ package com.ei104550.BookAnArtist.model;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
-import org.hibernate.type.ClobType;
+import org.hibernate.type.BlobType;
 
 import javax.persistence.*;
+import java.awt.*;
+import java.sql.Blob;
 import java.util.List;
 
 @Entity
@@ -16,10 +18,10 @@ public class Artist extends User{
     private Double puntuation;
     @ElementCollection()
     @LazyCollection(LazyCollectionOption.FALSE)
-    private List<ClobType> images;
+    private List<Long> images;
     @ElementCollection()
     @LazyCollection(LazyCollectionOption.FALSE)
-    private List<ClobType> videos;
+    private List<Long> videos;
 
     public Artist(){}
 
@@ -55,19 +57,19 @@ public class Artist extends User{
         this.puntuation = puntuation;
     }
 
-    public List<ClobType> getImages() {
+    public List<Long> getImages() {
         return images;
     }
 
-    public void setImages(List<ClobType> images) {
+    public void setImages(List<Long> images) {
         this.images = images;
     }
 
-    public List<ClobType> getVideos() {
+    public List<Long> getVideos() {
         return videos;
     }
 
-    public void setVideos(List<ClobType> videos) {
+    public void setVideos(List<Long> videos) {
         this.videos = videos;
     }
 

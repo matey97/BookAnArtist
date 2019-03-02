@@ -4,6 +4,7 @@ import org.hibernate.type.ClobType;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 
 @Entity
 public class User {
@@ -11,7 +12,8 @@ public class User {
     @Id
     private String username;
     private String password;
-    private ClobType image;
+    @Lob
+    private byte[] image;
 
     public User(){
 
@@ -33,11 +35,11 @@ public class User {
         this.password = password;
     }
 
-    public ClobType getImage() {
+    public byte[] getImage() {
         return image;
     }
 
-    public void setImage(ClobType image) {
+    public void setImage(byte[] image) {
         this.image = image;
     }
 
