@@ -13,6 +13,8 @@ import {VgCoreModule} from 'videogular2/core';
 import {VgControlsModule} from 'videogular2/controls';
 import {VgOverlayPlayModule} from 'videogular2/overlay-play';
 import {VgBufferingModule} from 'videogular2/buffering';
+import { HomeComponent } from './shared/home/home.component';
+import { LoginComponent } from './shared/login/login.component';
 
 
 
@@ -40,8 +42,6 @@ import {VgBufferingModule} from 'videogular2/buffering';
     VgOverlayPlayModule,
     VgBufferingModule,
     FormsModule,
-  //  HttpModule,
-  //  routing
   ],
   providers: [],
   bootstrap: [AppComponent]
