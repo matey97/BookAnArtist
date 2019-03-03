@@ -1,10 +1,13 @@
 package com.ei104550.BookAnArtist.configurations;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
@@ -12,8 +15,9 @@ public class BasicAuthConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        //todo check why appears warning WARN  o.s.s.c.bcrypt.BCryptPasswordEncoder - Encoded password does not look like BCrypt
         auth
-                .inMemoryAuthentication()
+                .inMemoryAuthentication().passwordEncoder(passwordEncoder())
                 .withUser("user")
                 .password("password")
                 .roles("USER");
@@ -25,10 +29,15 @@ public class BasicAuthConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .antMatchers("/login").permitAll()
-                //.antMatchers(HttpMethod.GET,"/user").denyAll()
+                .antMatchers(HttpMethod.GET,"/user").denyAll()
                 .anyRequest()
                 .authenticated()
                 .and()
                 .httpBasic();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }

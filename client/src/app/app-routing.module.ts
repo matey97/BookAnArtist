@@ -6,9 +6,10 @@ import { HomeComponent } from './shared/home/home.component';
 
 const routes: Routes = [
   { path: 'artistList', component: ArtistListComponent },
-  { path: '', component: HomeComponent },
+  { path: '', component: ArtistListComponent },
+  { path: 'user', component: HomeComponent },
   { path: 'login', component: LoginComponent },
-  { path: '**', redirectTo: '' }
+ // { path: '**', redirectTo: 'user' }
 ];
 
 @NgModule({
