@@ -1,7 +1,8 @@
-<form name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
+<body>
+<form class="box" name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
   <div [ngClass]="{ 'has-error': f.submitted && !username.valid }">
     <h1>Login</h1>
-    <label for="username">Username</label>
+    <label class="InputLabel" for="username">Username</label>
     <input type="text"
            name="username" [(ngModel)]="model.username"
            #username="ngModel" required/>
@@ -10,14 +11,15 @@
     </div>
   </div>
   <div [ngClass]="{ 'has-error': f.submitted && !password.valid }">
-      <label for="password">Password</label>
-      <input type="password"
+      <label class="InputLabel"for="password">Password</label>
+      <input class="Password"  type="password"
         name="password" [(ngModel)]="model.password"
           #password="ngModel" required />
       <div *ngIf="f.submitted
         && !password.valid">Password is required</div>
   </div>
   <div>
-      <button [disabled]="loading">Login</button>
+      <button class="LoginButton" [disabled]="loading">Login</button>
   </div>
 </form>
+</body>

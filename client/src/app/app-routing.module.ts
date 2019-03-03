@@ -9,7 +9,7 @@ const routes: Routes = [
   { path: '', component: ArtistListComponent },
   { path: 'user', component: HomeComponent },
   { path: 'login', component: LoginComponent },
- // { path: '**', redirectTo: 'user' }
+ //{ path: '**', redirectTo: 'user' }
 ];
 
 @NgModule({
