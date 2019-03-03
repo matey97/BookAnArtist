@@ -24,6 +24,7 @@ import javax.persistence.EntityManager;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.nio.file.Files;
 import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -48,34 +49,39 @@ public class BookAnArtistApplication {
 				user.setPrice((double) 5000);
 				user.setPuntuation((double) 8);
 
-				File file = new File("src/main/resources/profile-icon.png");
-                File fileVideo = new File("src/main/resources/sample720_1mb.mp4");
+				File fileImage = new File("src/main/resources/profile-icon.png");
+				File fileImage2 = new File("src/main/resources/test-image.png");
+				File fileVideo = new File("src/main/resources/small.mp4");
 
-				byte[] bFile = new byte[(int) file.length()];
-				byte[] vFile = new byte[(int) file.length()];
-				ArrayList<Long> auxImg = new ArrayList<>();
-                ArrayList<Long> auxVid = new ArrayList<>();
-                ArtistImage auxImage = new ArtistImage();
-				ArtistImage auxImage2 = new ArtistImage();
-				ArtistVideo auxVideo = new ArtistVideo();
+				byte[] bImageFile = null;
+				byte[] bImageFile2 = null;
+				byte[] bVideoFile = null;
+
+				ArrayList<Long> artistImageList = new ArrayList<>();
+                ArrayList<Long> artistVideoList = new ArrayList<>();
+                ArtistImage image1 = new ArtistImage();
+				ArtistImage image2 = new ArtistImage();
+				ArtistVideo video1 = new ArtistVideo();
                 try{
-					new FileInputStream(file).read(bFile);
-					new FileInputStream(fileVideo).read(vFile);
-                    auxImage.setImage(bFile);
-                    auxImage2.setImage(bFile);
-                    auxVideo.setVideo(vFile);
+					bImageFile = Files.readAllBytes(fileImage.toPath());
+					bImageFile2 = Files.readAllBytes(fileImage2.toPath());
+					bVideoFile = Files.readAllBytes(fileVideo.toPath());
+
+                    image1.setImage(bImageFile);
+                    image2.setImage(bImageFile2);
+                    video1.setVideo(bVideoFile);
                 }catch (Exception ex){
 					ex.printStackTrace();
 				}
-                imageRepository.save(auxImage);
-				imageRepository.save(auxImage2);
-				videoRepository.save(auxVideo);
-                auxImg.add(auxImage.getId());
-                auxImg.add(auxImage2.getId());
-                auxVid.add(auxVideo.getId());
-				user.setImage(bFile);
-                user.setImages(auxImg);
-				user.setVideos(auxVid);
+                imageRepository.save(image1);
+				imageRepository.save(image2);
+				videoRepository.save(video1);
+                artistImageList.add(image1.getId());
+                artistImageList.add(image2.getId());
+                artistVideoList.add(video1.getId());
+				user.setImage(bImageFile);
+                user.setImages(artistImageList);
+				user.setVideos(artistVideoList);
 				repository.save(user);
 			});
 			repository.findAll().forEach(System.out::println);
