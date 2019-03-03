@@ -99,7 +99,7 @@ public class BookAnArtistApplication {
 
 
 		return args -> {
-			Stream.of(artista1,artista2,artista3,artista4,artista5).forEach((artist) -> {
+			Stream.of(artista1,artista2,artista3,artista4).forEach((artist) -> {
 
 //				Stream.of("Serz", "Dj. X").forEach((name) -> {
 //				Artist user = new Artist();
