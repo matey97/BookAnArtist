@@ -11,6 +11,7 @@ import {UserService} from '../shared/user/user.service';
 export class ArtistListComponent implements OnInit {
   artists: Array<any>;
 
+
   constructor(private artistService: ArtistService,
               private multimediaServie: MultimediaService,
               private userService: UserService) { }
@@ -43,3 +44,5 @@ export class ArtistListComponent implements OnInit {
   }
 
 }
+
+
