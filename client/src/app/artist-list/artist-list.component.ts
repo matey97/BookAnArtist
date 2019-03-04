@@ -10,7 +10,6 @@ import {MultimediaService} from '../shared/multimedia/multimedia.service';
 export class ArtistListComponent implements OnInit {
   artists: Array<any>;
 
-
   constructor(private artistService: ArtistService,
               private multimediaServie: MultimediaService) { }
 
@@ -19,7 +18,6 @@ export class ArtistListComponent implements OnInit {
       this.artists = data;
       this.getMultimediaFiles();
     });
-
   }
 
   private getMultimediaFiles() {
@@ -39,6 +37,12 @@ export class ArtistListComponent implements OnInit {
     });
   }
 
+  onPuntuado(value, index) {
+
+    this.artists[index].puntuation += value;
+    this.artists[index].nPuntuations += 1;
+
+  }
 }
 
 

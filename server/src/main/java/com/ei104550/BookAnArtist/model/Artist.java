@@ -16,6 +16,7 @@ public class Artist extends User{
     private String description;
     private Double price;
     private Double puntuation;
+    private int nPuntuations;
     @ElementCollection()
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Long> images;
@@ -73,13 +74,17 @@ public class Artist extends User{
         this.videos = videos;
     }
 
+    public int getnPuntuations() { return nPuntuations; }
+
+    public void setnPuntuations(int nPuntuations) { this.nPuntuations = nPuntuations; }
+
     @Override
     public String toString() {
         return "Artist{" +
                 "artisticName='" + artisticName + '\'' +
                 ", description='" + description + '\'' +
                 ", price=" + price +
-                ", puntuation=" + puntuation +
+                ", puntuation=" + puntuation/nPuntuations +
                 ", images=" + images +
                 ", videos=" + videos +
                 '}';

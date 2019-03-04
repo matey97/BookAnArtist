@@ -46,56 +46,34 @@ public class BookAnArtistApplication {
 		artista1.setArtisticName("El Pepas");
 		artista1.setDescription("Es un tio muy majo que solo quiere ganarse la vida disfrutando del musicote");
 		artista1.setPrice((double) 5000);
-		artista1.setPuntuation((double) 8);
+		artista1.setPuntuation((double) 67);
+		artista1.setnPuntuations(10);
 
 		Artist artista2 = new Artist();
 		artista2.setUsername("Tomas");
 		artista2.setArtisticName("El Broncas");
 		artista2.setDescription("Descripcion aleatoria que describe como sera la desripcion no aleatoria de este artista");
 		artista2.setPrice((double) 5000);
-		artista2.setPuntuation((double) 8);
+		artista2.setPuntuation((double) 78);
+		artista2.setnPuntuations(10);
 
 		Artist artista3 = new Artist();
 		artista3.setUsername("Fermin");
 		artista3.setArtisticName("El Pirulin");
 		artista3.setDescription("Es un tio muy majo que solo quiere ganarse la vida disfrutando del musicote");
 		artista3.setPrice((double) 5000);
-		artista3.setPuntuation((double) 8);
+		artista3.setPuntuation((double) 34);
+		artista3.setnPuntuations(10);
 
 		Artist artista4 = new Artist();
 		artista4.setUsername("Agapito");
 		artista4.setArtisticName("Te lo Repito");
 		artista4.setDescription("Descripcion aleatoria que describe como sera la desripcion no aleatoria de este artista");
 		artista4.setPrice((double) 5000);
-		artista4.setPuntuation((double) 8);
+		artista4.setPuntuation((double) 56);
+		artista4.setnPuntuations(10);
 
-		Artist artista5 = new Artist();
-		artista4.setUsername("Javier");
-		artista4.setArtisticName("Er Javi");
-		artista4.setDescription("Es un tio muy majo que solo quiere ganarse la vida disfrutando del musicote");
-		artista4.setPrice((double) 5000);
-		artista4.setPuntuation((double) 8);
 
-		Artist artista6 = new Artist();
-		artista4.setUsername("Paco");
-		artista4.setArtisticName("Paquete de Musica");
-		artista4.setDescription("Es un tio muy majo que solo quiere ganarse la vida disfrutando del musicote");
-		artista4.setPrice((double) 5000);
-		artista4.setPuntuation((double) 8);
-
-		Artist artista7 = new Artist();
-		artista4.setUsername("Federico");
-		artista4.setArtisticName("El Rico");
-		artista4.setDescription("Es un tio muy majo que solo quiere ganarse la vida disfrutando del musicote");
-		artista4.setPrice((double) 5000);
-		artista4.setPuntuation((double) 8);
-
-		Artist artista8 = new Artist();
-		artista4.setUsername("Francisca");
-		artista4.setArtisticName("La tta Franci");
-		artista4.setDescription("Es un tia muy majo que solo quiere ganarse la vida disfrutando del musicote");
-		artista4.setPrice((double) 5000);
-		artista4.setPuntuation((double) 8);
 
 
 		return args -> {

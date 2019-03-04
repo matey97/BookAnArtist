@@ -16,11 +16,15 @@
           </div>
           <div class="w-100"></div>
           <div class="card-footer w-100 text-muted">
-            <ngb-rating [(rate)]="artist.puntuation">
+            <ngb-rating [rate]="artist.puntuation/artist.nPuntuations"  [readonly]=false (rateChange)="onPuntuado($event,i)">
               <ng-template let-fill="fill" >
                 <span class="star" [class.filled]="fill === 100" >&#9733;</span>
               </ng-template>
             </ngb-rating>
+            <div> <!-- div temporal para visualizar la puntuacion
+                     -->
+              {{artist.puntuation / artist.nPuntuations}}
+            </div>
           </div>
         </div>
       </div>
