@@ -5,13 +5,13 @@ import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.type.BlobType;
 
 import javax.persistence.*;
-import java.awt.*;
-import java.sql.Blob;
 import java.util.List;
 
 @Entity
-public class Artist extends User{
+public class Artist{
 
+    @Id
+    private String username;
     private String artisticName;
     private String description;
     private Double price;
@@ -24,6 +24,14 @@ public class Artist extends User{
     private List<Long> videos;
 
     public Artist(){}
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     public String getArtisticName() {
         return artisticName;

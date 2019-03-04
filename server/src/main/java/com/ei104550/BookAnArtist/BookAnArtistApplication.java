@@ -7,6 +7,7 @@ import com.ei104550.BookAnArtist.model.User;
 import com.ei104550.BookAnArtist.repositories.ArtistImageRepository;
 import com.ei104550.BookAnArtist.repositories.ArtistRepository;
 import com.ei104550.BookAnArtist.repositories.ArtistVideoRepository;
+import com.ei104550.BookAnArtist.repositories.UserRepository;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -39,44 +40,63 @@ public class BookAnArtistApplication {
 	}
 
 	@Bean
-	ApplicationRunner init(ArtistRepository repository, ArtistImageRepository imageRepository, ArtistVideoRepository videoRepository){
+	ApplicationRunner init(ArtistRepository repository,
+						   UserRepository userRepository,
+						   ArtistImageRepository imageRepository,
+						   ArtistVideoRepository videoRepository){
+
+		User user1 = new User();
+		user1.setUsername("Pepe");
 
 		Artist artista1 = new Artist();
-		artista1.setUsername("Pepe");
+		artista1.setUsername(user1.getUsername());
 		artista1.setArtisticName("El Pepas");
 		artista1.setDescription("Es un tio muy majo que solo quiere ganarse la vida disfrutando del musicote");
 		artista1.setPrice((double) 5000);
 		artista1.setPuntuation((double) 8);
 
+
+		User user2 = new User();
+		user2.setUsername("Tomas");
+
 		Artist artista2 = new Artist();
-		artista2.setUsername("Tomas");
+		artista2.setUsername(user2.getUsername());
 		artista2.setArtisticName("El Broncas");
 		artista2.setDescription("Descripcion aleatoria que describe como sera la desripcion no aleatoria de este artista");
 		artista2.setPrice((double) 5000);
 		artista2.setPuntuation((double) 8);
 
+		User user3 = new User();
+		user3.setUsername("Fermín");
+
 		Artist artista3 = new Artist();
-		artista3.setUsername("Fermin");
+		artista3.setUsername(user3.getUsername());
 		artista3.setArtisticName("El Pirulin");
 		artista3.setDescription("Es un tio muy majo que solo quiere ganarse la vida disfrutando del musicote");
 		artista3.setPrice((double) 5000);
 		artista3.setPuntuation((double) 8);
 
+		User user4 = new User();
+		user4.setUsername("Agapito");
+
 		Artist artista4 = new Artist();
-		artista4.setUsername("Agapito");
+		artista4.setUsername(user4.getUsername());
 		artista4.setArtisticName("Te lo Repito");
 		artista4.setDescription("Descripcion aleatoria que describe como sera la desripcion no aleatoria de este artista");
 		artista4.setPrice((double) 5000);
 		artista4.setPuntuation((double) 8);
 
-		Artist artista5 = new Artist();
-		artista4.setUsername("Javier");
-		artista4.setArtisticName("Er Javi");
-		artista4.setDescription("Es un tio muy majo que solo quiere ganarse la vida disfrutando del musicote");
-		artista4.setPrice((double) 5000);
-		artista4.setPuntuation((double) 8);
+		User user5 = new User();
+		user5.setUsername("Javier");
 
-		Artist artista6 = new Artist();
+		Artist artista5 = new Artist();
+		artista5.setUsername(user5.getUsername());
+		artista5.setArtisticName("Er Javi");
+		artista5.setDescription("Es un tio muy majo que solo quiere ganarse la vida disfrutando del musicote");
+		artista5.setPrice((double) 5000);
+		artista5.setPuntuation((double) 8);
+
+		/*Artist artista6 = new Artist();
 		artista4.setUsername("Paco");
 		artista4.setArtisticName("Paquete de Musica");
 		artista4.setDescription("Es un tio muy majo que solo quiere ganarse la vida disfrutando del musicote");
@@ -95,20 +115,23 @@ public class BookAnArtistApplication {
 		artista4.setArtisticName("La tta Franci");
 		artista4.setDescription("Es un tia muy majo que solo quiere ganarse la vida disfrutando del musicote");
 		artista4.setPrice((double) 5000);
-		artista4.setPuntuation((double) 8);
+		artista4.setPuntuation((double) 8);*/
 
 
 		return args -> {
-			Stream.of(artista1,artista2,artista3,artista4).forEach((artist) -> {
+			Stream.of(user1, user2, user3, user4, user5).forEach((user) -> {
+				File fileImage = new File("src/main/resources/profile-icon.png");
+				try{
+					byte[] bImageFile = Files.readAllBytes(fileImage.toPath());
+					user.setImage(bImageFile);
+				}catch (Exception ex){
 
-//				Stream.of("Serz", "Dj. X").forEach((name) -> {
-//				Artist user = new Artist();
-//				user.setUsername(name);
-//				user.setArtisticName(name);
-//				user.setDescription("Es un tio muy majo que solo quiere ganarse la vida disfrutando del musicote");
-//				user.setPrice((double) 5000);
-//				user.setPuntuation((double) 8);
-//
+				}
+				userRepository.save(user);
+			});
+			userRepository.findAll().forEach(System.out::println);
+			Stream.of(artista1,artista2,artista3,artista4,artista5).forEach((artist) -> {
+
 				File fileImage = new File("src/main/resources/profile-icon.png");
 				File fileImage2 = new File("src/main/resources/test-image.png");
 				File fileVideo = new File("src/main/resources/small.mp4");
@@ -139,7 +162,7 @@ public class BookAnArtistApplication {
                 artistImageList.add(image1.getId());
                 artistImageList.add(image2.getId());
                 artistVideoList.add(video1.getId());
-				artist.setImage(bImageFile);
+
 				artist.setImages(artistImageList);
 				artist.setVideos(artistVideoList);
 				repository.save(artist);
