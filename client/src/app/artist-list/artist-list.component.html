@@ -15,8 +15,13 @@
             <a href="./artist/profile/{{i}}" class="btn btn-outline-light">Ver perfil (./artist/profile/{{i}})</a>
           </div>
           <div class="w-100"></div>
-          <div class="card-footer w-100 text-muted"> {{artist.puntuation}} /10 </div>
-
+          <div class="card-footer w-100 text-muted">
+            <ngb-rating [(rate)]="artist.puntuation">
+              <ng-template let-fill="fill" >
+                <span class="star" [class.filled]="fill === 100" >&#9733;</span>
+              </ng-template>
+            </ngb-rating>
+          </div>
         </div>
       </div>
     </mat-list>

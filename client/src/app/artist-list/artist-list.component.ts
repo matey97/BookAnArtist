@@ -10,6 +10,7 @@ import {MultimediaService} from '../shared/multimedia/multimedia.service';
 export class ArtistListComponent implements OnInit {
   artists: Array<any>;
 
+
   constructor(private artistService: ArtistService,
               private multimediaServie: MultimediaService) { }
 
@@ -39,3 +40,5 @@ export class ArtistListComponent implements OnInit {
   }
 
 }
+
+
