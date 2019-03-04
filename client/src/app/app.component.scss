@@ -1,0 +1,25 @@
+@import "../assets/mixins.scss";
+.navStyle{
+    background-image: linear-gradient(1650deg,$purple,$blue, $blue);
+    color: white;
+}
+.LogoShortNavBar{
+    height: 7hw;
+    width: 7vw;
+}
+nav .navbar-nav li a{
+    color: white !important;
+}
+
+nav .navbar-nav li a:hover{
+   transform:  translateY(-2px);
+   transition-duration: 2s;
+   font-weight: 900;
+}
+
+.LoginButton{
+    color: white;
+    transform:  translateY(-2px);
+    transition-duration: 2s;
+    font-weight: 900;
+}
