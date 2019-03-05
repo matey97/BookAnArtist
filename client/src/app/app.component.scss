@@ -4,22 +4,27 @@
     color: white;
 }
 .LogoShortNavBar{
-    height: 7hw;
-    width: 7vw;
+    height: 8hw;
+    width: 8vw;
 }
 nav .navbar-nav li a{
     color: white !important;
 }
 
-nav .navbar-nav li a:hover{
-   transform:  translateY(-2px);
-   transition-duration: 2s;
-   font-weight: 900;
+nav .navbar-nav li a:active{
+   transform:  translateY(2px);
+  // transition-duration: 2s;
+   font-weight: 500;
 }
 
 .LoginButton{
     color: white;
-    transform:  translateY(-2px);
-    transition-duration: 2s;
-    font-weight: 900;
+    font-weight: 400;
+}
+.LoginButton:hover{
+    //transform:  translateY(-2px);
+}
+.LoginButton:active{
+    transform:  translateY(2px);
+    font-weight: 500;
 }
