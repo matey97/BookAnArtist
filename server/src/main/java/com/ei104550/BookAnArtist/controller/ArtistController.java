@@ -23,4 +23,9 @@ public class ArtistController {
     public Collection<Artist> artists(){
         return repository.findAll().stream().collect(Collectors.toList());
     }
+
+    @GetMapping("artista/{username}")
+    public Artist artistByUsername(@PathVariable String username){
+        return repository.findById(username).get();
+    }
 }

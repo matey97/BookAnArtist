@@ -19,6 +19,9 @@ public class Artist{
     private int nPuntuations;
     @ElementCollection()
     @LazyCollection(LazyCollectionOption.FALSE)
+    private List<String> habilities;
+    @ElementCollection()
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Long> images;
     @ElementCollection()
     @LazyCollection(LazyCollectionOption.FALSE)
@@ -66,6 +69,14 @@ public class Artist{
         this.puntuation = puntuation;
     }
 
+    public List<String> getHabilities() {
+        return habilities;
+    }
+
+    public void setHabilities(List<String> habilities) {
+        this.habilities = habilities;
+    }
+
     public List<Long> getImages() {
         return images;
     }
@@ -89,10 +100,13 @@ public class Artist{
     @Override
     public String toString() {
         return "Artist{" +
-                "artisticName='" + artisticName + '\'' +
+                "username='" + username + '\'' +
+                ", artisticName='" + artisticName + '\'' +
                 ", description='" + description + '\'' +
                 ", price=" + price +
-                ", puntuation=" + puntuation/nPuntuations +
+                ", puntuation=" + puntuation +
+                ", nPuntuations=" + nPuntuations +
+                ", habilities=" + habilities +
                 ", images=" + images +
                 ", videos=" + videos +
                 '}';

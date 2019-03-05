@@ -13,6 +13,10 @@ export class UserService {
     return this.http.get('api/users');
   }
 
+  getMockLoguedUser(): Observable<any> {
+    return this.http.get('api/user/' + 'Pepe');
+  }
+
   getProfileImage(userName: string): Observable<any> {
     return this.http.get('api/user-image/' + userName);
   }

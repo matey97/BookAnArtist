@@ -1,0 +1,67 @@
+<div *ngIf="artist != null && user != null" class="container">
+  <div class="jumbotron" style="text-align: center">
+    <h2>Perfil artísitco</h2>
+    <p>Hola {{user.username}}, bienvenido a tu perfil artístico. Aquí debes introducir todos tus datos de interés a nivel artístico, como tu nombre artísitco
+    una pequeña descripción, tus habilidades, videos, etc.</p>
+  </div>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="card" style="text-align: center">
+        <div class="card-header">
+          <img class="card-img-top" src="data:image/PNG;base64,{{artist.image}}">
+        </div>
+        <div class="card-body">
+          <h4 class="card-title" >{{user.username}}</h4>
+          <h5 class="card-text">{{user.email}}</h5>
+        </div>
+        <div class="card-footer">
+          <button mat-raised-button color="primary">Perfil de usuario</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-9">
+      <form #myForm="ngForm" (ngSubmit)="saveArtisticProfileChanges(myForm)" class="form form-register">
+        <mat-form-field>
+          <input matInput type="text" placeholder="Nombre artístico" [(ngModel)]="artist.artisticName" name="artisticName" required>
+        </mat-form-field>
+        <mat-form-field>
+          <textarea matInput type="text" placeholder="Descripción" [(ngModel)]="artist.description" name="description" rows="5" required></textarea>
+        </mat-form-field>
+        <div class="row">
+          <div class="col-sm-6">
+            <mat-form-field>
+              <mat-select placeholder="Habilidades" [(ngModel)]="listaHabilidades" name="habilities" multiple>
+                <mat-option *ngFor="let hability of habilities" >{{hability}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-6">
+            <mat-form-field>
+              <input matInput placeholder="Precio por actuación" [(ngModel)]="artist.price" name="price">
+            </mat-form-field>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="videos">Selecciona videos de tus actuaciones:</label>
+              <input type="file" class="form-control" id="videos" name="videos" accept="video/mp4" multiple>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="images">Selecciona imágenes de tus actuaciones:</label>
+              <input type="file" class="form-control" id="images" name="images" accept="image/*" multiple>
+            </div>
+          </div>
+        </div>
+        <hr>
+        <div class="btn-group float-right">
+          <button class="btn btn-warning" type="reset" value="Limpiar datos">Limpiar datos</button>
+          <input class="btn btn-primary" type="submit" value="Guardar datos">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

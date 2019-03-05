@@ -22,6 +22,11 @@ public class UserController {
         return userRepository.findAll().stream().collect(Collectors.toList());
     }
 
+    @GetMapping("user/{username}")
+    public User userByUsername(@PathVariable String username){
+        return userRepository.findById(username).get();
+    }
+
     @GetMapping(value = "user-image/{username}")
     public Map<String, String> userImage(@PathVariable String username){
         User user = userRepository.findById(username).get();

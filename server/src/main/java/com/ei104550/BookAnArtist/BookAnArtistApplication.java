@@ -47,6 +47,7 @@ public class BookAnArtistApplication {
 
 		User user1 = new User();
 		user1.setUsername("Pepe");
+		user1.setUserType(User.ARTIST);
 
 		Artist artista1 = new Artist();
 		artista1.setUsername(user1.getUsername());
