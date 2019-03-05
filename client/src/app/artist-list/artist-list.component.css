@@ -4,6 +4,11 @@ img.card-img-top{
   background-color: powderblue;
 }
 
+
+/*
+Estilo de las estrellas de valoración
+ */
+
 .star {
   font-size: 1.5rem;
   color: #F2EDD0;
