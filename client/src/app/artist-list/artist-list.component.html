@@ -15,8 +15,13 @@
             <a href="./artist/profile/{{i}}" class="btn btn-outline-light">Ver perfil (./artist/profile/{{i}})</a>
           </div>
           <div class="w-100"></div>
-          <div class="card-footer w-100 text-muted"> {{artist.puntuation}} /10 </div>
-
+          <div class="card-footer w-100 text-muted">
+            <ngb-rating [rate]="artist.puntuation/artist.nPuntuations"  [readonly]=false (rateChange)="onPuntuado($event,i)">
+              <ng-template let-fill="fill" >
+                <span class="star" [class.filled]="fill === 100" >&#9733;</span>
+              </ng-template>
+            </ngb-rating>
+          </div>
         </div>
       </div>
     </mat-list>
@@ -34,7 +39,8 @@
   </div>
   <div *ngFor="let rawVideo of artist.rawVideos">
     <video controls>
-      <source src="data:video/mp4;base64,{{rawVideo.video}}" type='video/mp4;codecs="H.264 AVC,AAC"'>
+      <source src="data:video/mp4;base64,{{rawVideo.video}}" type='video/mp4'>
+      <source src="data:video/webm;base64,{{rawVideo.video}}" type='video/webm'>
     </video>
   </div>
 </div>

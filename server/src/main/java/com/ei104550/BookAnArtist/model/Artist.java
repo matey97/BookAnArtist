@@ -5,17 +5,18 @@ import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.type.BlobType;
 
 import javax.persistence.*;
-import java.awt.*;
-import java.sql.Blob;
 import java.util.List;
 
 @Entity
-public class Artist extends User{
+public class Artist{
 
+    @Id
+    private String username;
     private String artisticName;
     private String description;
     private Double price;
     private Double puntuation;
+    private int nPuntuations;
     @ElementCollection()
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Long> images;
@@ -24,6 +25,14 @@ public class Artist extends User{
     private List<Long> videos;
 
     public Artist(){}
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     public String getArtisticName() {
         return artisticName;
@@ -73,13 +82,17 @@ public class Artist extends User{
         this.videos = videos;
     }
 
+    public int getnPuntuations() { return nPuntuations; }
+
+    public void setnPuntuations(int nPuntuations) { this.nPuntuations = nPuntuations; }
+
     @Override
     public String toString() {
         return "Artist{" +
                 "artisticName='" + artisticName + '\'' +
                 ", description='" + description + '\'' +
                 ", price=" + price +
-                ", puntuation=" + puntuation +
+                ", puntuation=" + puntuation/nPuntuations +
                 ", images=" + images +
                 ", videos=" + videos +
                 '}';
