@@ -8,33 +8,19 @@ import com.ei104550.BookAnArtist.repositories.ArtistImageRepository;
 import com.ei104550.BookAnArtist.repositories.ArtistRepository;
 import com.ei104550.BookAnArtist.repositories.ArtistVideoRepository;
 import com.ei104550.BookAnArtist.repositories.UserRepository;
-import org.hibernate.Hibernate;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.engine.spi.SessionDelegatorBaseImpl;
-import org.hibernate.internal.SessionImpl;
-import org.hibernate.type.BlobType;
-import org.hibernate.type.ClobType;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
-import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.nio.file.Files;
-import java.sql.Blob;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.stream.Stream;
 
-@SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
-public class BookAnArtistApplication {
+@SpringBootApplication
+public class BookAnArtistApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
 		SpringApplication.run(BookAnArtistApplication.class, args);
