@@ -15,6 +15,7 @@ import {VgOverlayPlayModule} from 'videogular2/overlay-play';
 import {VgBufferingModule} from 'videogular2/buffering';
 import { HomeComponent } from './shared/home/home.component';
 import { LoginComponent } from './shared/login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 
 
@@ -23,7 +24,8 @@ import { LoginComponent } from './shared/login/login.component';
     AppComponent,
     ArtistListComponent,
     HomeComponent,
-    LoginComponent
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
