@@ -5,7 +5,7 @@
   <mat-card-content>
     <mat-list>
       <div class="container">
-        <div class="card flex-row flex-wrap text-white bg-dark mb-3" *ngFor="let artist of artists | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; let i = index">
+        <div class="card flex-row flex-wrap text-white bg-dark mb-3" *ngFor="let artist of artists | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; ">
           <div class="card-header border-0">
             <img class="card-img-top" src="data:image/PNG;base64,{{artist.image}}">
           </div>
@@ -13,7 +13,7 @@
             <h2 class="card-title">{{artist.artisticName}}</h2>
             <p class="card-text">{{artist.description}}</p>
             <p class="card-text">{{artist.price}}€/h</p>
-            <a href="./artist/profile/{{i}}" class="btn btn-outline-light">Ver perfil (./artist/profile/{{artist.artisticName}})</a>
+            <a href="./artist/{{artist.username}}" class="btn btn-outline-light">Ver perfil </a>
           </div>
           <div class="w-100"></div>
           <div class="card-footer w-100 text-muted">
