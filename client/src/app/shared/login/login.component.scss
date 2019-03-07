@@ -1,3 +1,5 @@
+@import "../../../assets/mixins.scss";
+
 body{
   margin: 0;
   padding: 0;
@@ -40,7 +42,7 @@ body{
 }
 .box input[type = "text"]:focus,.box input[type = "password"]:focus{
   width: 220px;
-  border-color: #2ecc71;
+  border-color: $greenButtons;
 }
 .LoginButton{
   border:0;
@@ -48,7 +50,7 @@ body{
   display: block;
   margin: 20px auto;
   text-align: center;
-  border: 2px solid #2ecc71;
+  border: 2px solid $greenButtons;
   padding: 14px 40px;
   outline: none;
   color: white;
@@ -57,5 +59,23 @@ body{
   cursor: pointer;
 }
 .LoginButton:hover{
-  background: #2ecc71;
+  background: $greenButtons;
+}
+.SignUpButton{
+  font-size: 11px;
+  border:0;
+  background: none;
+  display: block;
+  margin: 20px auto;
+  text-align: center;
+  border: 2px solid $greenButtons;
+  padding: 2% 5% ;
+  outline: none;
+  color: white;
+  border-radius: 24px;
+  transition: 0.25s;
+  cursor: pointer;
+}
+.SignUpButton:hover {
+  background: $greenButtons;
 }

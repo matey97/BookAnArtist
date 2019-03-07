@@ -3,12 +3,14 @@ import { Routes, RouterModule } from '@angular/router';
 import { ArtistListComponent } from './artist-list/artist-list.component';
 import { LoginComponent } from './shared/login/login.component';
 import { HomeComponent } from './shared/home/home.component';
+import {RegisterComponent} from "./shared/register/register.component";
 
 const routes: Routes = [
   { path: 'artistList', component: ArtistListComponent },
   { path: '', component: ArtistListComponent },
   { path: 'user', component: HomeComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent}
  //{ path: '**', redirectTo: 'user' }
 ];
 
