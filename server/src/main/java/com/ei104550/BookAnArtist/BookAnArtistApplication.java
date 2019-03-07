@@ -30,6 +30,7 @@ import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.stream.Stream;
 
 @SpringBootApplication
@@ -53,6 +54,8 @@ public class BookAnArtistApplication {
 		artista1.setUsername(user1.getUsername());
 		artista1.setArtisticName("El Pepas");
 		artista1.setDescription("Es un tio muy majo que solo quiere ganarse la vida disfrutando del musicote");
+        List<String> habilidades = Arrays.asList("Bailar", "Cantar", "Reir");
+		artista1.setHabilities(habilidades);
 		artista1.setPrice((double) 5000);
 		artista1.setPuntuation((double) 67);
 		artista1.setnPuntuations(10);

@@ -1,0 +1,11 @@
+/*
+Estilo de las estrellas de valoración
+ */
+
+.star {
+  font-size: 1.5rem;
+  color: #F2EDD0;
+}
+.filled {
+  color: #FCDE1F;
+}

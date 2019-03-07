@@ -13,7 +13,9 @@ import { MultimediaService } from '../shared/multimedia/multimedia.service';
 export class ArtistComponent implements OnInit {
 
   artist: any;
+  habilidades: Array<string>
   username: string;
+
 
   constructor( private artistService: ArtistService,
                private userService: UserService,
@@ -24,7 +26,8 @@ export class ArtistComponent implements OnInit {
 
     this.username = this.route.snapshot.paramMap.get('username');
     this.getArtistProfile();
-    // this.getMultimediaFiles();
+    this.getMultimediaFiles();
+    this.habilidades = this.artist.habilities;
 
   }
 
@@ -42,13 +45,8 @@ export class ArtistComponent implements OnInit {
 
   }
 
-  /*
-
   private getMultimediaFiles() {
 
-    this.userService.getProfileImage(this.username).subscribe(image => {
-      this.artist.image = image.raw;
-    });
     this.artist.rawImages = [];
     this.artist.images.forEach( username => {
       this.multimediaServie.getImage(username).subscribe(data => {
@@ -62,7 +60,5 @@ export class ArtistComponent implements OnInit {
       });
     });
   }
-
-  */
 
 }
