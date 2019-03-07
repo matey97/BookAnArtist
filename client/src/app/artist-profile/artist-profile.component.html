@@ -8,7 +8,7 @@
     <div class="col-sm-3">
       <div class="card" style="text-align: center">
         <div class="card-header">
-          <img class="card-img-top" src="data:image/PNG;base64,{{artist.image}}">
+          <img class="card-img-top" src="data:image/PNG;base64,{{user.rawImage}}">
         </div>
         <div class="card-body">
           <h4 class="card-title" >{{user.username}}</h4>
@@ -22,46 +22,75 @@
     <div class="col-sm-9">
       <form #myForm="ngForm" (ngSubmit)="saveArtisticProfileChanges(myForm)" class="form form-register">
         <mat-form-field>
-          <input matInput type="text" placeholder="Nombre artístico" [(ngModel)]="artist.artisticName" name="artisticName" required>
+          <input matInput type="text" placeholder="Nombre artístico" [(ngModel)]="artist.artisticName" name="artisticName" [disabled]="!firstTime && !editMode" required>
         </mat-form-field>
         <mat-form-field>
-          <textarea matInput type="text" placeholder="Descripción" [(ngModel)]="artist.description" name="description" rows="5" required></textarea>
+          <textarea matInput type="text" placeholder="Descripción" [(ngModel)]="artist.description" name="description" rows="5" [disabled]="!firstTime && !editMode" required></textarea>
         </mat-form-field>
         <div class="row">
           <div class="col-sm-6">
             <mat-form-field>
-              <mat-select placeholder="Habilidades" [(ngModel)]="listaHabilidades" name="habilities" multiple>
-                <mat-option *ngFor="let hability of habilities" >{{hability}}</mat-option>
+              <mat-select placeholder="Habilidades" [(ngModel)]="artist.habilities" name="habilities" [disabled]="!firstTime && !editMode" multiple>
+                <mat-option *ngFor="let hability of habilities" value="{{hability}}">{{hability}}</mat-option>
               </mat-select>
             </mat-form-field>
           </div>
           <div class="col-sm-6">
             <mat-form-field>
-              <input matInput placeholder="Precio por actuación" [(ngModel)]="artist.price" name="price">
+              <input matInput placeholder="Precio por actuación" [(ngModel)]="artist.price" [disabled]="!firstTime && !editMode" name="price">
             </mat-form-field>
           </div>
         </div>
-        <hr>
+        <mat-divider></mat-divider>
+        <br>
         <div class="row">
           <div class="col-sm-6">
-            <div class="form-group">
-              <label for="videos">Selecciona videos de tus actuaciones:</label>
-              <input type="file" class="form-control" id="videos" name="videos" accept="video/mp4" multiple>
+            <div class="custom-file">
+              <input type="file" class="custom-file-input" id="videos" name="videos" value="videos" accept="video/mp4" (change)="videoChange($event)" [disabled]="!firstTime && !editMode">
+              <label class="custom-file-label" for="videos">Selecciona videos de tus actuaciones</label>
             </div>
           </div>
           <div class="col-sm-6">
             <div class="form-group">
-              <label for="images">Selecciona imágenes de tus actuaciones:</label>
-              <input type="file" class="form-control" id="images" name="images" accept="image/*" multiple>
+              <input type="file" class="custom-file-input" id="images" name="images" value="images" accept="image/*" (change)="imageChange($event)" [disabled]="!firstTime && !editMode">
+              <label class="custom-file-label" for="images">Selecciona imágenes de tus actuaciones</label>
             </div>
           </div>
         </div>
-        <hr>
-        <div class="btn-group float-right">
-          <button class="btn btn-warning" type="reset" value="Limpiar datos">Limpiar datos</button>
-          <input class="btn btn-primary" type="submit" value="Guardar datos">
+        <div class="row">
+          <div class="col-sm-6">
+            <mat-list>
+              <mat-list-item *ngFor="let video of videosFile">
+                <p mat-line>{{video.name}}</p>
+                <button mat-icon-button (click)="removeVideo(video)" [disabled]="!firstTime && !editMode">
+                  <mat-icon mat-list-icon>delete_forever</mat-icon>
+                </button>
+              </mat-list-item>
+            </mat-list>
+          </div>
+          <div class="col-sm-6">
+            <mat-list>
+              <mat-list-item *ngFor="let image of imagesFile">
+                <p mat-line>{{image.name}}</p>
+                <button mat-icon-button (click)="removeImage(image)" [disabled]="!firstTime && !editMode">
+                  <mat-icon mat-list-icon>delete_forever</mat-icon>
+                </button>
+              </mat-list-item>
+            </mat-list>
+          </div>
         </div>
+        <mat-divider></mat-divider>
+        <div class="button-row float-right" *ngIf="editMode || firstTime; else editButton">
+          <br>
+          <button mat-raised-button color="warn" type="reset" value="Limpiar datos" (click)="resetVideosAndImages()">Limpiar datos</button>
+          <button mat-raised-button color="primary" type="submit" value="Guardar datos">Guardar datos</button>
+        </div>
+        <ng-template #editButton>
+          <br>
+          <button class="float-right" mat-raised-button color="primary" value="Editar datos" (click)="changeEditMode(true)">Editar datos</button>
+        </ng-template>
       </form>
     </div>
   </div>
 </div>
+

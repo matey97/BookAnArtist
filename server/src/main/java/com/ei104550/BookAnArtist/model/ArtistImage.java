@@ -10,6 +10,7 @@ public class ArtistImage {
 
     @Id @GeneratedValue
     private Long id;
+    private String name;
     @Lob
     private byte[] image;
 
@@ -23,6 +24,14 @@ public class ArtistImage {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public byte[] getImage() {

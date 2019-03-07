@@ -10,7 +10,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
   MatButtonModule,
   MatCardModule,
-  MatFormFieldModule,
+  MatFormFieldModule, MatIconModule,
   MatInputModule,
   MatListModule,
   MatOptionModule, MatSelectModule,
@@ -47,6 +47,7 @@ import { ArtistComponent } from './artist/artist.component';
     MatOptionModule,
     MatSelectModule,
     MatButtonModule,
+    MatIconModule,
     FormsModule,
     NgbModule,
     VgCoreModule,

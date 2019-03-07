@@ -16,4 +16,8 @@ export class ArtistService {
   getArtistByUsername(username: string): Observable<any> {
     return this.http.get('api/artista/' + username);
   }
+
+  postArtistProfile(artistObj, imagesObj, videosObj): Observable<any> {
+    return this.http.post('api/artista/' + artistObj.username, {artist: artistObj, images: imagesObj, videos: videosObj});
+  }
 }

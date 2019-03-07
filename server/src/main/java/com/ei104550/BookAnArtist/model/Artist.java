@@ -5,6 +5,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.type.BlobType;
 
 import javax.persistence.*;
+import java.util.LinkedList;
 import java.util.List;
 
 @Entity
@@ -27,7 +28,11 @@ public class Artist{
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Long> videos;
 
-    public Artist(){}
+    public Artist(){
+        this.puntuation = 0.0;
+        this.images = new LinkedList<>();
+        this.videos = new LinkedList<>();
+    }
 
     public String getUsername() {
         return username;

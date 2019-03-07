@@ -14,7 +14,7 @@ export class UserService {
   }
 
   getMockLoguedUser(): Observable<any> {
-    return this.http.get('api/user/' + 'Pepe');
+    return this.http.get('api/user/' + 'Juan');
   }
 
   getProfileImage(userName: string): Observable<any> {

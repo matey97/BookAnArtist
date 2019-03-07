@@ -104,9 +104,12 @@ public class BookAnArtistApplication {
 		artista5.setPrice((double) 5000);
 		artista5.setPuntuation((double) 8);
 
+		User user6 = new User();
+		user6.setUsername("Juan");
+		user6.setUserType(User.ARTIST);
 
 		return args -> {
-			Stream.of(user1, user2, user3, user4, user5).forEach((user) -> {
+			Stream.of(user1, user2, user3, user4, user5, user6).forEach((user) -> {
 				File fileImage = new File("src/main/resources/profile-icon.png");
 				try{
 					byte[] bImageFile = Files.readAllBytes(fileImage.toPath());
