@@ -23,7 +23,7 @@ export class ArtistListComponent implements OnInit {
       this.getMultimediaFiles();
     });
     // Inicializa la paginacion
-    this.page = 2;
+    this.page = 1;
     this.pageSize = 2;
   }
   private getMultimediaFiles() {

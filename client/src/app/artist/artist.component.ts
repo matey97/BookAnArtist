@@ -12,6 +12,7 @@ import { UserService } from '../shared/user/user.service';
 export class ArtistComponent implements OnInit {
 
   artist: any;
+  user;
   habilidades: Array<string>
   username: string;
 
@@ -21,10 +22,8 @@ export class ArtistComponent implements OnInit {
                private route: ActivatedRoute) { }
 
   ngOnInit() {
-
     this.username = this.route.snapshot.paramMap.get('username');
     this.getArtistProfile();
-    this.getMultimediaFiles();
     this.habilidades = this.artist.habilities;
 
   }
@@ -37,27 +36,20 @@ export class ArtistComponent implements OnInit {
       this.artist = data;
     });
 
-    this.userService.getProfileImage(this.username).subscribe(image => {
-      this.artist.image = image.raw;
-    });
+    this.userService.getMockLoguedUser().subscribe(user => {
+      this.user = user;
+      this.artistService.getArtistByUsername(this.user.username).subscribe(artist => {
+        if (artist.username == null) {
+          artist.username = user.username;
+        }
 
-  }
-
-  private getMultimediaFiles() {
-
-    /*
-    this.artist.rawImages = [];
-    this.artist.images.forEach( username => {
-      this.multimediaServie.getImage(username).subscribe(data => {
-        this.artist.rawImages.push(data);
+        this.userService.getProfileImage(this.user.username).subscribe(image => {
+          this.user.rawImage = image.raw;
+        });
       });
     });
-    this.artist.rawVideos = [];
-    this.artist.videos.forEach( username => {
-      this.multimediaServie.getVideo(username).subscribe( data => {
-        this.artist.rawVideos.push(data);
-      });
-    });*/
   }
+
+
 
 }
