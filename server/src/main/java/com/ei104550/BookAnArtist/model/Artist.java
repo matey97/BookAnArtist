@@ -23,10 +23,10 @@ public class Artist{
     private List<String> habilities;
     @ElementCollection()
     @LazyCollection(LazyCollectionOption.FALSE)
-    private List<Long> images;
+    private List<ArtistImage> images;
     @ElementCollection()
     @LazyCollection(LazyCollectionOption.FALSE)
-    private List<Long> videos;
+    private List<ArtistVideo> videos;
 
     public Artist(){
         this.puntuation = 0.0;
@@ -82,19 +82,19 @@ public class Artist{
         this.habilities = habilities;
     }
 
-    public List<Long> getImages() {
+    public List<ArtistImage> getImages() {
         return images;
     }
 
-    public void setImages(List<Long> images) {
+    public void setImages(List<ArtistImage> images) {
         this.images = images;
     }
 
-    public List<Long> getVideos() {
+    public List<ArtistVideo> getVideos() {
         return videos;
     }
 
-    public void setVideos(List<Long> videos) {
+    public void setVideos(List<ArtistVideo> videos) {
         this.videos = videos;
     }
 

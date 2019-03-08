@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ArtistService } from '../shared/artist/artist.service';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from '../shared/user/user.service';
-import { MultimediaService } from '../shared/multimedia/multimedia.service';
 
 
 @Component({
@@ -19,7 +18,6 @@ export class ArtistComponent implements OnInit {
 
   constructor( private artistService: ArtistService,
                private userService: UserService,
-               private multimediaServie: MultimediaService,
                private route: ActivatedRoute) { }
 
   ngOnInit() {
@@ -47,6 +45,7 @@ export class ArtistComponent implements OnInit {
 
   private getMultimediaFiles() {
 
+    /*
     this.artist.rawImages = [];
     this.artist.images.forEach( username => {
       this.multimediaServie.getImage(username).subscribe(data => {
@@ -58,7 +57,7 @@ export class ArtistComponent implements OnInit {
       this.multimediaServie.getVideo(username).subscribe( data => {
         this.artist.rawVideos.push(data);
       });
-    });
+    });*/
   }
 
 }

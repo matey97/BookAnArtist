@@ -60,9 +60,9 @@
         <div class="row">
           <div class="col-sm-6">
             <mat-list>
-              <mat-list-item *ngFor="let video of videosFile">
+              <mat-list-item *ngFor="let video of artist.videos">
                 <p mat-line>{{video.name}}</p>
-                <button mat-icon-button (click)="removeVideo(video)" [disabled]="!firstTime && !editMode">
+                <button type="button" mat-icon-button (click)="removeVideo(video)" [disabled]="!firstTime && !editMode">
                   <mat-icon mat-list-icon>delete_forever</mat-icon>
                 </button>
               </mat-list-item>
@@ -70,9 +70,9 @@
           </div>
           <div class="col-sm-6">
             <mat-list>
-              <mat-list-item *ngFor="let image of imagesFile">
+              <mat-list-item *ngFor="let image of artist.images">
                 <p mat-line>{{image.name}}</p>
-                <button mat-icon-button (click)="removeImage(image)" [disabled]="!firstTime && !editMode">
+                <button type="button" mat-icon-button (click)="removeImage(image)" [disabled]="!firstTime && !editMode">
                   <mat-icon mat-list-icon>delete_forever</mat-icon>
                 </button>
               </mat-list-item>

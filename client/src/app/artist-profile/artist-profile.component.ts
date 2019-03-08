@@ -1,10 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {UserService} from '../shared/user/user.service';
 import {ArtistService} from '../shared/artist/artist.service';
-import {Observable} from 'rxjs';
-import {MultimediaService} from '../shared/multimedia/multimedia.service';
-import {MatDialog} from '@angular/material';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-artist-profile',
@@ -19,14 +15,8 @@ export class ArtistProfileComponent implements OnInit {
   firstTime = false;
   editMode = false;
 
-  videosFile = [];
-  videosLoaded = [];
-  imagesFile = [];
-  imagesLoaded = [];
-
   constructor(private userService: UserService,
-              private artistService: ArtistService,
-              private multimediaService: MultimediaService) { }
+              private artistService: ArtistService) { }
 
   ngOnInit() {
     this.userService.getMockLoguedUser().subscribe(user => {
@@ -35,24 +25,6 @@ export class ArtistProfileComponent implements OnInit {
         if (artist.username == null) {
           this.firstTime = true;
           artist.username = user.username;
-        } else {
-          artist.images.forEach( id => {
-            this.multimediaService.getImage(id).subscribe(data => {
-              this.imagesFile.push({
-                name: data.name
-              });
-              this.imagesLoaded.push(data.image);
-            });
-          });
-          artist.rawVideos = [];
-          artist.videos.forEach( id => {
-            this.multimediaService.getVideo(id).subscribe( data => {
-              this.videosFile.push({
-                name: data.name
-              });
-              this.videosLoaded.push(data.video);
-            });
-          });
         }
         this.artist = artist;
         this.userService.getProfileImage(this.user.username).subscribe(image => {
@@ -71,23 +43,7 @@ export class ArtistProfileComponent implements OnInit {
     this.changeEditMode(false);
     this.firstTime = false;
 
-    const imagesArray = new Array(this.imagesFile.length);
-    this.imagesFile.forEach((item, index) => {
-      imagesArray[index] = {
-        name: item.name,
-        base64: this.imagesLoaded[index]
-      };
-    });
-
-    const videosArray = new Array(this.videosFile.length);
-    this.videosFile.forEach((item, index) => {
-      videosArray[index] = {
-        name: item.name,
-        base64: this.videosLoaded[index]
-      };
-    });
-
-    this.artistService.postArtistProfile(this.artist, imagesArray, videosArray).subscribe(() => {
+    this.artistService.postArtistProfile(this.artist).subscribe(() => {
       console.log('Exito');
     },
       error1 => {
@@ -96,48 +52,53 @@ export class ArtistProfileComponent implements OnInit {
   }
 
   public videoChange(fileInput: any) {
+    let name;
     const videosReader = new FileReader();
     videosReader.onload = ((e) => {
-      this.videosLoaded = this.videosLoaded.concat(e.target['result'].split(',')[1]);
+      // this.videosLoaded = this.videosLoaded.concat(e.target['result'].split(',')[1]);
+      this.artist.videos.push({
+        id: -1,
+        name,
+        video: e.target['result'].split(',')[1]});
     });
     if (fileInput.target.files) {
       for (const video of fileInput.target.files) {
-        this.videosFile = this.videosFile.concat(video);
+        // this.videosFile = this.videosFile.concat(video);
+        name = video.name;
         videosReader.readAsDataURL(video);
       }
     }
   }
 
   public imageChange(fileInput: any) {
+    let name;
+    const imagesReader = new FileReader();
+    imagesReader.onload = ((e) => {
+      this.artist.images.push({
+        id: -1,
+        name,
+        image: e.target['result'].split(',')[1]
+      });
+    });
     if (fileInput.target.files) {
       for (const image of fileInput.target.files) {
-        const imagesReader = new FileReader();
-        imagesReader.onload = ((e) => {
-          this.imagesLoaded = this.imagesLoaded.concat(e.target['result'].split(',')[1]);
-        });
-        this.imagesFile = this.imagesFile.concat(image);
+        name = image.name;
         imagesReader.readAsDataURL(image);
       }
     }
   }
 
   public resetVideosAndImages() {
-    this.imagesFile = [];
-    this.imagesLoaded = [];
-    this.videosFile = [];
-    this.videosLoaded = [];
+    this.artist.images = [];
+    this.artist.videos = [];
   }
 
-  public removeImage(name: string) {
-    const index = this.imagesFile.indexOf(name);
-    this.imagesFile = this.imagesFile.filter(item => item !== name);
-    this.imagesLoaded.splice(index, 1);
+  public removeImage(image: string) {
+    this.artist.images = this.artist.images.filter(item => item !== image);
+    console.log(this.artist.images);
   }
 
-  public removeVideo(name: string) {
-    const index = this.videosFile.indexOf(name);
-    this.videosFile = this.videosFile.filter(item => item !== name);
-    this.videosLoaded.splice(index, 1);
-
+  public removeVideo(video: string) {
+    this.artist.videos = this.artist.videos.filter(item => item !== video);
   }
 }

@@ -130,8 +130,8 @@ public class BookAnArtistApplication {
 				byte[] bImageFile2 = null;
 				byte[] bVideoFile = null;
 
-				ArrayList<Long> artistImageList = new ArrayList<>();
-                ArrayList<Long> artistVideoList = new ArrayList<>();
+				ArrayList<ArtistImage> artistImageList = new ArrayList<>();
+                ArrayList<ArtistVideo> artistVideoList = new ArrayList<>();
                 ArtistImage image1 = new ArtistImage();
 				ArtistImage image2 = new ArtistImage();
 				ArtistVideo video1 = new ArtistVideo();
@@ -149,9 +149,9 @@ public class BookAnArtistApplication {
                 imageRepository.save(image1);
 				imageRepository.save(image2);
 				videoRepository.save(video1);
-                artistImageList.add(image1.getId());
-                artistImageList.add(image2.getId());
-                artistVideoList.add(video1.getId());
+                artistImageList.add(image1);
+                artistImageList.add(image2);
+                artistVideoList.add(video1);
 
 				artist.setImages(artistImageList);
 				artist.setVideos(artistVideoList);

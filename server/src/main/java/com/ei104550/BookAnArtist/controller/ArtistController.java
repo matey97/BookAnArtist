@@ -3,15 +3,11 @@ package com.ei104550.BookAnArtist.controller;
 import com.ei104550.BookAnArtist.model.Artist;
 import com.ei104550.BookAnArtist.model.ArtistImage;
 import com.ei104550.BookAnArtist.model.ArtistVideo;
-import com.ei104550.BookAnArtist.model.ProfileData;
 import com.ei104550.BookAnArtist.repositories.ArtistImageRepository;
 import com.ei104550.BookAnArtist.repositories.ArtistRepository;
 import com.ei104550.BookAnArtist.repositories.ArtistVideoRepository;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -44,32 +40,23 @@ public class ArtistController {
 
     @PostMapping("artista/{username}")
     public void saveArtistProfile(@PathVariable String username,
-                                    @RequestBody ProfileData artistProfile){
-        Artist artist = artistProfile.getArtist();
-        Map<String, String>[] images = artistProfile.getImages();
-        Map<String, String>[] videos = artistProfile.getVideos();
+                                    @RequestBody Artist artist){
 
-        ArtistImage auxImage;
-        List<Long> imageList = new ArrayList<>();
-        for (Map<String, String> image : images){
-            auxImage = new ArtistImage();
-            auxImage.setName(image.get("name"));
-            auxImage.setImage(Base64.getDecoder().decode(image.get("base64")));
-            imageRepository.save(auxImage);
-            imageList.add(auxImage.getId());
+        List<ArtistImage> images = artist.getImages();
+        for (ArtistImage image : images){
+            if (image.getId() == -1){
+                image.setId(null);
+            }
+            imageRepository.save(image);
         }
-        artist.setImages(imageList);
 
-        ArtistVideo auxVideo;
-        List<Long> videoList = artist.getVideos();
-        for (Map<String, String> video : videos){
-            auxVideo = new ArtistVideo();
-            auxVideo.setName(video.get("name"));
-            auxVideo.setVideo(Base64.getDecoder().decode(video.get("base64")));
-            videoRepository.save(auxVideo);
-            videoList.add(auxVideo.getId());
+        List<ArtistVideo> videos = artist.getVideos();
+        for (ArtistVideo video : videos){
+            if (video.getId() == -1){
+                video.setId(null);
+            }
+            videoRepository.save(video);
         }
-        artist.setVideos(videoList);
 
         artistRepository.save(artist);
         System.out.println(artist);
