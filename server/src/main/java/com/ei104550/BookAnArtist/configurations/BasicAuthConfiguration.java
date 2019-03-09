@@ -32,6 +32,7 @@ public class BasicAuthConfiguration extends WebSecurityConfigurerAdapter  {
                 .antMatchers(HttpMethod.GET, "/artistas").permitAll()
                 .antMatchers(HttpMethod.GET, "/user-image").permitAll()
                 .antMatchers(HttpMethod.GET, "/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/register").permitAll()
                 .antMatchers("/login").permitAll()
                 .anyRequest()
                 .authenticated()
