@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {UserService} from '../shared/user/user.service';
 import {ArtistService} from '../shared/artist/artist.service';
+import {Observable} from 'rxjs';
+import {FormControl} from '@angular/forms';
+import {map, startWith} from 'rxjs/operators';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'app-artist-profile',
@@ -9,14 +13,24 @@ import {ArtistService} from '../shared/artist/artist.service';
 })
 export class ArtistProfileComponent implements OnInit {
 
+  habilities = ['Músico', 'Mago', 'DJ', 'Banda', 'Narcoterrorista', 'Cómico'];
+  schedules = ['Mañana', 'Tarde', 'Noche'];
+  zones = ['Álava', 'Albacete', 'Alicante', 'Almeria', 'Asturias', 'Ávila', 'Badajoz', 'Barcelona', 'Burgos', 'Cáceres', 'Cadiz',
+    'Cantabria', 'Castellón', 'Ceuta', 'Ciudad real', 'Cordoba', 'Cuenca', 'Girona', 'Las palmas de Gran Canaria', 'Granada', 'Guadalajara',
+    'Guipúzcoa', 'Huelva', 'Huesca', 'Islas Baleares', 'Jaén', 'A Coruña', 'La Rioja', 'León', 'Lleida', 'Lugo', 'Madrid', 'Malaga', 'Melilla',
+    'Murcia', 'Navarra', 'Ourense', 'Palencia', 'Pontevedra', 'Salamanca', 'Segovia', 'Sevilla', 'Soria', 'Tarragona', 'Santa cruz de Tenerife',
+    'Teruel', 'Toledo', 'Valencia', 'Valladolid', 'Vizcaya', 'Zamora', 'Zaragoza'];
+  myControl;
+  filteredZones: Observable<string[]>;
+
   user;
   artist;
-  habilities = ['Músico', 'Mago', 'DJ', 'Banda', 'Narcoterrorista', 'Cómico'];
   firstTime = false;
   editMode = false;
 
   constructor(private userService: UserService,
-              private artistService: ArtistService) { }
+              private artistService: ArtistService,
+              private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.userService.getMockLoguedUser().subscribe(user => {
@@ -32,22 +46,35 @@ export class ArtistProfileComponent implements OnInit {
         });
       });
     });
+    this.myControl = new FormControl({value: '', disabled: !this.firstTime});
+    this.applyFilter();
   }
 
   public changeEditMode(mode: boolean) {
     this.editMode = mode;
+    this.myControl = new FormControl({value: '', disabled: !mode});
+    this.applyFilter();
+  }
+
+  private applyFilter() {
+    this.filteredZones = this.myControl.valueChanges.pipe(
+      startWith(''),
+      map(formState => this.filter(formState))
+    );
   }
 
   public saveArtisticProfileChanges(myForm) {
-    console.log('Save llamado');
+    console.log(this.artist);
     this.changeEditMode(false);
     this.firstTime = false;
 
     this.artistService.postArtistProfile(this.artist).subscribe(() => {
       console.log('Exito');
+      this.snackBar.open('Datos actualizados correctamente', 'Cerrar', {duration: 3000});
     },
       error1 => {
       console.log('Error');
+      this.snackBar.open('Ha ocurrido un error', 'Cerrar', {duration: 3000});
     });
   }
 
@@ -63,7 +90,6 @@ export class ArtistProfileComponent implements OnInit {
     });
     if (fileInput.target.files) {
       for (const video of fileInput.target.files) {
-        // this.videosFile = this.videosFile.concat(video);
         name = video.name;
         videosReader.readAsDataURL(video);
       }
@@ -88,9 +114,16 @@ export class ArtistProfileComponent implements OnInit {
     }
   }
 
+  public zoneChange(zone: any) {
+    this.artist.zones.push(zone.option.value);
+    this.myControl.setValue('');
+  }
+
   public resetVideosAndImages() {
     this.artist.images = [];
     this.artist.videos = [];
+    this.artist.zones = [];
+    console.log(this.artist);
   }
 
   public removeImage(image: string) {
@@ -100,5 +133,14 @@ export class ArtistProfileComponent implements OnInit {
 
   public removeVideo(video: string) {
     this.artist.videos = this.artist.videos.filter(item => item !== video);
+  }
+
+  public removeZone(zone: string) {
+    this.artist.zones = this.artist.zones.filter(item => item !== zone);
+  }
+
+  private filter(value): string[] {
+    const filterValue = value.toLowerCase();
+    return this.zones.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
   }
 }

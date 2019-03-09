@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -8,12 +8,13 @@ import {HttpClientModule} from '@angular/common/http';
 import { ArtistListComponent } from './artist-list/artist-list.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
+  MatAutocompleteModule,
   MatButtonModule,
   MatCardModule,
   MatFormFieldModule, MatIconModule,
   MatInputModule,
   MatListModule,
-  MatOptionModule, MatSelectModule,
+  MatOptionModule, MatSelectModule, MatSnackBarModule,
   MatToolbarModule
 } from '@angular/material';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
@@ -48,12 +49,15 @@ import { ArtistComponent } from './artist/artist.component';
     MatSelectModule,
     MatButtonModule,
     MatIconModule,
+    MatAutocompleteModule,
+    MatSnackBarModule,
     FormsModule,
     NgbModule,
     VgCoreModule,
     VgControlsModule,
     VgOverlayPlayModule,
-    VgBufferingModule
+    VgBufferingModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

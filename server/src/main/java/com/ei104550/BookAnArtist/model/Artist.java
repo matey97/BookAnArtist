@@ -27,11 +27,20 @@ public class Artist{
     @ElementCollection()
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<ArtistVideo> videos;
+    @ElementCollection()
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<String> zones;
+    @ElementCollection()
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<String> schedules;
+
 
     public Artist(){
         this.puntuation = 0.0;
         this.images = new LinkedList<>();
         this.videos = new LinkedList<>();
+        this.zones = new LinkedList<>();
+        this.schedules = new LinkedList<>();
     }
 
     public String getUsername() {
@@ -102,6 +111,22 @@ public class Artist{
 
     public void setnPuntuations(int nPuntuations) { this.nPuntuations = nPuntuations; }
 
+    public List<String> getZones() {
+        return zones;
+    }
+
+    public void setZones(List<String> zones) {
+        this.zones = zones;
+    }
+
+    public List<String> getSchedules() {
+        return schedules;
+    }
+
+    public void setSchedules(List<String> schedules) {
+        this.schedules = schedules;
+    }
+
     @Override
     public String toString() {
         return "Artist{" +
@@ -114,6 +139,8 @@ public class Artist{
                 ", habilities=" + habilities +
                 ", images=" + images +
                 ", videos=" + videos +
+                ", zones=" + zones +
+                ", schedules=" + schedules +
                 '}';
     }
 }
