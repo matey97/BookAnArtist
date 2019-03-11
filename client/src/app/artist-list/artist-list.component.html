@@ -1,13 +1,13 @@
 
-<div>
+<div *ngIf="artists != null">
 <mat-card >
   <mat-card-title>Listado de artistas</mat-card-title>
   <mat-card-content>
     <mat-list>
-      <div class="container">
+      <div  class="container">
         <div class="card flex-row flex-wrap text-white bg-dark mb-3" *ngFor="let artist of artists | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; ">
           <div class="card-header border-0">
-            <img class="card-img-top" src="data:image/PNG;base64,{{artist.image}}">
+            <img class="card-img-top" src="data:image/PNG;base64,{{artist.profileImage}}">
           </div>
           <div class="card-block px-2">
             <h2 class="card-title">{{artist.artisticName}}</h2>
@@ -29,6 +29,6 @@
   </mat-card-content>
 </mat-card>
 </div>
-<ngb-pagination [collectionSize]="artists.length" [pageSize]="pageSize" [(page)]="page" [boundaryLinks]="true"></ngb-pagination>
+<ngb-pagination *ngIf="artists != null" [collectionSize]="artists.length" [pageSize]="pageSize" [(page)]="page" [boundaryLinks]="true"></ngb-pagination>
 
 

@@ -5,6 +5,8 @@ import {Observable} from 'rxjs';
 import {FormControl} from '@angular/forms';
 import {map, startWith} from 'rxjs/operators';
 import {MatSnackBar} from '@angular/material';
+import {User} from '../model/User';
+import {Artist, Image, Video} from '../model/Artist';
 
 @Component({
   selector: 'app-artist-profile',
@@ -13,18 +15,18 @@ import {MatSnackBar} from '@angular/material';
 })
 export class ArtistProfileComponent implements OnInit {
 
-  habilities = ['Músico', 'Mago', 'DJ', 'Banda', 'Narcoterrorista', 'Cómico'];
+  habilities = ['Músico', 'Grupo musical', 'Banda', 'DJ', 'Mago', 'Animador', 'Cómico'];
   schedules = ['Mañana', 'Tarde', 'Noche'];
   zones = ['Álava', 'Albacete', 'Alicante', 'Almeria', 'Asturias', 'Ávila', 'Badajoz', 'Barcelona', 'Burgos', 'Cáceres', 'Cadiz',
     'Cantabria', 'Castellón', 'Ceuta', 'Ciudad real', 'Cordoba', 'Cuenca', 'Girona', 'Las palmas de Gran Canaria', 'Granada', 'Guadalajara',
     'Guipúzcoa', 'Huelva', 'Huesca', 'Islas Baleares', 'Jaén', 'A Coruña', 'La Rioja', 'León', 'Lleida', 'Lugo', 'Madrid', 'Malaga', 'Melilla',
     'Murcia', 'Navarra', 'Ourense', 'Palencia', 'Pontevedra', 'Salamanca', 'Segovia', 'Sevilla', 'Soria', 'Tarragona', 'Santa cruz de Tenerife',
     'Teruel', 'Toledo', 'Valencia', 'Valladolid', 'Vizcaya', 'Zamora', 'Zaragoza'];
-  myControl;
+  myControl: FormControl;
   filteredZones: Observable<string[]>;
 
-  user;
-  artist;
+  user: User;
+  artist: Artist;
   firstTime = false;
   editMode = false;
 
@@ -41,13 +43,13 @@ export class ArtistProfileComponent implements OnInit {
           artist.username = user.username;
         }
         this.artist = artist;
-        this.userService.getProfileImage(this.user.username).subscribe(image => {
+        /*this.userService.getProfileImage(this.user.username).subscribe(image => {
           this.user.rawImage = image.raw;
-        });
+        });*/
+        this.myControl = new FormControl({value: '', disabled: !this.firstTime});
+        this.applyFilter();
       });
     });
-    this.myControl = new FormControl({value: '', disabled: !this.firstTime});
-    this.applyFilter();
   }
 
   public changeEditMode(mode: boolean) {
@@ -126,12 +128,12 @@ export class ArtistProfileComponent implements OnInit {
     console.log(this.artist);
   }
 
-  public removeImage(image: string) {
+  public removeImage(image: Image) {
     this.artist.images = this.artist.images.filter(item => item !== image);
     console.log(this.artist.images);
   }
 
-  public removeVideo(video: string) {
+  public removeVideo(video: Video) {
     this.artist.videos = this.artist.videos.filter(item => item !== video);
   }
 

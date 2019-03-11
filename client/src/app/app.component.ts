@@ -11,7 +11,6 @@ export class AppComponent implements OnInit {
   private title = 'BookAnArtist';
 
   private loguedUser = null;
-  private isArtist = false;
 
   constructor(private userService: UserService) {
 
@@ -20,10 +19,6 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.userService.getMockLoguedUser().subscribe(user => {
       this.loguedUser = user;
-      if (this.loguedUser.userType === 2) {
-        this.isArtist = true;
-      }
-      console.log(this);
     });
   }
 

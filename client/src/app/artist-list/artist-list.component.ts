@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ArtistService} from '../shared/artist/artist.service';
 import {UserService} from '../shared/user/user.service';
+import {Artist} from '../model/Artist';
 
 @Component({
   selector: 'app-artist-list',
@@ -9,6 +10,7 @@ import {UserService} from '../shared/user/user.service';
 })
 export class ArtistListComponent implements OnInit {
   artists: Array<any>;
+  profileImage: string;
 
   // Atributos para la paginación
   page: number;
@@ -29,7 +31,7 @@ export class ArtistListComponent implements OnInit {
   private getMultimediaFiles() {
     this.artists.forEach((artist) => {
       this.userService.getProfileImage(artist.username).subscribe(image => {
-        artist.image = image.raw;
+        artist.profileImage = image.raw;
       });
     });
   }
