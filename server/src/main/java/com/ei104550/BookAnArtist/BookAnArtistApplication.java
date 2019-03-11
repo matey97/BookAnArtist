@@ -55,7 +55,13 @@ public class BookAnArtistApplication {
 		artista1.setArtisticName("El Pepas");
 		artista1.setDescription("Es un tio muy majo que solo quiere ganarse la vida disfrutando del musicote");
         List<String> habilidades = Arrays.asList("Bailar", "Cantar", "Reir");
+		List<String> zones = Arrays.asList("Madrid", "Valencia", "Alicante");
+		List<String> schedules = Arrays.asList("Mañana", "Tarde");
+
 		artista1.setHabilities(habilidades);
+		artista1.setZones(zones);
+		artista1.setSchedules(schedules);
+
 		artista1.setPrice((double) 5000);
 		artista1.setPuntuation((double) 67);
 		artista1.setnPuntuations(10);

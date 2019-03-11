@@ -13,7 +13,6 @@ export class ArtistComponent implements OnInit {
 
   artist: any;
   user;
-  habilidades: Array<string>
   username: string;
 
 
@@ -24,7 +23,7 @@ export class ArtistComponent implements OnInit {
   ngOnInit() {
     this.username = this.route.snapshot.paramMap.get('username');
     this.getArtistProfile();
-    this.habilidades = this.artist.habilities;
+
 
   }
 
@@ -49,7 +48,4 @@ export class ArtistComponent implements OnInit {
       });
     });
   }
-
-
-
 }
