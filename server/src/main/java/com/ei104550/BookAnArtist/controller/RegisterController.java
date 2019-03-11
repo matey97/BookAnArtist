@@ -1,6 +1,7 @@
 package com.ei104550.BookAnArtist.controller;
 
 import com.ei104550.BookAnArtist.model.User;
+import com.ei104550.BookAnArtist.repositories.UserRepository;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,11 +15,19 @@ import java.util.Base64;
 @CrossOrigin
 public class RegisterController {
 
-    @RequestMapping("/register")
-    public boolean registerUser(@RequestBody User user) {
-        System.out.println("he sido llamado");
-        return true;
+    private UserRepository userRepository;
+
+    public RegisterController(UserRepository userRepository){
+        this.userRepository = userRepository;
     }
 
-
+    @RequestMapping("/register")
+    public void registerUser(@RequestBody User user) {
+       if (validData(user)){
+            userRepository.save(user);
+       }
+    }
+    private boolean validData (User user){
+        return user.getUsername() != null && user.getPassword() != null && user.getEmail() != null;
+    }
 }

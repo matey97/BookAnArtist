@@ -1,5 +1,6 @@
 package com.ei104550.BookAnArtist;
 
+import com.ei104550.BookAnArtist.enums.UserType;
 import com.ei104550.BookAnArtist.model.Artist;
 import com.ei104550.BookAnArtist.model.ArtistImage;
 import com.ei104550.BookAnArtist.model.ArtistVideo;
@@ -34,6 +35,7 @@ public class BookAnArtistApplication extends SpringBootServletInitializer {
 
 		User user1 = new User();
 		user1.setUsername("Pepe");
+		user1.setUserType(UserType.ARTIST);
 
 		Artist artista1 = new Artist();
 		artista1.setUsername(user1.getUsername());
@@ -46,6 +48,7 @@ public class BookAnArtistApplication extends SpringBootServletInitializer {
 
 		User user2 = new User();
 		user2.setUsername("Tomas");
+		user2.setUserType(UserType.ARTIST);
 
 		Artist artista2 = new Artist();
 		artista2.setUsername(user2.getUsername());
@@ -99,7 +102,6 @@ public class BookAnArtistApplication extends SpringBootServletInitializer {
 				}
 				userRepository.save(user);
 			});
-			userRepository.findAll().forEach(System.out::println);
 			Stream.of(artista1,artista2,artista3,artista4,artista5).forEach((artist) -> {
 
 				File fileImage = new File("src/main/resources/profile-icon.png");
@@ -138,6 +140,7 @@ public class BookAnArtistApplication extends SpringBootServletInitializer {
 				repository.save(artist);
 			});
 			repository.findAll().forEach(System.out::println);
+			userRepository.findAll().forEach(System.out::println);
 		};
 	}
 

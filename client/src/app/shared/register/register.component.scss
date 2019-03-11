@@ -3,7 +3,7 @@
 
 
       .box{
-        width: 30vw;
+        max-width: 60vw;
         padding: 40px;
         position: absolute;
         top: 50%;
@@ -30,7 +30,8 @@
         text-align: center;
         border: 2px solid #3498db;
         padding: 14px 10px;
-        width: 200px;
+        //width: 200px;
+        max-width: 200px;
         outline: none;
         color: white;
         border-radius: 24px;
@@ -38,17 +39,21 @@
       }
       .box input[type = "text"]:focus,.box input[type = "password"]:focus,
        .box input[type = "email"]:focus {
-        width: 220px;
+        //width: 220px;
+        max-width: 220px;
         border-color: $greenButtons;
+      }
+      input::placeholder{
+        color: white;
       }
       .LoginButton{
         border:0;
         background: none;
         display: block;
-        margin: 20px auto;
+        //margin: 20px auto;
         text-align: center;
         border: 2px solid $greenButtons;
-        padding: 14px 40px;
+       // padding: 14px 40px;
         outline: none;
         color: white;
         border-radius: 24px;
@@ -62,10 +67,10 @@
         border:0;
         background: none;
         display: block;
-        margin: 20px auto;
+       // margin: 20px auto;
         text-align: center;
         border: 2px solid $greenButtons;
-        padding: 14px 40px;
+        //padding: 14px 40px;
         outline: none;
         color: white;
         border-radius: 24px;
@@ -91,7 +96,8 @@
 
       ul{
         list-style-type: none;
-        width: 220px;
+        //width: 220px;
+        max-width: 220px;
         margin: auto;
     }
     

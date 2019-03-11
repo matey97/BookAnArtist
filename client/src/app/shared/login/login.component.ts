@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 })
 
 export class LoginComponent implements OnInit {
-
+    
     model: any = {};
 
     constructor(
@@ -32,6 +32,7 @@ export class LoginComponent implements OnInit {
             if (isValid) {
                 sessionStorage.setItem('token', btoa(this.model.username + ':' + this.model.password));
                 this.router.navigate(['user']);
+
             } else {
                 alert("Authentication failed.")
             }

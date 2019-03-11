@@ -1,44 +1,44 @@
 
-<div class="full">
-  <form class="box" name="form" (ngSubmit)="f.form.valid && SignUp()" #f="ngForm" novalidate>
+<div class="full form-group">
+  <form class="box " name="form" (ngSubmit)="f.form.valid && SignUp()" #f="ngForm" novalidate>
     <div [ngClass]="{ 'has-error': f.submitted && !username.valid }">
       <h1>Register</h1>
-      <label class="InputLabel" for="username">Nombre de usuario</label>
-      <input type="text"
+     
+      <input type="text" class="form-control"
              name="username" [(ngModel)]="model.username"
-             #username="ngModel" required/>
+             #username="ngModel"  placeholder="Nombre de usuario" required/>
       <div *ngIf="f.submitted
           && !username.valid">Se requiere nombre de usuario
       </div>
     </div>
     <div [ngClass]="{ 'has-error': f.submitted && !password.valid }">
-        <label class="InputLabel"for="password">contraseña</label>
-        <input class="Password"  type="password"
+       
+        <input class="Password form-control"  type="password"
           name="password" [(ngModel)]="model.password"
-            #password="ngModel" required />
+            #password="ngModel" placeholder="Contraseña" required />
         <div *ngIf="f.submitted
           && !password.valid">Se requiere contraseña</div>
     </div>
     <div [ngClass]="{ 'has-error': f.submitted && !password.valid }">
-      <label class="InputLabel"for="email">Email</label>
-      <input class="email"  type="email"
+     
+      <input class="email form-control"  type="email"
         name="email" [(ngModel)]="model.email"
-          #email="ngModel" required />
+          #email="ngModel" placeholder="Email" required />
       <div *ngIf="f.submitted
         && !email.valid">se requiere email</div>
   </div>
-  <div class="tipoUsuarioText">
+  <div class="tipoUsuarioText form-group">
     Selecciona tipo de usuario 
       <ul>
         <li>
-          <input  #userType="ngModel" [(ngModel)]="model.userType" value="ARTIST" type="radio" name="1">
+          <input class="form-control" #userType="ngModel" [(ngModel)]="model.userType" value="ARTIST" type="radio" name="1">
           <div class="RadioLabelTextContainer">
             <label class="radioText">Artista</label>
           </div>
           <div class="bullet"></div>
         </li>
         <li>
-          <input #userType="ngModel" [(ngModel)]="model.userType"  value="ORGANIZER" type="radio" name="1">
+          <input class="form-control" #userType="ngModel" [(ngModel)]="model.userType"  value="ORGANIZER" type="radio" name="1">
           <div class="RadioLabelTextContainer">
             <label class="radioText">Organizador</label>
           </div>
@@ -47,7 +47,7 @@
       </ul>
     </div>
     <div>
-        <button class="SignUpButton" [disabled]="loading">Sign Up</button>
+        <button class="SignUpButton form-control" [disabled]="loading">Sign Up</button>
     </div>
   </form>
 </div>
