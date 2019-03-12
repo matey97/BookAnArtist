@@ -2,6 +2,7 @@
 <div *ngIf="artists != null">
 <mat-card >
   <mat-card-title>Listado de artistas</mat-card-title>
+  <ngb-pagination class="d-flex justify-content-center" *ngIf="artists != null" [collectionSize]="artists.length" [pageSize]="pageSize" [(page)]="page" [boundaryLinks]="true"></ngb-pagination>
   <mat-card-content>
     <mat-list>
       <div  class="container">
@@ -29,6 +30,6 @@
   </mat-card-content>
 </mat-card>
 </div>
-<ngb-pagination *ngIf="artists != null" [collectionSize]="artists.length" [pageSize]="pageSize" [(page)]="page" [boundaryLinks]="true"></ngb-pagination>
+<ngb-pagination class="d-flex justify-content-center" *ngIf="artists != null" [collectionSize]="artists.length" [pageSize]="pageSize" [(page)]="page" [boundaryLinks]="true"></ngb-pagination>
 
 
