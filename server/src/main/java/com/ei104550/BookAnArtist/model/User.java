@@ -1,6 +1,6 @@
 package com.ei104550.BookAnArtist.model;
 
-import org.hibernate.type.ClobType;
+import com.ei104550.BookAnArtist.enums.UserType;
 
 import javax.persistence.*;
 import java.util.Arrays;
@@ -8,20 +8,24 @@ import java.util.Arrays;
 @Entity
 public class User {
 
-    public static final int ADMIN = 1;
-    public static final int ARTIST = 2;
-    public static final int ORGANIZER = 3;
-
     @Id
     private String username;
     private String password;
     private String email;
-    private int userType;
+    private UserType userType;
     @Lob
     private byte[] image;
 
     public User(){
 
+    }
+
+    public UserType getUserType() {
+        return userType;
+    }
+
+    public void setUserType(UserType userType) {
+        this.userType = userType;
     }
 
     public String getUsername() {
@@ -48,13 +52,6 @@ public class User {
         this.email = email;
     }
 
-    public int getUserType() {
-        return userType;
-    }
-
-    public void setUserType(int userType) {
-        this.userType = userType;
-    }
 
     public byte[] getImage() {
         return image;
@@ -70,7 +67,7 @@ public class User {
                 "username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
-                ", userType=" + userType +
+                ", tipo=" + userType +
                 ", image=" + Arrays.toString(image) +
                 '}';
     }

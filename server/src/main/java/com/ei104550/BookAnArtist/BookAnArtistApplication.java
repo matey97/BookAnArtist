@@ -1,5 +1,6 @@
 package com.ei104550.BookAnArtist;
 
+import com.ei104550.BookAnArtist.enums.UserType;
 import com.ei104550.BookAnArtist.model.Artist;
 import com.ei104550.BookAnArtist.model.ArtistImage;
 import com.ei104550.BookAnArtist.model.ArtistVideo;
@@ -18,6 +19,7 @@ import org.hibernate.type.ClobType;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,7 +36,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 @SpringBootApplication
-public class BookAnArtistApplication {
+public class BookAnArtistApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
 		SpringApplication.run(BookAnArtistApplication.class, args);
@@ -48,7 +50,7 @@ public class BookAnArtistApplication {
 
 		User user1 = new User();
 		user1.setUsername("Pepe");
-		user1.setUserType(User.ARTIST);
+		user1.setUserType(UserType.ARTIST);
 
 		Artist artista1 = new Artist();
 		artista1.setUsername(user1.getUsername());
@@ -69,6 +71,7 @@ public class BookAnArtistApplication {
 
 		User user2 = new User();
 		user2.setUsername("Tomas");
+		user2.setUserType(UserType.ARTIST);
 
 		Artist artista2 = new Artist();
 		artista2.setUsername(user2.getUsername());
@@ -112,7 +115,6 @@ public class BookAnArtistApplication {
 
 		User user6 = new User();
 		user6.setUsername("Juan");
-		user6.setUserType(User.ARTIST);
 
 		return args -> {
 			Stream.of(user1, user2, user3, user4, user5, user6).forEach((user) -> {
@@ -164,6 +166,7 @@ public class BookAnArtistApplication {
 				repository.save(artist);
 			});
 			repository.findAll().forEach(System.out::println);
+			userRepository.findAll().forEach(System.out::println);
 		};
 	}
 

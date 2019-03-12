@@ -1,0 +1,53 @@
+
+<div class="full form-group">
+  <form class="box " name="form" (ngSubmit)="f.form.valid && SignUp()" #f="ngForm" novalidate>
+    <div [ngClass]="{ 'has-error': f.submitted && !username.valid }">
+      <h1>Register</h1>
+     
+      <input type="text" class="form-control"
+             name="username" [(ngModel)]="model.username"
+             #username="ngModel"  placeholder="Nombre de usuario" required/>
+      <div *ngIf="f.submitted
+          && !username.valid">Se requiere nombre de usuario
+      </div>
+    </div>
+    <div [ngClass]="{ 'has-error': f.submitted && !password.valid }">
+       
+        <input class="Password form-control"  type="password"
+          name="password" [(ngModel)]="model.password"
+            #password="ngModel" placeholder="Contraseña" required />
+        <div *ngIf="f.submitted
+          && !password.valid">Se requiere contraseña</div>
+    </div>
+    <div [ngClass]="{ 'has-error': f.submitted && !password.valid }">
+     
+      <input class="email form-control"  type="email"
+        name="email" [(ngModel)]="model.email"
+          #email="ngModel" placeholder="Email" required />
+      <div *ngIf="f.submitted
+        && !email.valid">se requiere email</div>
+  </div>
+  <div class="tipoUsuarioText form-group">
+    Selecciona tipo de usuario 
+      <ul>
+        <li>
+          <input class="form-control" #userType="ngModel" [(ngModel)]="model.userType" value="ARTIST" type="radio" name="1">
+          <div class="RadioLabelTextContainer">
+            <label class="radioText">Artista</label>
+          </div>
+          <div class="bullet"></div>
+        </li>
+        <li>
+          <input class="form-control" #userType="ngModel" [(ngModel)]="model.userType"  value="ORGANIZER" type="radio" name="1">
+          <div class="RadioLabelTextContainer">
+            <label class="radioText">Organizador</label>
+          </div>
+          <div class="bullet"></div>
+        </li>
+      </ul>
+    </div>
+    <div>
+        <button class="SignUpButton form-control" [disabled]="loading">Sign Up</button>
+    </div>
+  </form>
+</div>

@@ -1,7 +1,8 @@
 <!--The content below is only a placeholder and can be replaced.-->
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">BNA</a>
+<nav class="navbar navbar-expand-lg navbar-light bg-light navStyle">
+  <a class="navbar-brand" href="#">
+    <img class="LogoShortNavBar" src="../assets/images/LogoShortNamePurple.PNG" alt="shortLogo"></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -20,8 +21,10 @@
         <a class="nav-link" href="#">Buscar</a>
       </li>
     </ul>
-    <span class="navbar-text">
-    </span>
+    <a class="navbar-brand nav-link " routerLink="/login">
+        <div class="LoginButton"  alt="shortLogo">login</div></a>
+        <a class="navbar-brand nav-link " routerLink="/register">
+          <div class="LoginButton"  alt="shortLogo">Sign up</div></a>
   </div>
 </nav>
 <router-outlet></router-outlet>
