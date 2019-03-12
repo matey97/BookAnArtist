@@ -7,16 +7,19 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarText">
-    <ul class="navbar-nav mr-auto ">
+    <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
         <a class="nav-link" href="#">Inicio <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
         <a class="nav-link" routerLink="/artistList">Acceder a la lista de artistas</a>
       </li>
-      <li class="nav-item ">
+      <li *ngIf = "loguedUser != null && loguedUser.userType == 2" class="nav-item">
+        <a class="nav-link" [routerLink]="['/profile', loguedUser.username]">Perfil artístico</a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link" href="#">Buscar</a>
-      </li >
+      </li>
     </ul>
     <a class="navbar-brand nav-link " routerLink="/login">
         <div class="LoginButton"  alt="shortLogo">login</div></a>

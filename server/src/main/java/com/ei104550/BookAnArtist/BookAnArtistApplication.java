@@ -9,15 +9,30 @@ import com.ei104550.BookAnArtist.repositories.ArtistImageRepository;
 import com.ei104550.BookAnArtist.repositories.ArtistRepository;
 import com.ei104550.BookAnArtist.repositories.ArtistVideoRepository;
 import com.ei104550.BookAnArtist.repositories.UserRepository;
+import org.hibernate.Hibernate;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.engine.spi.SessionDelegatorBaseImpl;
+import org.hibernate.internal.SessionImpl;
+import org.hibernate.type.BlobType;
+import org.hibernate.type.ClobType;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.nio.file.Files;
+import java.sql.Blob;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Stream;
 
 @SpringBootApplication
@@ -41,6 +56,14 @@ public class BookAnArtistApplication extends SpringBootServletInitializer {
 		artista1.setUsername(user1.getUsername());
 		artista1.setArtisticName("El Pepas");
 		artista1.setDescription("Es un tio muy majo que solo quiere ganarse la vida disfrutando del musicote");
+        List<String> habilidades = Arrays.asList("Bailar", "Cantar", "Reir");
+		List<String> zones = Arrays.asList("Madrid", "Valencia", "Alicante");
+		List<String> schedules = Arrays.asList("Mañana", "Tarde");
+
+		artista1.setHabilities(habilidades);
+		artista1.setZones(zones);
+		artista1.setSchedules(schedules);
+
 		artista1.setPrice((double) 5000);
 		artista1.setPuntuation((double) 67);
 		artista1.setnPuntuations(10);
@@ -90,9 +113,11 @@ public class BookAnArtistApplication extends SpringBootServletInitializer {
 		artista5.setPrice((double) 5000);
 		artista5.setPuntuation((double) 8);
 
+		User user6 = new User();
+		user6.setUsername("Juan");
 
 		return args -> {
-			Stream.of(user1, user2, user3, user4, user5).forEach((user) -> {
+			Stream.of(user1, user2, user3, user4, user5, user6).forEach((user) -> {
 				File fileImage = new File("src/main/resources/profile-icon.png");
 				try{
 					byte[] bImageFile = Files.readAllBytes(fileImage.toPath());
@@ -102,6 +127,7 @@ public class BookAnArtistApplication extends SpringBootServletInitializer {
 				}
 				userRepository.save(user);
 			});
+			userRepository.findAll().forEach(System.out::println);
 			Stream.of(artista1,artista2,artista3,artista4,artista5).forEach((artist) -> {
 
 				File fileImage = new File("src/main/resources/profile-icon.png");
@@ -112,8 +138,8 @@ public class BookAnArtistApplication extends SpringBootServletInitializer {
 				byte[] bImageFile2 = null;
 				byte[] bVideoFile = null;
 
-				ArrayList<Long> artistImageList = new ArrayList<>();
-                ArrayList<Long> artistVideoList = new ArrayList<>();
+				ArrayList<ArtistImage> artistImageList = new ArrayList<>();
+                ArrayList<ArtistVideo> artistVideoList = new ArrayList<>();
                 ArtistImage image1 = new ArtistImage();
 				ArtistImage image2 = new ArtistImage();
 				ArtistVideo video1 = new ArtistVideo();
@@ -131,9 +157,9 @@ public class BookAnArtistApplication extends SpringBootServletInitializer {
                 imageRepository.save(image1);
 				imageRepository.save(image2);
 				videoRepository.save(video1);
-                artistImageList.add(image1.getId());
-                artistImageList.add(image2.getId());
-                artistVideoList.add(video1.getId());
+                artistImageList.add(image1);
+                artistImageList.add(image2);
+                artistVideoList.add(video1);
 
 				artist.setImages(artistImageList);
 				artist.setVideos(artistVideoList);

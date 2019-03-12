@@ -1,0 +1,63 @@
+<div *ngIf="artist != null" class="container">
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="card" style="text-align: center">
+          <div class="card-header">
+            <img class="card-img-top" src="data:image/PNG;base64,{{user.rawImage}}">
+          </div>
+          <div class="card-body">
+            <h4 class="card-title" >{{artist.artisticName}}</h4>
+          </div>
+          <div class="card-footer">
+            <ngb-rating [rate]="artist.puntuation/artist.nPuntuations"  [readonly]=false >
+              <ng-template let-fill="fill" >
+                <span class="star" [class.filled]="fill === 100" >&#9733;</span>
+              </ng-template>
+            </ngb-rating>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-9">
+          <h3>{{artist.artisticName}}</h3>
+        <p>{{artist.description}}</p>
+          <div class="row">
+            <div class="col-sm-6">
+              <h4>Habilidades</h4>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item border-top-0 border-right-0 border-left-0" *ngFor="let habilidad of artist.habilities"> {{habilidad}} </li>
+              </ul>
+            </div>
+            <div class="col-sm-6">
+              <h4>Precio por actuación</h4>
+              <p> {{artist.price}}€</p>
+            </div>
+          </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <h4>Zonas de actuación</h4>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item border-top-0 border-right-0 border-left-0" *ngFor="let zone of artist.zones"> {{zone}} </li>
+            </ul>
+          </div>
+          <div class="col-sm-6">
+            <h4>Horarios</h4>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item border-top-0 border-right-0 border-left-0" *ngFor="let schedule of artist.schedules"> {{schedule}} </li>
+            </ul>
+          </div>
+        </div>
+          <hr>
+         <div class="row">
+            <div class="col-sm-9">
+              <h3>Videos de las actuaciones</h3>
+              <div *ngFor="let rawVideo of artist.videos">
+                <video controls>
+                  <source src="data:video/mp4;base64,{{rawVideo.video}}" type='video/mp4'>
+                  <source src="data:video/webm;base64,{{rawVideo.video}}" type='video/webm'>
+                </video>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+</div>

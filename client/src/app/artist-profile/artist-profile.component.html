@@ -1,0 +1,128 @@
+<div *ngIf="artist != null && user != null" class="container">
+  <div class="jumbotron" style="text-align: center">
+    <h2>Perfil artísitco</h2>
+    <p>Hola {{user.username}}, bienvenido a tu perfil artístico. Aquí debes introducir todos tus datos de interés a nivel artístico, como tu nombre artísitco
+    una pequeña descripción, tus habilidades, videos, etc.</p>
+  </div>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="card" style="text-align: center">
+        <div class="card-header">
+          <img class="card-img-top" src="data:image/PNG;base64,{{user.rawImage}}">
+        </div>
+        <div class="card-body">
+          <h4 class="card-title" >{{user.username}}</h4>
+          <h5 class="card-text">{{user.email}}</h5>
+        </div>
+        <div class="card-footer">
+          <button mat-raised-button color="primary">Perfil de usuario</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-9">
+      <form #myForm="ngForm" (ngSubmit)="saveArtisticProfileChanges(myForm)" class="form form-register">
+        <mat-form-field>
+          <input matInput type="text" placeholder="Nombre artístico" [(ngModel)]="artist.artisticName" name="artisticName" [disabled]="!firstTime && !editMode" required>
+        </mat-form-field>
+        <mat-form-field>
+          <textarea matInput type="text" placeholder="Descripción" [(ngModel)]="artist.description" name="description" rows="5" [disabled]="!firstTime && !editMode" required></textarea>
+        </mat-form-field>
+        <div class="row">
+          <div class="col-sm-6">
+            <mat-form-field>
+              <mat-select placeholder="Habilidades" [(ngModel)]="artist.habilities" name="habilities" [disabled]="!firstTime && !editMode" multiple>
+                <mat-option *ngFor="let hability of habilities" value="{{hability}}">{{hability}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-6">
+            <mat-form-field>
+              <input matInput placeholder="Precio por actuación" [(ngModel)]="artist.price" [disabled]="!firstTime && !editMode" name="price">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <mat-form-field>
+              <input [disabled]="!firstTime && !editMode" [formControl]="myControl" [matAutocomplete]="auto" matInput
+                     name="zones" placeholder="Zonas de actuación" type="text">
+              <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="zoneChange($event)">
+                <mat-option *ngFor="let zone of filteredZones | async" value="{{zone}}">
+                  {{zone}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-6">
+            <mat-form-field>
+              <mat-select placeholder="Horarios" [(ngModel)]="artist.schedules" name="schedule" [disabled]="!firstTime && !editMode" multiple>
+                <mat-option *ngFor="let schedule of schedules" value="{{schedule}}">{{schedule}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <mat-list>
+              <mat-list-item *ngFor="let zone of artist.zones">
+                <p mat-line>{{zone}}</p>
+                <button type="button" mat-icon-button (click)="removeZone(zone)" [disabled]="!firstTime && !editMode">
+                  <mat-icon mat-list-icon>delete_forever</mat-icon>
+                </button>
+              </mat-list-item>
+            </mat-list>
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+        <br>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="custom-file">
+              <input type="file" class="custom-file-input" id="videos" name="videos" value="videos" accept="video/mp4" (change)="videoChange($event)" [disabled]="!firstTime && !editMode">
+              <label class="custom-file-label" for="videos">Selecciona videos de tus actuaciones</label>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <input type="file" class="custom-file-input" id="images" name="images" value="images" accept="image/*" (change)="imageChange($event)" [disabled]="!firstTime && !editMode">
+              <label class="custom-file-label" for="images">Selecciona imágenes de tus actuaciones</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <mat-list>
+              <mat-list-item *ngFor="let video of artist.videos">
+                <p mat-line>{{video.name}}</p>
+                <button type="button" mat-icon-button (click)="removeVideo(video)" [disabled]="!firstTime && !editMode">
+                  <mat-icon mat-list-icon>delete_forever</mat-icon>
+                </button>
+              </mat-list-item>
+            </mat-list>
+          </div>
+          <div class="col-sm-6">
+            <mat-list>
+              <mat-list-item *ngFor="let image of artist.images">
+                <p mat-line>{{image.name}}</p>
+                <button type="button" mat-icon-button (click)="removeImage(image)" [disabled]="!firstTime && !editMode">
+                  <mat-icon mat-list-icon>delete_forever</mat-icon>
+                </button>
+              </mat-list-item>
+            </mat-list>
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="button-row float-right" *ngIf="editMode || firstTime; else editButton">
+          <br>
+          <button mat-raised-button color="warn" type="reset" value="Limpiar datos" (click)="resetVideosAndImages()">Limpiar datos</button>
+          <button mat-raised-button color="primary" type="submit" value="Guardar datos">Guardar datos</button>
+        </div>
+        <ng-template #editButton>
+          <br>
+          <button class="float-right" mat-raised-button color="primary" value="Editar datos" (click)="changeEditMode(true)">Editar datos</button>
+        </ng-template>
+      </form>
+    </div>
+  </div>
+</div>
+

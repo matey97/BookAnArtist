@@ -5,6 +5,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.type.BlobType;
 
 import javax.persistence.*;
+import java.util.LinkedList;
 import java.util.List;
 
 @Entity
@@ -19,12 +20,28 @@ public class Artist{
     private int nPuntuations;
     @ElementCollection()
     @LazyCollection(LazyCollectionOption.FALSE)
-    private List<Long> images;
+    private List<String> habilities;
     @ElementCollection()
     @LazyCollection(LazyCollectionOption.FALSE)
-    private List<Long> videos;
+    private List<ArtistImage> images;
+    @ElementCollection()
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<ArtistVideo> videos;
+    @ElementCollection()
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<String> zones;
+    @ElementCollection()
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<String> schedules;
 
-    public Artist(){}
+
+    public Artist(){
+        this.puntuation = 0.0;
+        this.images = new LinkedList<>();
+        this.videos = new LinkedList<>();
+        this.zones = new LinkedList<>();
+        this.schedules = new LinkedList<>();
+    }
 
     public String getUsername() {
         return username;
@@ -66,19 +83,27 @@ public class Artist{
         this.puntuation = puntuation;
     }
 
-    public List<Long> getImages() {
+    public List<String> getHabilities() {
+        return habilities;
+    }
+
+    public void setHabilities(List<String> habilities) {
+        this.habilities = habilities;
+    }
+
+    public List<ArtistImage> getImages() {
         return images;
     }
 
-    public void setImages(List<Long> images) {
+    public void setImages(List<ArtistImage> images) {
         this.images = images;
     }
 
-    public List<Long> getVideos() {
+    public List<ArtistVideo> getVideos() {
         return videos;
     }
 
-    public void setVideos(List<Long> videos) {
+    public void setVideos(List<ArtistVideo> videos) {
         this.videos = videos;
     }
 
@@ -86,15 +111,36 @@ public class Artist{
 
     public void setnPuntuations(int nPuntuations) { this.nPuntuations = nPuntuations; }
 
+    public List<String> getZones() {
+        return zones;
+    }
+
+    public void setZones(List<String> zones) {
+        this.zones = zones;
+    }
+
+    public List<String> getSchedules() {
+        return schedules;
+    }
+
+    public void setSchedules(List<String> schedules) {
+        this.schedules = schedules;
+    }
+
     @Override
     public String toString() {
         return "Artist{" +
-                "artisticName='" + artisticName + '\'' +
+                "username='" + username + '\'' +
+                ", artisticName='" + artisticName + '\'' +
                 ", description='" + description + '\'' +
                 ", price=" + price +
-                ", puntuation=" + puntuation/nPuntuations +
+                ", puntuation=" + puntuation +
+                ", nPuntuations=" + nPuntuations +
+                ", habilities=" + habilities +
                 ", images=" + images +
                 ", videos=" + videos +
+                ", zones=" + zones +
+                ", schedules=" + schedules +
                 '}';
     }
 }

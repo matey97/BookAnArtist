@@ -12,4 +12,12 @@ export class ArtistService {
   getAll(): Observable<any> {
     return this.http.get('api/artistas');
   }
+
+  getArtistByUsername(username: string): Observable<any> {
+    return this.http.get('api/artista/' + username);
+  }
+
+  postArtistProfile(artist): Observable<any> {
+    return this.http.post('api/artista/' + artist.username, artist);
+  }
 }
