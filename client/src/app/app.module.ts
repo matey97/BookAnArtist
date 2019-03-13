@@ -24,6 +24,9 @@ import {VgOverlayPlayModule} from 'videogular2/overlay-play';
 import {VgBufferingModule} from 'videogular2/buffering';
 import { ArtistProfileComponent } from './artist-profile/artist-profile.component';
 import { ArtistComponent } from './artist/artist.component';
+import { HomeComponent } from './shared/home/home.component';
+import { LoginComponent } from './shared/login/login.component';
+import { RegisterComponent } from './shared/register/register.component';
 
 
 
@@ -32,7 +35,11 @@ import { ArtistComponent } from './artist/artist.component';
     AppComponent,
     ArtistListComponent,
     ArtistProfileComponent,
-    ArtistComponent
+    ArtistComponent,
+    ArtistListComponent,
+    HomeComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -57,7 +64,9 @@ import { ArtistComponent } from './artist/artist.component';
     VgControlsModule,
     VgOverlayPlayModule,
     VgBufferingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    VgBufferingModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

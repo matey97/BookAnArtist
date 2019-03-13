@@ -1,0 +1,29 @@
+@import "../../assets/mixins.scss";
+img.card-img-top{
+  height: 150px;
+  width: 150px;
+  //background-color: powderblue;
+}
+.cardStyle{
+  background-image: linear-gradient(45deg,#5c258d,#4389a2) !important;
+  border-radius: 60px;
+}
+
+/*
+Estilo de las estrellas de valoración
+ */
+
+.star {
+  font-size: 1.5rem;
+  color: #F2EDD0;
+  position: relative;
+  left: 2vw;
+}
+.filled {
+  color: #FCDE1F;
+}
+
+
+.btn:hover{
+background-color: $greenButtons;
+}

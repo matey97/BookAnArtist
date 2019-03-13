@@ -6,8 +6,8 @@
   <mat-card-content>
     <mat-list>
       <div  class="container">
-        <div class="card flex-row flex-wrap text-white bg-dark mb-3" *ngFor="let artist of artists | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; ">
-          <div class="card-header border-0">
+        <div class="card flex-row flex-wrap cardStyle text-white bg-dark mb-3 " *ngFor="let artist of artists | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; ">
+          <div class=" card-header border-0">
             <img class="card-img-top" src="data:image/PNG;base64,{{artist.profileImage}}">
           </div>
           <div class="card-block px-2">
