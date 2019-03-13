@@ -17,7 +17,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.userService.getMockLoguedUser().subscribe(user => {
+    this.userService.getLoguedUser().subscribe(user => {
       this.loguedUser = user;
     });
   }

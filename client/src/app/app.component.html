@@ -14,7 +14,7 @@
       <li class="nav-item">
         <a class="nav-link" routerLink="/artistList">Acceder a la lista de artistas</a>
       </li>
-      <li *ngIf = "loguedUser != null && loguedUser.userType == 2" class="nav-item">
+      <li *ngIf = "loguedUser != null && loguedUser.userType == 'ARTIST'" class="nav-item">
         <a class="nav-link" [routerLink]="['/profile', loguedUser.username]">Perfil artístico</a>
       </li>
       <li class="nav-item">

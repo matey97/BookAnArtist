@@ -35,7 +35,7 @@ export class ArtistProfileComponent implements OnInit {
               private snackBar: MatSnackBar) { }
 
   ngOnInit() {
-    this.userService.getMockLoguedUser().subscribe(user => {
+    this.userService.getLoguedUser().subscribe(user => {
       this.user = user;
       this.artistService.getArtistByUsername(this.user.username).subscribe(artist => {
         if (artist.username == null) {

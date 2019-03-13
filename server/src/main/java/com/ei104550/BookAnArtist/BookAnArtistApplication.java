@@ -115,6 +115,7 @@ public class BookAnArtistApplication extends SpringBootServletInitializer {
 
 		User user6 = new User();
 		user6.setUsername("Juan");
+		user6.setUserType(UserType.ARTIST);
 
 		return args -> {
 			Stream.of(user1, user2, user3, user4, user5, user6).forEach((user) -> {

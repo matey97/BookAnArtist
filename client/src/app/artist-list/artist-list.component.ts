@@ -6,7 +6,7 @@ import {Artist} from '../model/Artist';
 @Component({
   selector: 'app-artist-list',
   templateUrl: './artist-list.component.html',
-  styleUrls: ['./artist-list.component.css']
+  styleUrls: ['./artist-list.component.scss']
 })
 export class ArtistListComponent implements OnInit {
   artists: Array<any>;

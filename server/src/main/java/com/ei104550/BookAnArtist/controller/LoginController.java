@@ -1,10 +1,7 @@
 package com.ei104550.BookAnArtist.controller;
 
 import com.ei104550.BookAnArtist.model.User;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
@@ -14,10 +11,11 @@ import java.util.Base64;
 @CrossOrigin
 public class LoginController {
 
-    @RequestMapping("/login")
+    @PostMapping("/login")
     public boolean login(@RequestBody User user) {
-        return user.getUsername().equals("user") && user.getPassword().equals("password");
+        return user.getUsername().equals("Juan") && user.getPassword().equals("password");
     }
+
 
     @RequestMapping("/user")
     public Principal user(HttpServletRequest request) {

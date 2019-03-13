@@ -1,5 +1,5 @@
-<body>
-<form class="box" name="form" (ngSubmit)="f.form.valid && SignUp()" #f="ngForm" novalidate>
+
+<form class="box" name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
   <div [ngClass]="{ 'has-error': f.submitted && !username.valid }">
     <h1>Login</h1>
   
@@ -23,4 +23,4 @@
   </div>
 
 </form>
-</body>
+
