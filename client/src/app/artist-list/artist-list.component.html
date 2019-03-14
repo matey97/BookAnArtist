@@ -1,35 +1,59 @@
 
 <div *ngIf="artists != null">
 <mat-card >
-  <mat-card-title>Listado de artistas</mat-card-title>
-  <ngb-pagination class="d-flex justify-content-center" *ngIf="artists != null" [collectionSize]="artists.length" [pageSize]="pageSize" [(page)]="page" [boundaryLinks]="true"></ngb-pagination>
-  <mat-card-content>
-    <mat-list>
-      <div  class="container">
-        <div class="card flex-row flex-wrap cardStyle text-white bg-dark mb-3 " *ngFor="let artist of artists | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; ">
-          <div class=" card-header border-0">
-            <img class="card-img-top" src="data:image/PNG;base64,{{artist.profileImage}}">
-          </div>
-          <div class="card-block px-2">
-            <h2 class="card-title">{{artist.artisticName}}</h2>
-            <p class="card-text">{{artist.description}}</p>
-            <p class="card-text">{{artist.price}}€/h</p>
-            <a href="./artist/{{artist.username}}" class="btn btn-outline-light">Ver perfil </a>
-          </div>
-          <div class="w-100"></div>
-          <div class="card-footer w-100 text-muted">
-            <ngb-rating [rate]="artist.puntuation/artist.nPuntuations"  [readonly]=false (rateChange)="onPuntuado($event,i)">
-              <ng-template let-fill="fill" >
-                <span class="star" [class.filled]="fill === 100" >&#9733;</span>
-              </ng-template>
-            </ngb-rating>
-          </div>
+  <div class="row">
+    <div class="col-sm-2">
+      <h3>Buscar artista</h3>
+      <form #f="ngForm" (ngSubmit)="onSubmit(f)" class="form-filter">
+        <mat-form-field>
+          <input matInput name="first" ngModel placeholder="Nombre artístico">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput name="last" ngModel placeholder="Descripción">
+        </mat-form-field>
+        <button mat-raised-button>Filtrar</button>
+      </form>
+      <div *ngFor="let filtrado of values">
+          {{filtrado.artisticName}}
+
+      </div>
+      <div class="row-fluid">
+        <div class="col-xs-3">
         </div>
       </div>
-    </mat-list>
-  </mat-card-content>
+    </div>
+    <div class="col-sm-10">
+      <h3>Lista de artistas</h3>
+      <ngb-pagination class="d-flex justify-content-center" *ngIf="artists != null" [collectionSize]="artistsFiltrate.length" [pageSize]="pageSize" [(page)]="page" [boundaryLinks]="true"></ngb-pagination>
+      <mat-card-content>
+        <mat-list>
+          <div  class="container">
+            <div class="card flex-row flex-wrap cardStyle text-white bg-dark mb-3 " *ngFor="let artist of artistsFiltrate | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; ">
+              <div class=" card-header border-0">
+                <img class="card-img-top" src="data:image/PNG;base64,{{artist.profileImage}}">
+              </div>
+              <div class="card-block px-2">
+                <h2 class="card-title">{{artist.artisticName}}</h2>
+                <p class="card-text">{{artist.description}}</p>
+                <p class="card-text">{{artist.price}}€/h</p>
+                <a href="./artist/{{artist.username}}" class="btn btn-outline-light">Ver perfil </a>
+              </div>
+              <div class="w-100"></div>
+              <div class="card-footer w-100 text-muted">
+                <ngb-rating [rate]="artist.puntuation/artist.nPuntuations"  [readonly]=false (rateChange)="onPuntuado($event,i)">
+                  <ng-template let-fill="fill" >
+                    <span class="star" [class.filled]="fill === 100" >&#9733;</span>
+                  </ng-template>
+                </ngb-rating>
+              </div>
+            </div>
+          </div>
+        </mat-list>
+      </mat-card-content>
+    </div>
+  </div>
 </mat-card>
 </div>
-<ngb-pagination class="d-flex justify-content-center" *ngIf="artists != null" [collectionSize]="artists.length" [pageSize]="pageSize" [(page)]="page" [boundaryLinks]="true"></ngb-pagination>
+<ngb-pagination class="d-flex justify-content-center" *ngIf="artists != null" [collectionSize]="artistsFiltrate.length" [pageSize]="pageSize" [(page)]="page" [boundaryLinks]="true"></ngb-pagination>
 
 
