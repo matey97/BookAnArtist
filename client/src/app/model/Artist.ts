@@ -2,6 +2,7 @@ export class Artist {
   username: string;
   artisticName: string;
   description: string;
+  price: number;
   puntuation: number;
   nPuntuations: number;
   habilities: Array<string>;

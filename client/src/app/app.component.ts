@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from './shared/user/user.service';
 import {Observable} from 'rxjs';
+import 'hammerjs';
 
 @Component({
   selector: 'app-root',

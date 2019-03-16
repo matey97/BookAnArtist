@@ -42,7 +42,7 @@ public class BookAnArtistApplication extends SpringBootServletInitializer {
 		SpringApplication.run(BookAnArtistApplication.class, args);
 	}
 
-	@Bean
+	/*@Bean
 	ApplicationRunner init(ArtistRepository repository,
 						   UserRepository userRepository,
 						   ArtistImageRepository imageRepository,
@@ -50,6 +50,8 @@ public class BookAnArtistApplication extends SpringBootServletInitializer {
 
 		User user1 = new User();
 		user1.setUsername("Pepe");
+		user1.setPassword("pepe");
+		user1.setEmail("pepe@gmail.com");
 		user1.setUserType(UserType.ARTIST);
 
 		Artist artista1 = new Artist();
@@ -71,6 +73,8 @@ public class BookAnArtistApplication extends SpringBootServletInitializer {
 
 		User user2 = new User();
 		user2.setUsername("Tomas");
+		user2.setPassword("tomas");
+		user2.setEmail("tomas@gmail.com");
 		user2.setUserType(UserType.ARTIST);
 
 		Artist artista2 = new Artist();
@@ -83,6 +87,9 @@ public class BookAnArtistApplication extends SpringBootServletInitializer {
 
 		User user3 = new User();
 		user3.setUsername("Fermín");
+		user3.setPassword("fermin");
+		user3.setEmail("fermin@gmail.com");
+		user3.setUserType(UserType.ARTIST);
 
 		Artist artista3 = new Artist();
 		artista3.setUsername(user3.getUsername());
@@ -94,6 +101,9 @@ public class BookAnArtistApplication extends SpringBootServletInitializer {
 
 		User user4 = new User();
 		user4.setUsername("Agapito");
+		user4.setPassword("agapito");
+		user4.setEmail("agapito@gmail.com");
+		user4.setUserType(UserType.ARTIST);
 
 		Artist artista4 = new Artist();
 		artista4.setUsername(user4.getUsername());
@@ -105,6 +115,9 @@ public class BookAnArtistApplication extends SpringBootServletInitializer {
 
 		User user5 = new User();
 		user5.setUsername("Javier");
+		user5.setPassword("javier");
+		user5.setEmail("javier@gmail.com");
+		user5.setUserType(UserType.ARTIST);
 
 		Artist artista5 = new Artist();
 		artista5.setUsername(user5.getUsername());
@@ -115,6 +128,8 @@ public class BookAnArtistApplication extends SpringBootServletInitializer {
 
 		User user6 = new User();
 		user6.setUsername("Juan");
+		user6.setPassword("juan");
+		user6.setEmail("juan@gmail.com");
 		user6.setUserType(UserType.ARTIST);
 
 		return args -> {
@@ -169,6 +184,6 @@ public class BookAnArtistApplication extends SpringBootServletInitializer {
 			repository.findAll().forEach(System.out::println);
 			userRepository.findAll().forEach(System.out::println);
 		};
-	}
+	}*/
 
 }
