@@ -11,6 +11,38 @@
         <mat-form-field>
           <input matInput name="last" ngModel placeholder="Descripción">
         </mat-form-field>
+        <mat-form-field>
+          <mat-select placeholder="Habilidades WIP" name="habilities" multiple disabled="true">
+            <mat-option *ngFor="let hability of habilities" value="{{hability}}">{{hability}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select placeholder="Zona WIP" name="habilities"  multiple disabled="true">
+            <mat-option *ngFor="let zona of zones" value="{{zona}}">{{zona}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select placeholder="Horario WIP" name="habilities"  multiple disabled="true">
+            <mat-option *ngFor="let schedule of schedules" value="{{schedule}}">{{schedule}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <h5>Coste mínimo</h5>
+          <mat-slider
+            thumbLabel
+            (ngModel) = prueba
+            name="dineroMin"
+            tickInterval="10"
+            min="1"
+            max="8000"></mat-slider>
+        <h5>Coste máximo</h5>
+        <mat-slider
+          thumbLabel
+          (ngModel) = prueba
+          name="dineroMax"
+          tickInterval="10"
+          min="1"
+          max="8000"></mat-slider>
+        <br>
         <button mat-raised-button>Filtrar</button>
       </form>
       <div *ngFor="let filtrado of values">
@@ -34,7 +66,8 @@
               </div>
               <div class="card-block px-2">
                 <h2 class="card-title">{{artist.artisticName}}</h2>
-                <p class="card-text">{{artist.description}}</p>
+                <p class = "card-text">{{artist.description}}</p>
+                <p class="card-text">{{artist.habilities}}</p>
                 <p class="card-text">{{artist.price}}€/h</p>
                 <a href="./artist/{{artist.username}}" class="btn btn-outline-light">Ver perfil </a>
               </div>
@@ -55,5 +88,8 @@
 </mat-card>
 </div>
 <ngb-pagination class="d-flex justify-content-center" *ngIf="artists != null" [collectionSize]="artistsFiltrate.length" [pageSize]="pageSize" [(page)]="page" [boundaryLinks]="true"></ngb-pagination>
+
+
+
 
 

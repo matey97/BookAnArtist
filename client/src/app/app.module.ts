@@ -27,6 +27,9 @@ import { ArtistComponent } from './artist/artist.component';
 import { HomeComponent } from './shared/home/home.component';
 import { LoginComponent } from './shared/login/login.component';
 import { RegisterComponent } from './shared/register/register.component';
+import { MatSliderModule } from '@angular/material/slider';
+
+
 
 
 
@@ -56,6 +59,7 @@ import { RegisterComponent } from './shared/register/register.component';
     MatSelectModule,
     MatButtonModule,
     MatIconModule,
+    MatSliderModule,
     MatAutocompleteModule,
     MatSnackBarModule,
     FormsModule,
