@@ -1,40 +1,32 @@
 package com.ei104550.BookAnArtist.controller;
 
+import com.ei104550.BookAnArtist.Exceptions.RegistrationForbiddenException;
 import com.ei104550.BookAnArtist.Services.UserService;
 import com.ei104550.BookAnArtist.model.User;
-import com.ei104550.BookAnArtist.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import javax.servlet.http.HttpServletRequest;
-import java.security.Principal;
-import java.util.Base64;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin
 public class RegisterController {
 
-    private UserRepository userRepository;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+
+
     @Autowired
     private UserService userService;
 
-    public RegisterController(UserRepository userRepository){
-        this.userRepository = userRepository;
-    }
 
-    @RequestMapping("/register")
-    public void registerUser(@RequestBody User user) {
+    @PostMapping("/register")
+    public boolean registerUser(@RequestBody User user) throws RegistrationForbiddenException {
        if (validData(user)){
           user.setPassword(userService.EncodeUserPassword(user.getPassword()));
+          user.setUsername(user.getUsername().trim().toLowerCase());
           userService.checkUserType(user.getUserType());
-          userRepository.save(user);
+          userService.addNewUser(user);
+          userService.logInRegisteredUser(user);
        }
+       return true;
     }
 
     private boolean validData (User user){
