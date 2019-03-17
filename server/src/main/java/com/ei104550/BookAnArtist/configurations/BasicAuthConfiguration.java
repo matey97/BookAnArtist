@@ -1,4 +1,6 @@
 package com.ei104550.BookAnArtist.configurations;
+import com.ei104550.BookAnArtist.daos.UserDao;
+import com.ei104550.BookAnArtist.model.User;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -12,10 +14,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @EnableWebSecurity
 public class BasicAuthConfiguration extends WebSecurityConfigurerAdapter  {
+    private UserDao userDao;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         //todo check why appears warning WARN  o.s.s.c.bcrypt.BCryptPasswordEncoder - Encoded password does not look like BCrypt
+
         auth
                 .inMemoryAuthentication().passwordEncoder(passwordEncoder())
                 .withUser("user")
@@ -28,13 +32,12 @@ public class BasicAuthConfiguration extends WebSecurityConfigurerAdapter  {
         http.headers().frameOptions().disable();
         http.csrf().disable()
                 .authorizeRequests()
-                //.antMatchers(HttpMethod.GET,"/user").denyAll()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/artistas").permitAll()
                 .antMatchers(HttpMethod.GET, "/user-image").permitAll()
                 .antMatchers(HttpMethod.GET, "/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/register").permitAll()
-                .antMatchers("/login").permitAll()
+                .antMatchers(HttpMethod.POST,"/login").permitAll()
                 .antMatchers(HttpMethod.POST,"/**" ).permitAll()
                 .antMatchers(HttpMethod.POST, "/user").permitAll()
                 .anyRequest()

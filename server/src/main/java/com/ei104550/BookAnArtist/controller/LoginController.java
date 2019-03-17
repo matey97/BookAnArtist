@@ -1,11 +1,17 @@
 package com.ei104550.BookAnArtist.controller;
 
+import com.ei104550.BookAnArtist.Exceptions.UserDoesntExistException;
 import com.ei104550.BookAnArtist.Services.UserService;
 import com.ei104550.BookAnArtist.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.security.Principal;
 import java.util.Base64;
 
@@ -17,7 +23,7 @@ public class LoginController {
     private UserService userService;
 
     @PostMapping("/login")
-    public boolean login(@RequestBody User user) {
+    public boolean login(@RequestBody User user) throws UserDoesntExistException {
         System.out.println("he sido llamado");
         return userService.checkCredentials(user.getUsername().trim().toLowerCase(), user.getPassword());
     }

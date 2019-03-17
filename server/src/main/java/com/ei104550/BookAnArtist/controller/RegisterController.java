@@ -25,8 +25,9 @@ public class RegisterController {
           userService.checkUserType(user.getUserType());
           userService.addNewUser(user);
           userService.logInRegisteredUser(user);
+          return true;
        }
-       return true;
+       return false;
     }
 
     private boolean validData (User user){

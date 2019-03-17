@@ -1,6 +1,7 @@
 package com.ei104550.BookAnArtist.Services;
 
 import com.ei104550.BookAnArtist.Exceptions.RegistrationForbiddenException;
+import com.ei104550.BookAnArtist.Exceptions.UserDoesntExistException;
 import com.ei104550.BookAnArtist.daos.UserDao;
 import com.ei104550.BookAnArtist.enums.UserType;
 import com.ei104550.BookAnArtist.model.User;
@@ -30,7 +31,7 @@ public class UserService {
         userDao.addNewUser(user);
     }
 
-    public boolean checkCredentials(String userName, String password) {
+    public boolean checkCredentials(String userName, String password) throws UserDoesntExistException {
         User user = userDao.getuserByUserName(userName);
         return isUser(userName, user) && isPasswordCorrect(password, user);
     }
