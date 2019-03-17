@@ -1,4 +1,5 @@
 <div *ngIf="artist != null" class="container">
+  <br>
     <div class="row">
       <div class="col-sm-3">
         <div class="card" style="text-align: center">
@@ -15,6 +16,12 @@
               </ng-template>
             </ngb-rating>
           </div>
+        </div>
+        <br>
+        <mat-divider></mat-divider>
+        <br>
+        <div style="text-align: center">
+          <button mat-raised-button color="primary" style="font-size: larger; width: 100%" type="button" (click)="openContratationModal(modal)" value="contratar">Contratar</button>
         </div>
       </div>
       <div class="col-sm-9">
@@ -61,3 +68,6 @@
       </div>
     </div>
 </div>
+<ng-template #modal let-mod>
+  <app-contratation [artist]="artist" [modal]="mod"></app-contratation>
+</ng-template>
