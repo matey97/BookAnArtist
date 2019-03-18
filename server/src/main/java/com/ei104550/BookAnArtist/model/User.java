@@ -13,6 +13,11 @@ public class User {
     private String password;
     private String email;
     private UserType userType;
+    private int active;
+    @OneToMany(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn
+    private set<Roles> roles;
+    private
     @Lob
     private byte[] image;
 
