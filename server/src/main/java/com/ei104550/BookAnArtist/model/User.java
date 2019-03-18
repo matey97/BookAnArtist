@@ -1,23 +1,22 @@
 package com.ei104550.BookAnArtist.model;
 
-import com.ei104550.BookAnArtist.enums.UserType;
 
 import javax.persistence.*;
 import java.util.Arrays;
+import java.util.Set;
 
 @Entity
+@Table(name = "USER")
 public class User {
 
     @Id
     private String username;
     private String password;
     private String email;
-    private UserType userType;
-    private int active;
+
     @OneToMany(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn
-    private set<Roles> roles;
-    private
+    private Set<Role> role;
     @Lob
     private byte[] image;
 
@@ -25,13 +24,24 @@ public class User {
 
     }
 
-    public UserType getUserType() {
-        return userType;
+    public User(User user) {
+        this.username = user.getUsername();
+        this.password = user.getPassword();
+        this.email = user.getEmail();
+        this.role = user.getRoles();
+        this.image = user.getImage();
+
     }
 
-    public void setUserType(UserType userType) {
-        this.userType = userType;
+
+    public Set<Role> getRoles() {
+        return role;
     }
+
+    public void setRoles(Set<Role> roles) {
+        this.role = roles;
+    }
+
 
     public String getUsername() {
         return username;
@@ -72,7 +82,7 @@ public class User {
                 "username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
-                ", tipo=" + userType +
+                ", tipo=" + role +
                 ", image=" + Arrays.toString(image) +
                 '}';
     }

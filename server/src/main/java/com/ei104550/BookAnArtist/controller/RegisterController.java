@@ -11,26 +11,26 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 public class RegisterController {
 
-
-
     @Autowired
     private UserService userService;
 
 
     @PostMapping("/register")
     public boolean registerUser(@RequestBody User user) throws RegistrationForbiddenException {
-       if (validData(user)){
-          user.setPassword(userService.EncodeUserPassword(user.getPassword()));
-          user.setUsername(user.getUsername().trim().toLowerCase());
-          userService.checkUserType(user.getUserType());
-          userService.addNewUser(user);
-          userService.logInRegisteredUser(user);
-          return true;
-       }
-       return false;
+//       if (validData(user)){
+//          user.setPassword(userService.EncodeUserPassword(user.getPassword()));
+//          user.setUsername(user.getUsername().trim().toLowerCase());
+//          //userService.checkUserType(user.getUserType());
+//         // userService.addNewUser(user);
+//          userService.logInRegisteredUser(user);
+//          return true;
+//       }
+//       return false;
+        return true;
     }
 
     private boolean validData (User user){
-        return user.getUsername() != null && user.getPassword() != null && user.getEmail() != null;
+//        return user.getUsername() != null && user.getPassword() != null && user.getEmail() != null;
+        return true;
     }
 }
