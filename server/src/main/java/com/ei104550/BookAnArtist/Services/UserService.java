@@ -6,11 +6,14 @@ import com.ei104550.BookAnArtist.daos.UserDao;
 import com.ei104550.BookAnArtist.enums.UserType;
 import com.ei104550.BookAnArtist.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component("userService")
-public class UserService {
+public class UserService implements UserDetailsService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -46,5 +49,10 @@ public class UserService {
 
     public void logInRegisteredUser(User user) {
 
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return null;
     }
 }

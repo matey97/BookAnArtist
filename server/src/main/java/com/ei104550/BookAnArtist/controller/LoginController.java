@@ -23,9 +23,10 @@ public class LoginController {
     private UserService userService;
 
     @PostMapping("/login")
-    public boolean login(@RequestBody User user) throws UserDoesntExistException {
+    public boolean login(Principal user) throws UserDoesntExistException {
         System.out.println("he sido llamado");
-        return userService.checkCredentials(user.getUsername().trim().toLowerCase(), user.getPassword());
+        //return userService.checkCredentials(user.getUsername().trim().toLowerCase(), user.getPassword());
+        return true;
     }
 
 
