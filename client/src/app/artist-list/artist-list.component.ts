@@ -23,9 +23,11 @@ export class ArtistListComponent implements OnInit {
   artistsFiltrate: Array<any>;
   profileImage: string;
 
-  values: Array<any>;
   prueba: any;
   prueba2: any;
+  hability: string;
+  zona: string;
+  schedule: string;
 
 
 
@@ -41,12 +43,13 @@ export class ArtistListComponent implements OnInit {
     this.artistService.getAll().subscribe(data => {
       this.artists = data;
       this.artistsFiltrate = data;
-      this.prueba = 10;
       this.getMultimediaFiles();
     });
     // Inicializa la paginacion
+    this.prueba2 = 'asdadsasdad';
     this.page = 1;
     this.pageSize = 5;
+
   }
   private getMultimediaFiles() {
     this.artists.forEach((artist) => {
@@ -72,8 +75,24 @@ export class ArtistListComponent implements OnInit {
     this.artistsFiltrate = this.artistsFiltrate.filter(artist => artist.artisticName.indexOf(f.value.first) > -1);
     this.artistsFiltrate = this.artistsFiltrate.filter(artist => artist.description.indexOf(f.value.last) > -1);
     this.artistsFiltrate = this.artistsFiltrate.filter(artist => artist.price > f.value.dineroMin);
-    this.artistsFiltrate = this.artistsFiltrate.filter(artist => artist.price < f.value.dineroMax);
 
+    if (f.value.dineroMax === 1 || f.value.dineroMax === null) {
+      this.artistsFiltrate = this.artistsFiltrate.filter(artist => artist.price < 8000);
+    } else {
+      this.artistsFiltrate = this.artistsFiltrate.filter(artist => artist.price < f.value.dineroMax);
+    }
+
+    if (f.value.habilities != null) {
+      f.value.habilities.forEach(hability => this.artistsFiltrate = this.artistsFiltrate.filter(artist => artist.habilities.indexOf(hability.toString()) > -1));
+    }
+
+    if (f.value.zones != null) {
+      f.value.zones.forEach(zone => this.artistsFiltrate = this.artistsFiltrate.filter(artist => artist.zones.indexOf(zone.toString()) > -1));
+    }
+
+    if ( f.value.schedules != null) {
+      f.value.schedules.forEach(schedule => this.artistsFiltrate = this.artistsFiltrate.filter(artist => artist.schedules.indexOf(schedule.toString()) > -1));
+    }
   }
 }
 
