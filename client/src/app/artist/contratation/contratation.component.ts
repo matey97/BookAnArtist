@@ -17,6 +17,6 @@ export class ContratationComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.artist);
+    console.log(this.modal);
   }
-
 }

@@ -17,7 +17,7 @@ import {
   MatOptionModule, MatSelectModule, MatSnackBarModule,
   MatToolbarModule
 } from '@angular/material';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModalModule, NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {VgCoreModule} from 'videogular2/core';
 import {VgControlsModule} from 'videogular2/controls';
 import {VgOverlayPlayModule} from 'videogular2/overlay-play';
@@ -29,6 +29,7 @@ import { LoginComponent } from './shared/login/login.component';
 import { RegisterComponent } from './shared/register/register.component';
 import { MatSliderModule } from '@angular/material/slider';
 import { ContratationComponent } from './artist/contratation/contratation.component';
+import {NgbModalBackdrop} from '@ng-bootstrap/ng-bootstrap/modal/modal-backdrop';
 
 
 
@@ -72,7 +73,7 @@ import { ContratationComponent } from './artist/contratation/contratation.compon
     VgBufferingModule,
     ReactiveFormsModule,
     VgBufferingModule,
-    FormsModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -24,7 +24,7 @@ public class UserController {
 
     @GetMapping("user/{username}")
     public User userByUsername(@PathVariable String username){
-        return userRepository.findById(username).get();
+        return userRepository.findById(username).orElse(null);
     }
 
     @GetMapping(value = "user-image/{username}")

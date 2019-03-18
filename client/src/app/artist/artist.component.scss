@@ -1,0 +1,27 @@
+/*
+Estilo de las estrellas de valoración
+ */
+
+.star {
+  font-size: 1.5rem;
+  color: #F2EDD0;
+}
+.filled {
+  color: #FCDE1F;
+}
+
+
+.modal-backdrop-chachiguay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-image: linear-gradient(45deg,#5c258d,#4389a2);
+  opacity: 0.8;
+  width: 100%;
+  height: 100%;
+  z-index: 1050;
+}
+
+

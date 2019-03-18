@@ -36,19 +36,18 @@ export class ArtistProfileComponent implements OnInit {
 
   ngOnInit() {
     this.userService.getLoguedUser().subscribe(user => {
-      this.user = user;
-      this.artistService.getArtistByUsername(this.user.username).subscribe(artist => {
-        if (artist.username == null) {
-          this.firstTime = true;
-          artist.username = user.username;
-        }
-        this.artist = artist;
-        /*this.userService.getProfileImage(this.user.username).subscribe(image => {
-          this.user.rawImage = image.raw;
-        });*/
-        this.myControl = new FormControl({value: '', disabled: !this.firstTime});
-        this.applyFilter();
-      });
+      if (user !== null) {
+        this.user = user;
+        this.artistService.getArtistByUsername(this.user.username).subscribe(artist => {
+          if (artist.username == null) {
+            this.firstTime = true;
+            artist.username = user.username;
+          }
+          this.artist = artist;
+          this.myControl = new FormControl({value: '', disabled: !this.firstTime});
+          this.applyFilter();
+        });
+      }
     });
   }
 
