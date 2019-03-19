@@ -26,7 +26,7 @@ export class RegisterComponent implements OnInit {
           username: this.model.username,
           password: this.model.password,
           email: this.model.email,
-          userType: this.model.userType
+          role: this.model.role
       }).subscribe(isValid => {
           if (isValid) {
               sessionStorage.setItem('token', btoa(this.model.username + ':' + this.model.password));

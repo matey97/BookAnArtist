@@ -2,6 +2,6 @@ export class User {
   username: string;
   password: string;
   email: string;
-  userType: 'ARTIST' | 'ADMIN' | 'ORGANIZER';
+  role: 'ARTIST' | 'ADMIN' | 'ORGANIZER';
   image: string;
 }

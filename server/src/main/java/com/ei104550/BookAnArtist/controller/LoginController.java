@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.ws.Response;
 import java.security.Principal;
 import java.util.Base64;
 
@@ -28,5 +29,10 @@ public class LoginController {
     public Principal user(HttpServletRequest request) {
         String authToken = request.getHeader("Authorization").substring("Basic".length()).trim();
         return () -> new String(Base64.getDecoder().decode(authToken)).split(":")[0];
+    }
+    @GetMapping("/redirecttologin")
+    public boolean getLogin(){
+        System.out.println("hesido llamado");
+        return true;
     }
 }

@@ -2,8 +2,10 @@ package com.ei104550.BookAnArtist.controller;
 
 import com.ei104550.BookAnArtist.model.User;
 import com.ei104550.BookAnArtist.repositories.UserRepository;
+import org.springframework.security.web.server.transport.HttpsRedirectWebFilter;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -23,7 +25,7 @@ public class UserController {
     }
 
     @GetMapping("user/{username}")
-    public User userByUsername(@PathVariable String username){
+    public User userByUsername(HttpServletResponse httpServletResponse, @PathVariable String username){
         return userRepository.findById(username).get();
     }
 

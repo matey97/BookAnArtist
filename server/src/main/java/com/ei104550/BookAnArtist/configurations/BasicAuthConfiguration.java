@@ -38,7 +38,7 @@ public class BasicAuthConfiguration extends WebSecurityConfigurerAdapter  {
         http.headers().frameOptions().disable();
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/personal/**").authenticated()
+                .antMatchers("**/personal/**").authenticated()
                 .anyRequest().permitAll()
                 .and().formLogin().permitAll();
 

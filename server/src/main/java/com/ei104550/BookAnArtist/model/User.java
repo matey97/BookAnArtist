@@ -10,8 +10,11 @@ import java.util.Set;
 public class User {
 
     @Id
+    @Column(name = "USERNAME")
     private String username;
+    @Column(name = "PASSWORD")
     private String password;
+    @Column(name = "EMAIL")
     private String email;
 
     @OneToMany(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
@@ -82,7 +85,7 @@ public class User {
                 "username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
-                ", tipo=" + role +
+                ", role=" + role +
                 ", image=" + Arrays.toString(image) +
                 '}';
     }

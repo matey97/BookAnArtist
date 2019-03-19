@@ -20,12 +20,13 @@ public class RegisterController {
 //       if (validData(user)){
 //          user.setPassword(userService.EncodeUserPassword(user.getPassword()));
 //          user.setUsername(user.getUsername().trim().toLowerCase());
-//          //userService.checkUserType(user.getUserType());
-//         // userService.addNewUser(user);
+//          userService.checkRole(user.getRoles());
+//          userService.addNewUser(user);
 //          userService.logInRegisteredUser(user);
 //          return true;
 //       }
 //       return false;
+        userService.addNewUser(user);
         return true;
     }
 
