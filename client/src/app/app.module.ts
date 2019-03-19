@@ -8,12 +8,13 @@ import {HttpClientModule} from '@angular/common/http';
 import { ArtistListComponent } from './artist-list/artist-list.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
+  MAT_DATE_LOCALE,
   MatAutocompleteModule,
   MatButtonModule,
-  MatCardModule,
+  MatCardModule, MatDatepickerModule,
   MatFormFieldModule, MatIconModule,
   MatInputModule,
-  MatListModule,
+  MatListModule, MatNativeDateModule,
   MatOptionModule, MatSelectModule, MatSnackBarModule,
   MatToolbarModule
 } from '@angular/material';
@@ -29,10 +30,6 @@ import { LoginComponent } from './shared/login/login.component';
 import { RegisterComponent } from './shared/register/register.component';
 import { MatSliderModule } from '@angular/material/slider';
 import { ContratationComponent } from './artist/contratation/contratation.component';
-import {NgbModalBackdrop} from '@ng-bootstrap/ng-bootstrap/modal/modal-backdrop';
-
-
-
 
 
 @NgModule({
@@ -65,6 +62,8 @@ import {NgbModalBackdrop} from '@ng-bootstrap/ng-bootstrap/modal/modal-backdrop'
     MatSliderModule,
     MatAutocompleteModule,
     MatSnackBarModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     FormsModule,
     NgbModule,
     VgCoreModule,
@@ -75,7 +74,7 @@ import {NgbModalBackdrop} from '@ng-bootstrap/ng-bootstrap/modal/modal-backdrop'
     VgBufferingModule,
     FormsModule
   ],
-  providers: [],
+  providers: [{provide: MAT_DATE_LOCALE, useValue: 'es-ES'}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

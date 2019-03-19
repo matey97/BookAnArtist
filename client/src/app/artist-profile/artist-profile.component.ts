@@ -8,6 +8,12 @@ import {MatSnackBar} from '@angular/material';
 import {User} from '../model/User';
 import {Artist, Image, Video} from '../model/Artist';
 
+export const ZONES = ['Álava', 'Albacete', 'Alicante', 'Almeria', 'Asturias', 'Ávila', 'Badajoz', 'Barcelona', 'Burgos', 'Cáceres', 'Cadiz',
+  'Cantabria', 'Castellón', 'Ceuta', 'Ciudad real', 'Cordoba', 'Cuenca', 'Girona', 'Las palmas de Gran Canaria', 'Granada', 'Guadalajara',
+  'Guipúzcoa', 'Huelva', 'Huesca', 'Islas Baleares', 'Jaén', 'A Coruña', 'La Rioja', 'León', 'Lleida', 'Lugo', 'Madrid', 'Malaga', 'Melilla',
+  'Murcia', 'Navarra', 'Ourense', 'Palencia', 'Pontevedra', 'Salamanca', 'Segovia', 'Sevilla', 'Soria', 'Tarragona', 'Santa cruz de Tenerife',
+  'Teruel', 'Toledo', 'Valencia', 'Valladolid', 'Vizcaya', 'Zamora', 'Zaragoza'];
+
 @Component({
   selector: 'app-artist-profile',
   templateUrl: './artist-profile.component.html',
@@ -17,11 +23,6 @@ export class ArtistProfileComponent implements OnInit {
 
   habilities = ['Músico', 'Grupo musical', 'Banda', 'DJ', 'Mago', 'Animador', 'Cómico'];
   schedules = ['Mañana', 'Tarde', 'Noche'];
-  zones = ['Álava', 'Albacete', 'Alicante', 'Almeria', 'Asturias', 'Ávila', 'Badajoz', 'Barcelona', 'Burgos', 'Cáceres', 'Cadiz',
-    'Cantabria', 'Castellón', 'Ceuta', 'Ciudad real', 'Cordoba', 'Cuenca', 'Girona', 'Las palmas de Gran Canaria', 'Granada', 'Guadalajara',
-    'Guipúzcoa', 'Huelva', 'Huesca', 'Islas Baleares', 'Jaén', 'A Coruña', 'La Rioja', 'León', 'Lleida', 'Lugo', 'Madrid', 'Malaga', 'Melilla',
-    'Murcia', 'Navarra', 'Ourense', 'Palencia', 'Pontevedra', 'Salamanca', 'Segovia', 'Sevilla', 'Soria', 'Tarragona', 'Santa cruz de Tenerife',
-    'Teruel', 'Toledo', 'Valencia', 'Valladolid', 'Vizcaya', 'Zamora', 'Zaragoza'];
   myControl: FormControl;
   filteredZones: Observable<string[]>;
 
@@ -142,6 +143,6 @@ export class ArtistProfileComponent implements OnInit {
 
   private filter(value): string[] {
     const filterValue = value.toLowerCase();
-    return this.zones.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
+    return ZONES.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
   }
 }

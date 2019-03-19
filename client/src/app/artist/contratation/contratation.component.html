@@ -1,21 +1,46 @@
-<div class="modal-header">
-  <h4 class="modal-title" id="modal-basic-title">Contratación</h4>
-  <button type="button" class="close" aria-label="Close" (click)="modal.close()">
-    <span aria-hidden="true">&times;</span>
-  </button>
+<div class="modal-header d-block">
+  <div class="d-flex">
+    <h3 class="modal-title"><b>Formulario de contratación</b></h3>
+      <button type="button" class="close" aria-label="Close" (click)="modal.close()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+  <h5 class="modal-title">Artista: {{artist.artisticName}}</h5>
 </div>
 <div class="modal-body">
-  <form>
-    <div class="form-group">
-      <label for="dateOfBirth">Date of birth</label>
-      <div class="input-group">
-        <input id="dateOfBirth" class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #dp="ngbDatepicker">
-        <div class="input-group-append">
-          <button class="btn btn-outline-secondary calendar"  type="button"></button>
+  <div class="container">
+    <form>
+      <div class="row">
+        <div class="col-sm-6">
+          <mat-form-field>
+          <input [formControl]="myControl" [matAutocomplete]="auto" matInput
+                 name="zone" placeholder="Provincia" type="text" required>
+          <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+            <mat-option *ngFor="let zone of filteredZones | async" value="{{zone}}">
+              {{zone}}
+            </mat-option>
+          </mat-autocomplete>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6">
+          <mat-form-field class="example-full-width">
+            <input matInput [matDatepickerFilter]="dateFilter" [matDatepicker]="picker" placeholder="Elige una fecha" required>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
         </div>
       </div>
-    </div>
-  </form>
+      <div class="row">
+        <div class="col-sm-6">
+          <mat-form-field>
+            <input matInput type="text" placeholder="Localidad" name="location" required>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6">
+        </div>
+      </div>
+    </form>
+  </div>
 </div>
 <div class="modal-footer">
   <button type="button" class="btn btn-outline-dark" (click)="modal.close()">Save</button>
