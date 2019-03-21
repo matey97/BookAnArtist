@@ -33,6 +33,9 @@ public class Artist{
     @ElementCollection()
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<String> schedules;
+    @ElementCollection()
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Contract> contracts;
 
 
     public Artist(){
@@ -41,6 +44,7 @@ public class Artist{
         this.videos = new LinkedList<>();
         this.zones = new LinkedList<>();
         this.schedules = new LinkedList<>();
+        this.contracts = new LinkedList<>();
     }
 
     public String getUsername() {
@@ -125,6 +129,18 @@ public class Artist{
 
     public void setSchedules(List<String> schedules) {
         this.schedules = schedules;
+    }
+
+    public List<Contract> getContracts() {
+        return contracts;
+    }
+
+    public void setContracts(List<Contract> contracts) {
+        this.contracts = contracts;
+    }
+
+    public void addContract(Contract c){
+        this.contracts.add(c);
     }
 
     @Override

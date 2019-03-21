@@ -40,6 +40,6 @@ export class ArtistComponent implements OnInit {
   }
 
   public openContratationModal(modal) {
-    this.modalService.open(modal, {centered: true, backdropClass: 'modal-backdrop-chachiguay'});
+    this.modalService.open(modal, {centered: true, backdropClass: 'modal-backdrop-chachiguay', size: 'lg'});
   }
 }

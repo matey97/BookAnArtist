@@ -14,6 +14,10 @@ export const ZONES = ['Álava', 'Albacete', 'Alicante', 'Almeria', 'Asturias', '
   'Murcia', 'Navarra', 'Ourense', 'Palencia', 'Pontevedra', 'Salamanca', 'Segovia', 'Sevilla', 'Soria', 'Tarragona', 'Santa cruz de Tenerife',
   'Teruel', 'Toledo', 'Valencia', 'Valladolid', 'Vizcaya', 'Zamora', 'Zaragoza'];
 
+export const HABILITIES = ['Músico', 'Grupo musical', 'Banda', 'DJ', 'Mago', 'Animador', 'Cómico'];
+
+export const SCHEDULES = ['Mañana', 'Tarde', 'Noche'];
+
 @Component({
   selector: 'app-artist-profile',
   templateUrl: './artist-profile.component.html',
@@ -21,8 +25,9 @@ export const ZONES = ['Álava', 'Albacete', 'Alicante', 'Almeria', 'Asturias', '
 })
 export class ArtistProfileComponent implements OnInit {
 
-  habilities = ['Músico', 'Grupo musical', 'Banda', 'DJ', 'Mago', 'Animador', 'Cómico'];
-  schedules = ['Mañana', 'Tarde', 'Noche'];
+  habilities = HABILITIES;
+  schedules = SCHEDULES;
+
   myControl: FormControl;
   filteredZones: Observable<string[]>;
 

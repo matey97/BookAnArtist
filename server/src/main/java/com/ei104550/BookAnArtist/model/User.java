@@ -1,9 +1,13 @@
 package com.ei104550.BookAnArtist.model;
 
 import com.ei104550.BookAnArtist.enums.UserType;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 @Entity
 public class User {
@@ -15,9 +19,12 @@ public class User {
     private UserType userType;
     @Lob
     private byte[] image;
+    @ElementCollection()
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Contract> contracts;
 
     public User(){
-
+        this.contracts = new LinkedList<>();
     }
 
     public UserType getUserType() {
@@ -59,6 +66,18 @@ public class User {
 
     public void setImage(byte[] image) {
         this.image = image;
+    }
+
+    public List<Contract> getContracts() {
+        return contracts;
+    }
+
+    public void setContracts(List<Contract> contracts) {
+        this.contracts = contracts;
+    }
+
+    public void addContract(Contract c){
+        this.contracts.add(c);
     }
 
     @Override

@@ -10,7 +10,6 @@ Estilo de las estrellas de valoración
   color: #FCDE1F;
 }
 
-
 .modal-backdrop-chachiguay {
   position: fixed;
   top: 0;
@@ -22,6 +21,19 @@ Estilo de las estrellas de valoración
   width: 100%;
   height: 100%;
   z-index: 1050;
+}
+
+.dark-modal .modal-header{
+  background-color: #292b2c;
+  color: white;
+}
+
+.dark-modal .modal-footer{
+  background-color: #292b2c;
+  color: white;
+}
+.dark-modal .close {
+  color: white;
 }
 
 
