@@ -1,5 +1,5 @@
 
-<form class="box" name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
+<form class="box" name="form" (ngSubmit)="f.form.valid && login(f)" #f="ngForm" novalidate>
   <div [ngClass]="{ 'has-error': f.submitted && !username.valid }">
     <h1>Login</h1>
   
