@@ -17,22 +17,16 @@ public class RegisterController {
 
     @PostMapping("/register")
     public boolean registerUser(@RequestBody User user) throws RegistrationForbiddenException {
-//       if (validData(user)){
-//          user.setPassword(userService.EncodeUserPassword(user.getPassword()));
-//          user.setUsername(user.getUsername().trim().toLowerCase());
-//          userService.checkRole(user.getRoles());
-//          userService.addNewUser(user);
-//          userService.logInRegisteredUser(user);
-//          return true;
-//       }
-//       return false;
-        user.setPassword(userService.EncodeUserPassword(user.getPassword()));
-        userService.addNewUser(user);
-        return true;
+       if (validData(user) && userService.find(user.getUsername()) == null){
+           user.setPassword(userService.EncodeUserPassword(user.getPassword()));
+           userService.addNewUser(user);
+          return true;
+       }
+       return false;
+
     }
 
     private boolean validData (User user){
-//        return user.getUsername() != null && user.getPassword() != null && user.getEmail() != null;
-        return true;
+        return user.getUsername() != null && user.getPassword() != null && user.getEmail() != null;
     }
 }

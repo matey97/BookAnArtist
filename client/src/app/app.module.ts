@@ -28,7 +28,6 @@ import { HomeComponent } from './shared/home/home.component';
 import { LoginComponent } from './shared/login/login.component';
 import { RegisterComponent } from './shared/register/register.component';
 import { MatSliderModule } from '@angular/material/slider';
-import { AuthServiceComponent } from './auth-service/auth-service.component';
 
 
 
@@ -44,7 +43,6 @@ import { AuthServiceComponent } from './auth-service/auth-service.component';
     HomeComponent,
     LoginComponent,
     RegisterComponent,
-    AuthServiceComponent
   ],
   imports: [
     BrowserModule,
