@@ -30,9 +30,5 @@ public class LoginController {
         String authToken = request.getHeader("Authorization").substring("Basic".length()).trim();
         return () -> new String(Base64.getDecoder().decode(authToken)).split(":")[0];
     }
-    @GetMapping("/redirecttologin")
-    public boolean getLogin(){
-        System.out.println("hesido llamado");
-        return true;
-    }
+
 }

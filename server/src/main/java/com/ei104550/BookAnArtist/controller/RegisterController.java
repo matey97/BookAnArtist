@@ -26,6 +26,7 @@ public class RegisterController {
 //          return true;
 //       }
 //       return false;
+        user.setPassword(userService.EncodeUserPassword(user.getPassword()));
         userService.addNewUser(user);
         return true;
     }

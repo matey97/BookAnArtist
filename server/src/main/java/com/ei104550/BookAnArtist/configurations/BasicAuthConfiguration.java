@@ -38,9 +38,9 @@ public class BasicAuthConfiguration extends WebSecurityConfigurerAdapter  {
         http.headers().frameOptions().disable();
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("**/personal/**").authenticated()
+                //.antMatchers("").fullyAuthenticated()
                 .anyRequest().permitAll()
-                .and().formLogin().permitAll();
+                .and().formLogin().loginProcessingUrl("localhost:4200/login").permitAll();
 
 
 //                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
