@@ -15,7 +15,7 @@ import {
   MatFormFieldModule, MatIconModule,
   MatInputModule,
   MatListModule, MatNativeDateModule,
-  MatOptionModule, MatSelectModule, MatSnackBarModule,
+  MatOptionModule, MatPaginator, MatPaginatorModule, MatSelectModule, MatSnackBarModule, MatSortModule, MatTableModule,
   MatToolbarModule
 } from '@angular/material';
 import {NgbModalModule, NgbModule} from '@ng-bootstrap/ng-bootstrap';
@@ -30,6 +30,7 @@ import { LoginComponent } from './shared/login/login.component';
 import { RegisterComponent } from './shared/register/register.component';
 import { MatSliderModule } from '@angular/material/slider';
 import { ContratationComponent } from './artist/contratation/contratation.component';
+import { ContractListComponent } from './contract-list/contract-list.component';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { ContratationComponent } from './artist/contratation/contratation.compon
     HomeComponent,
     LoginComponent,
     RegisterComponent,
-    ContratationComponent
+    ContratationComponent,
+    ContractListComponent
   ],
   imports: [
     BrowserModule,
@@ -64,6 +66,9 @@ import { ContratationComponent } from './artist/contratation/contratation.compon
     MatSnackBarModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatTableModule,
+    MatSortModule,
+    MatPaginatorModule,
     FormsModule,
     NgbModule,
     VgCoreModule,

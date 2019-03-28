@@ -6,5 +6,5 @@ export class Contract {
   location: string;
   comments: string;
   date: number;
-  state: 'ACCEPTED' | 'REJECTED' | 'DONE' | 'ACCEPTANCE_PENDING';
+  state: 'ACCEPTED' | 'REJECTED' | 'DONE' | 'ACCEPTANCE_PENDING' | 'CANCELLED';
 }

@@ -1,0 +1,58 @@
+<div *ngIf="loguedUser != null">
+  <div class="jumbotron" style="text-align: center">
+    <h2>Contrataciones</h2>
+    <p>Hola {{loguedUser.username}}, aqui puedes ver los contratos en los que estas involucrado.</p>
+  </div>
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+    <ng-container *ngIf="!isArtist" matColumnDef="artisticUsername">
+      <th mat-header-cell *matHeaderCellDef> Artista </th>
+      <td mat-cell *matCellDef="let element"> {{element.artisticUsername}} </td>
+    </ng-container>
+    <ng-container *ngIf="isArtist" matColumnDef="organizerUsername">
+      <th mat-header-cell *matHeaderCellDef> Organizador </th>
+      <td mat-cell *matCellDef="let element"> {{element.organizerUsername}} </td>
+    </ng-container>
+    <ng-container matColumnDef="comments">
+      <th mat-header-cell *matHeaderCellDef> Comentarios </th>
+      <td mat-cell *matCellDef="let element"> {{element.comments}} </td>
+    </ng-container>
+    <ng-container matColumnDef="location">
+      <th mat-header-cell *matHeaderCellDef> Provincia </th>
+      <td mat-cell *matCellDef="let element"> {{element.location}} </td>
+    </ng-container>
+    <ng-container matColumnDef="zone">
+      <th mat-header-cell *matHeaderCellDef> Localidad </th>
+      <td mat-cell *matCellDef="let element"> {{element.zone}} </td>
+    </ng-container>
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha y hora </th>
+      <td mat-cell *matCellDef="let element"> {{getDate(element.date)}} </td>
+    </ng-container>
+    <ng-container matColumnDef="state">
+      <th mat-header-cell *matHeaderCellDef> Estado </th>
+      <td mat-cell *matCellDef="let element"> {{stateTransformation.get(element.state)}} </td>
+    </ng-container>
+    <ng-container matColumnDef="operations">
+      <th mat-header-cell *matHeaderCellDef> Acciones </th>
+      <td mat-cell *matCellDef="let element">
+        <div class="button-row" *ngIf="element.state == 'ACCEPTANCE_PENDING' && isArtist; else organizerOptions">
+          <button mat-raised-button color="primary" type="button" value="accept" (click)="acceptContract(element)">Aceptar</button>
+          <button mat-raised-button color="warn" type="button" value="decline" (click)="declineContract(element)">Rechazar</button>
+        </div>
+        <ng-template *ngIf="element.state == 'ACCEPTANCE_PENDING'; else nada" #organizerOptions>
+          <button mat-raised-button color="warn" type="button" value="cancel" (click)="cancelContract(element)">Cancelar</button>
+        </ng-template>
+        <ng-template #nada>
+          Nada por ahora!
+        </ng-template>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <div style="text-align: center">
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  </div>
+
+</div>

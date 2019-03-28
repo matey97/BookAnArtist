@@ -9,6 +9,9 @@ import com.ei104550.BookAnArtist.repositories.ContractRepository;
 import com.ei104550.BookAnArtist.repositories.UserRepository;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RestController
 @RequestMapping("api/")
 public class ContractController {
@@ -36,6 +39,42 @@ public class ContractController {
         artist.addContract(contract);
         userRepository.save(user);
         artistRepository.save(artist);
+        return true;
+    }
+
+    @GetMapping("art-contract-list/{username}")
+    public List<Contract> getArtistContracts(@PathVariable("username") String username){
+        return this.contractRepository.findAll().stream().filter(contract -> contract.getArtisticUsername().equals(username))
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("org-contract-list/{username}")
+    public List<Contract> getOrganizerContracts(@PathVariable("username") String username){
+        return this.contractRepository.findAll().stream().filter(contract -> contract.getOrganizerUsername().equals(username))
+                .collect(Collectors.toList());
+    }
+
+    @PutMapping("contract/accept/{id}")
+    public boolean acceptContractById(@PathVariable("id") String id){
+        Contract c = this.contractRepository.findById(Long.parseLong(id)).get();
+        c.setState(ContractState.ACCEPTED);
+        this.contractRepository.save(c);
+        return true;
+    }
+
+    @PutMapping("contract/decline/{id}")
+    public boolean declineContractById(@PathVariable("id") String id){
+        Contract c = this.contractRepository.findById(Long.parseLong(id)).get();
+        c.setState(ContractState.REJECTED);
+        this.contractRepository.save(c);
+        return true;
+    }
+
+    @PutMapping("contract/cancel/{id}")
+    public boolean cancelContractById(@PathVariable("id") String id){
+        Contract c = this.contractRepository.findById(Long.parseLong(id)).get();
+        c.setState(ContractState.CANCELLED);
+        this.contractRepository.save(c);
         return true;
     }
 }

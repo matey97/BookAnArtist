@@ -13,4 +13,24 @@ export class ContractService {
   postContract(contract: Contract): Observable<any> {
     return this.http.post('api/contract/' + contract.artisticUsername + '_' + contract.organizerUsername, contract);
   }
+
+  getOrganizerContracts(username: string): Observable<any> {
+    return this.http.get('api/org-contract-list/' + username);
+  }
+
+  getArtistContracts(username: string): Observable<any> {
+    return this.http.get('api/art-contract-list/' + username);
+  }
+
+  acceptContract(id: number): Observable<any> {
+    return this.http.put('api/contract/accept/' + id, null);
+  }
+
+  declineContract(id: number): Observable<any> {
+    return this.http.put('api/contract/decline/' + id, null);
+  }
+
+  cancelContract(id: number): Observable<any> {
+    return this.http.put('api/contract/cancel/' + id, null);
+  }
 }
