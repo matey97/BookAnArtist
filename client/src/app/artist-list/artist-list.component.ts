@@ -95,16 +95,21 @@ export class ArtistListComponent implements OnInit {
     }
 
     this.setArtistasFiltado.clear();
-    f.value.habilities.forEach((hability) => {
-      this.artists.forEach((artist) => {
-        if (artist.habilities.indexOf(hability.toString()) > -1) {
-          this.setArtistasFiltado.add(artist);
-        }
+
+    if (f.value.habilities != null && f.value.habilities.length > 0) {
+      f.value.habilities.forEach((hability) => {
+        this.artists.forEach((artist) => {
+          if (artist.habilities.indexOf(hability.toString()) > -1) {
+            this.setArtistasFiltado.add(artist);
+          }
         });
-    });
-    this.artistsFiltrate = this.artistsFiltrate.filter((value, index, arr) => {
-      return this.setArtistasFiltado.has(value);
-    });
+      });
+      this.artistsFiltrate = this.artistsFiltrate.filter((value, index, arr) => {
+        return this.setArtistasFiltado.has(value);
+      });
+    }
+
+
 
     /*
         this.setArtistasFiltado.clear();
