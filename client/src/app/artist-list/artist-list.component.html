@@ -1,4 +1,8 @@
 
+
+<div *ngIf="artists == null">
+  <mat-spinner style="margin:0 auto;" mode="indeterminate"></mat-spinner>
+</div>
 <div *ngIf="artists != null">
 <mat-card >
   <div class="row">
@@ -12,17 +16,21 @@
           <input matInput name="last" ngModel placeholder="Descripción">
         </mat-form-field>
         <mat-form-field>
-          <mat-select placeholder="Habilidades WIP" name="habilities" multiple disabled="true">
+          <mat-select placeholder="Habilidades" name="habilities" (ngModel)="prueba" multiple>
             <mat-option *ngFor="let hability of habilities" value="{{hability}}">{{hability}}</mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field>
-          <mat-select placeholder="Zona WIP" name="habilities"  multiple disabled="true">
-            <mat-option *ngFor="let zona of zones" value="{{zona}}">{{zona}}</mat-option>
+          <mat-label>Zona de actuación</mat-label>
+          <mat-select [(value)]="zona" >
+            <mat-option [value]="vacio">Ninguna</mat-option>
+            <mat-option *ngFor="let zonea of zones" [value]="zonea">
+              {{zonea}}
+            </mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field>
-          <mat-select placeholder="Horario WIP" name="habilities"  multiple disabled="true">
+          <mat-select placeholder="Horario" name="schedules" (ngModel)="prueba2" multiple>
             <mat-option *ngFor="let schedule of schedules" value="{{schedule}}">{{schedule}}</mat-option>
           </mat-select>
         </mat-form-field>
@@ -45,10 +53,6 @@
         <br>
         <button mat-raised-button>Filtrar</button>
       </form>
-      <div *ngFor="let filtrado of values">
-          {{filtrado.artisticName}}
-
-      </div>
       <div class="row-fluid">
         <div class="col-xs-3">
         </div>
@@ -60,6 +64,9 @@
       <mat-card-content>
         <mat-list>
           <div  class="container">
+            <div *ngIf="artistsFiltrate.length == 0">
+              <h2>No se ha encontrado ningún artista</h2>
+            </div>
             <div class="card flex-row flex-wrap cardStyle text-white bg-dark mb-3 " *ngFor="let artist of artistsFiltrate | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; ">
               <div class=" card-header border-0">
                 <img class="card-img-top" src="data:image/PNG;base64,{{artist.profileImage}}">

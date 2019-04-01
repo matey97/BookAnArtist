@@ -14,6 +14,7 @@ import {
   MatFormFieldModule, MatIconModule,
   MatInputModule,
   MatListModule,
+  MatProgressSpinnerModule,
   MatOptionModule, MatSelectModule, MatSnackBarModule,
   MatToolbarModule
 } from '@angular/material';
@@ -56,6 +57,7 @@ import { MatSliderModule } from '@angular/material/slider';
     MatToolbarModule,
     MatFormFieldModule,
     MatOptionModule,
+    MatProgressSpinnerModule,
     MatSelectModule,
     MatButtonModule,
     MatIconModule,
