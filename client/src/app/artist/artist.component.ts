@@ -19,6 +19,8 @@ export class ArtistComponent implements OnInit {
   profileImage: string;
   username: string;
 
+  loguedUser;
+
 
   constructor( private artistService: ArtistService,
                private userService: UserService,
@@ -33,13 +35,20 @@ export class ArtistComponent implements OnInit {
   private getArtistProfile() {
     this.artistService.getArtistByUsername(this.username).subscribe(data => {
       this.artist = data;
+      this.userService.getLoguedUser().subscribe(user =>{
+        this.loguedUser = user;
+      });
       this.userService.getProfileImage(this.artist.username).subscribe(image => {
         this.profileImage = image.raw;
       });
     });
   }
 
-  public openContratationModal(modal) {
-    this.modalService.open(modal, {centered: true, backdropClass: 'modal-backdrop-chachiguay', size: 'lg'});
+  public openContratationModal(modal, authReq) {
+    if (this.loguedUser != null && this.loguedUser.userType === 'ORGANIZER') {
+      this.modalService.open(modal, {centered: true, backdropClass: 'modal-backdrop-chachiguay', size: 'lg'});
+    } else {
+      this.modalService.open(authReq, {centered: true, backdropClass: 'modal-backdrop-chachiguay', size: 'lg'});
+    }
   }
 }
