@@ -6,6 +6,7 @@ import { ArtistComponent} from './artist/artist.component';
 import { LoginComponent } from './shared/login/login.component';
 import { HomeComponent } from './shared/home/home.component';
 import { RegisterComponent} from "./shared/register/register.component";
+import {ContractListComponent} from './contract-list/contract-list.component';
 
 const routes: Routes = [
   { path: 'artistList', component: ArtistListComponent },
@@ -15,7 +16,8 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent},
  //{ path: '**', redirectTo: 'user' }
   { path: 'profile/:username', component: ArtistProfileComponent },
-  { path: 'artist/:username', component: ArtistComponent}
+  { path: 'artist/:username', component: ArtistComponent},
+  { path: 'contracts/:username', component: ContractListComponent}
 ];
 
 @NgModule({

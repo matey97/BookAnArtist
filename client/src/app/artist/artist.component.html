@@ -1,4 +1,5 @@
 <div *ngIf="artist != null" class="container">
+  <br>
     <div class="row">
       <div class="col-sm-3">
         <div class="card" style="text-align: center">
@@ -15,6 +16,12 @@
               </ng-template>
             </ngb-rating>
           </div>
+        </div>
+        <br>
+        <mat-divider></mat-divider>
+        <br>
+        <div style="text-align: center">
+          <button mat-raised-button color="primary" style="font-size: larger; width: 100%" type="button" (click)="openContratationModal(modal,authReq)" value="contratar">Contratar</button>
         </div>
       </div>
       <div class="col-sm-9">
@@ -61,3 +68,30 @@
       </div>
     </div>
 </div>
+
+<ng-template #modal let-modRef>
+  <app-contratation [artist]="artist" [modal]="modRef"></app-contratation>
+</ng-template>
+
+<ng-template #authReq let-autModRef>
+  <div class="modal-header d-block">
+    <div class="d-flex">
+      <h3 class="modal-title"><b>Autenticación necesaria</b></h3>
+      <button type="button" class="close" aria-label="Close" (click)="autModRef.close()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </div>
+  <div class="modal-body">
+    <p>¡Vaya! Parece que intentas contratar los servicios de uno de nuestros artistas.</p>
+    <p>Para ello debes tener una cuenta de <b>Organizador</b> y estar logueado en el sistema</p>
+  </div>
+  <div class="modal-footer">
+    <div class="button-row">
+      <button type="button" mat-raised-button color="primary" routerLink="/login" (click)="autModRef.close()">Inicia sesión</button>
+      <button type="button" mat-raised-button color="primary" routerLink="/register" (click)="autModRef.close()">Registrarse</button>
+      <button type="button" mat-raised-button color="warn" (click)="autModRef.close()">Cancelar</button>
+    </div>
+  </div>
+</ng-template>
+

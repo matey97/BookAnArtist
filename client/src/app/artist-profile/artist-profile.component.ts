@@ -8,6 +8,16 @@ import {MatSnackBar} from '@angular/material';
 import {User} from '../model/User';
 import {Artist, Image, Video} from '../model/Artist';
 
+export const ZONES = ['Álava', 'Albacete', 'Alicante', 'Almeria', 'Asturias', 'Ávila', 'Badajoz', 'Barcelona', 'Burgos', 'Cáceres', 'Cadiz',
+  'Cantabria', 'Castellón', 'Ceuta', 'Ciudad real', 'Cordoba', 'Cuenca', 'Girona', 'Las palmas de Gran Canaria', 'Granada', 'Guadalajara',
+  'Guipúzcoa', 'Huelva', 'Huesca', 'Islas Baleares', 'Jaén', 'A Coruña', 'La Rioja', 'León', 'Lleida', 'Lugo', 'Madrid', 'Malaga', 'Melilla',
+  'Murcia', 'Navarra', 'Ourense', 'Palencia', 'Pontevedra', 'Salamanca', 'Segovia', 'Sevilla', 'Soria', 'Tarragona', 'Santa cruz de Tenerife',
+  'Teruel', 'Toledo', 'Valencia', 'Valladolid', 'Vizcaya', 'Zamora', 'Zaragoza'];
+
+export const HABILITIES = ['Músico', 'Grupo musical', 'Banda', 'DJ', 'Mago', 'Animador', 'Cómico'];
+
+export const SCHEDULES = ['Mañana', 'Tarde', 'Noche'];
+
 @Component({
   selector: 'app-artist-profile',
   templateUrl: './artist-profile.component.html',
@@ -15,13 +25,9 @@ import {Artist, Image, Video} from '../model/Artist';
 })
 export class ArtistProfileComponent implements OnInit {
 
-  habilities = ['Músico', 'Grupo musical', 'Banda', 'DJ', 'Mago', 'Animador', 'Cómico'];
-  schedules = ['Mañana', 'Tarde', 'Noche'];
-  zones = ['Álava', 'Albacete', 'Alicante', 'Almeria', 'Asturias', 'Ávila', 'Badajoz', 'Barcelona', 'Burgos', 'Cáceres', 'Cadiz',
-    'Cantabria', 'Castellón', 'Ceuta', 'Ciudad real', 'Cordoba', 'Cuenca', 'Girona', 'Las palmas de Gran Canaria', 'Granada', 'Guadalajara',
-    'Guipúzcoa', 'Huelva', 'Huesca', 'Islas Baleares', 'Jaén', 'A Coruña', 'La Rioja', 'León', 'Lleida', 'Lugo', 'Madrid', 'Malaga', 'Melilla',
-    'Murcia', 'Navarra', 'Ourense', 'Palencia', 'Pontevedra', 'Salamanca', 'Segovia', 'Sevilla', 'Soria', 'Tarragona', 'Santa cruz de Tenerife',
-    'Teruel', 'Toledo', 'Valencia', 'Valladolid', 'Vizcaya', 'Zamora', 'Zaragoza'];
+  habilities = HABILITIES;
+  schedules = SCHEDULES;
+
   myControl: FormControl;
   filteredZones: Observable<string[]>;
 
@@ -36,19 +42,18 @@ export class ArtistProfileComponent implements OnInit {
 
   ngOnInit() {
     this.userService.getLoguedUser().subscribe(user => {
-      this.user = user;
-      this.artistService.getArtistByUsername(this.user.username).subscribe(artist => {
-        if (artist.username == null) {
-          this.firstTime = true;
-          artist.username = user.username;
-        }
-        this.artist = artist;
-        /*this.userService.getProfileImage(this.user.username).subscribe(image => {
-          this.user.rawImage = image.raw;
-        });*/
-        this.myControl = new FormControl({value: '', disabled: !this.firstTime});
-        this.applyFilter();
-      });
+      if (user !== null) {
+        this.user = user;
+        this.artistService.getArtistByUsername(this.user.username).subscribe(artist => {
+          if (artist.username == null) {
+            this.firstTime = true;
+            artist.username = user.username;
+          }
+          this.artist = artist;
+          this.myControl = new FormControl({value: '', disabled: !this.firstTime});
+          this.applyFilter();
+        });
+      }
     });
   }
 
@@ -143,6 +148,6 @@ export class ArtistProfileComponent implements OnInit {
 
   private filter(value): string[] {
     const filterValue = value.toLowerCase();
-    return this.zones.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
+    return ZONES.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
   }
 }

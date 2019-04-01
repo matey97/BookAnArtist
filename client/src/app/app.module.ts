@@ -8,14 +8,16 @@ import {HttpClientModule} from '@angular/common/http';
 import { ArtistListComponent } from './artist-list/artist-list.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
+  MAT_DATE_LOCALE,
   MatAutocompleteModule,
   MatButtonModule,
-  MatCardModule,
+  MatCardModule, MatDatepickerModule,
   MatFormFieldModule, MatIconModule,
   MatInputModule,
-  MatListModule,
+  MatListModule, MatNativeDateModule,
+  MatPaginator, MatPaginatorModule, MatSelectModule, MatSnackBarModule, MatSortModule, MatTableModule,
   MatProgressSpinnerModule,
-  MatOptionModule, MatSelectModule, MatSnackBarModule,
+  MatOptionModule,
   MatToolbarModule
 } from '@angular/material';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
@@ -29,9 +31,8 @@ import { HomeComponent } from './shared/home/home.component';
 import { LoginComponent } from './shared/login/login.component';
 import { RegisterComponent } from './shared/register/register.component';
 import { MatSliderModule } from '@angular/material/slider';
-
-
-
+import { ContratationComponent } from './artist/contratation/contratation.component';
+import { ContractListComponent } from './contract-list/contract-list.component';
 
 
 @NgModule({
@@ -43,7 +44,9 @@ import { MatSliderModule } from '@angular/material/slider';
     ArtistListComponent,
     HomeComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    ContratationComponent,
+    ContractListComponent
   ],
   imports: [
     BrowserModule,
@@ -64,6 +67,11 @@ import { MatSliderModule } from '@angular/material/slider';
     MatSliderModule,
     MatAutocompleteModule,
     MatSnackBarModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatTableModule,
+    MatSortModule,
+    MatPaginatorModule,
     FormsModule,
     NgbModule,
     VgCoreModule,
@@ -72,9 +80,9 @@ import { MatSliderModule } from '@angular/material/slider';
     VgBufferingModule,
     ReactiveFormsModule,
     VgBufferingModule,
-    FormsModule,
+    FormsModule
   ],
-  providers: [],
+  providers: [{provide: MAT_DATE_LOCALE, useValue: 'es-ES'}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,14 +1,8 @@
 package com.ei104550.BookAnArtist;
 
 import com.ei104550.BookAnArtist.enums.UserType;
-import com.ei104550.BookAnArtist.model.Artist;
-import com.ei104550.BookAnArtist.model.ArtistImage;
-import com.ei104550.BookAnArtist.model.ArtistVideo;
-import com.ei104550.BookAnArtist.model.User;
-import com.ei104550.BookAnArtist.repositories.ArtistImageRepository;
-import com.ei104550.BookAnArtist.repositories.ArtistRepository;
-import com.ei104550.BookAnArtist.repositories.ArtistVideoRepository;
-import com.ei104550.BookAnArtist.repositories.UserRepository;
+import com.ei104550.BookAnArtist.model.*;
+import com.ei104550.BookAnArtist.repositories.*;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -46,7 +40,8 @@ public class BookAnArtistApplication extends SpringBootServletInitializer {
 	ApplicationRunner init(ArtistRepository repository,
 						   UserRepository userRepository,
 						   ArtistImageRepository imageRepository,
-						   ArtistVideoRepository videoRepository){
+						   ArtistVideoRepository videoRepository,
+						   ContractRepository contractRepository){
 
 		User user1 = new User();
 		user1.setUsername("Pepe");
@@ -184,6 +179,7 @@ public class BookAnArtistApplication extends SpringBootServletInitializer {
 			repository.findAll().forEach(System.out::println);
 			userRepository.findAll().forEach(System.out::println);
 		};
+
 	}*/
 
 }
