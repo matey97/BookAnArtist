@@ -76,8 +76,8 @@ export class ArtistListComponent implements OnInit {
 
     this.artistsFiltrate = this.artists;
 
-    this.artistsFiltrate = this.artistsFiltrate.filter(artist => artist.artisticName.indexOf(f.value.first) > -1);
-    this.artistsFiltrate = this.artistsFiltrate.filter(artist => artist.description.indexOf(f.value.last) > -1);
+    this.artistsFiltrate = this.artistsFiltrate.filter(artist => artist.artisticName.toLocaleLowerCase().indexOf(f.value.first.toString().toLocaleLowerCase()) > -1);
+    this.artistsFiltrate = this.artistsFiltrate.filter(artist => artist.description.toLocaleLowerCase().indexOf(f.value.last.toString().toLocaleLowerCase()) > -1);
     this.artistsFiltrate = this.artistsFiltrate.filter(artist => artist.price > f.value.dineroMin);
 
     if (f.value.dineroMax === 1 || f.value.dineroMax === null) {
