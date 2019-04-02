@@ -21,11 +21,14 @@ export class ArtistListComponent implements OnInit {
     'Teruel', 'Toledo', 'Valencia', 'Valladolid', 'Vizcaya', 'Zamora', 'Zaragoza'];
   artists: Array<any>;
   artistsFiltrate: Array<any>;
+  setArtistasFiltado: Set<any>;
   profileImage: string;
 
-  values: Array<any>;
-  prueba: any;
+  prueba: Array<any>;
   prueba2: any;
+  hability: string;
+  zona: string;
+  schedule: string;
 
 
 
@@ -41,12 +44,16 @@ export class ArtistListComponent implements OnInit {
     this.artistService.getAll().subscribe(data => {
       this.artists = data;
       this.artistsFiltrate = data;
-      this.prueba = 10;
       this.getMultimediaFiles();
+      this.setArtistasFiltado = new Set();
+      this.zona = null;
+      this.prueba2 = 'Prueba';
     });
     // Inicializa la paginacion
+
     this.page = 1;
     this.pageSize = 5;
+
   }
   private getMultimediaFiles() {
     this.artists.forEach((artist) => {
@@ -72,9 +79,77 @@ export class ArtistListComponent implements OnInit {
     this.artistsFiltrate = this.artistsFiltrate.filter(artist => artist.artisticName.indexOf(f.value.first) > -1);
     this.artistsFiltrate = this.artistsFiltrate.filter(artist => artist.description.indexOf(f.value.last) > -1);
     this.artistsFiltrate = this.artistsFiltrate.filter(artist => artist.price > f.value.dineroMin);
-    this.artistsFiltrate = this.artistsFiltrate.filter(artist => artist.price < f.value.dineroMax);
+
+    if (f.value.dineroMax === 1 || f.value.dineroMax === null) {
+      this.artistsFiltrate = this.artistsFiltrate.filter(artist => artist.price < 8000);
+    } else {
+      this.artistsFiltrate = this.artistsFiltrate.filter(artist => artist.price < f.value.dineroMax);
+    }
+
+    if (this.zona != null) {
+      this.artistsFiltrate = this.artistsFiltrate.filter(artist => artist.zones.indexOf(this.zona) > -1);
+    }
+
+    if ( f.value.schedules != null) {
+      f.value.schedules.forEach(schedule => this.artistsFiltrate = this.artistsFiltrate.filter(artist => artist.schedules.indexOf(schedule.toString()) > -1));
+    }
+
+    this.setArtistasFiltado.clear();
+
+    if (f.value.habilities != null && f.value.habilities.length > 0) {
+      f.value.habilities.forEach((hability) => {
+        this.artists.forEach((artist) => {
+          if (artist.habilities.indexOf(hability.toString()) > -1) {
+            this.setArtistasFiltado.add(artist);
+          }
+        });
+      });
+      this.artistsFiltrate = this.artistsFiltrate.filter((value, index, arr) => {
+        return this.setArtistasFiltado.has(value);
+      });
+    }
+
+
+
+    /*
+        this.setArtistasFiltado.clear();
+        f.value.zones.forEach((zone) => {
+          this.artists.forEach((artist) => {
+            if (artist.zones.indexOf(zone.toString()) > -1) {
+              this.setArtistasFiltado.add(artist);
+            }
+          });
+        });
+        this.artistsFiltrate = this.artistsFiltrate.filter((value, index, arr) => {
+          return this.setArtistasFiltado.has(value);
+        });
+            f.value.zones.forEach((zone) => {
+               this.artistsFiltrate.forEach((artist) => {
+                 if (artist.zones.indexOf(zone.toString()) > -1) {
+                   this.setArtistasFiltado.add(artist);
+                 }
+               });
+             });
+            this.artistsFiltrate.filter(artists => this.setArtistasFiltado.has(artists));
+            this.setArtistasFiltado.clear();
+
+            f.value.schedules.forEach((schedule) => {
+               this.artistsFiltrate.forEach((artist) => {
+                 if (artist.schedules.indexOf(schedule.toString()) > -1) {
+                   this.setArtistasFiltado.add(artist);
+                 }
+               });
+             });
+            this.artistsFiltrate.filter(artists => this.setArtistasFiltado.has(artists));
+            this.setArtistasFiltado.clear();
+
+
+        */
+
 
   }
+
+
 }
 
 

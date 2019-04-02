@@ -1,0 +1,77 @@
+<div class="modal-header d-block">
+  <div class="d-flex">
+    <h3 class="modal-title"><b>Formulario de contratación</b></h3>
+      <button type="button" class="close" aria-label="Close" (click)="modal.close()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+  <h5 class="modal-title">Artista: {{artist.artisticName}}</h5>
+</div>
+<div class="modal-body">
+  <div class="container">
+    <form>
+      <div class="row">
+        <div class="col-sm-3">
+          <mat-form-field>
+          <input [formControl]="myControl" [(ngModel)]="contract.zone" [matAutocomplete]="auto" matInput
+                 name="zone" placeholder="Provincia" type="text" required>
+          <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+            <mat-option *ngFor="let zone of filteredZones | async" value="{{zone}}">
+              {{zone}}
+            </mat-option>
+          </mat-autocomplete>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput type="text" [(ngModel)]="contract.location" placeholder="Localidad" name="location" required>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6">
+          <mat-form-field>
+            <textarea matInput type="text" [(ngModel)]="contract.comments" placeholder="Comentarios" name="comments" rows="8"></textarea>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-3">
+          <mat-form-field>
+            <input matInput [matDatepickerFilter]="dateFilter" [(ngModel)]="date" [matDatepicker]="picker" placeholder="Elige una fecha" name="date" required>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <ngb-timepicker [(ngModel)]="time" name="hour" required="true"></ngb-timepicker>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="modal-footer">
+  <div class="button-row">
+    <button type="button" mat-raised-button color="warn" (click)="modal.close()">Cancelar</button>
+    <button type="button" mat-raised-button color="primary" (click)="askConfirmation(confModal)">Finalizar</button>
+  </div>
+</div>
+
+<ng-template #confModal let-modalRef>
+  <div class="modal-header">
+    <h3 class="modal-title"><b>Confirmación de contratación</b></h3>
+    <button type="button" class="close" aria-label="Close" (click)="modalRef.close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>¿Estas seguro que quieres realizar la contratación? Revisa que los datos son correctos:</p>
+    <div class="col-sm-12">
+      <mat-list role="list">
+        <mat-list-item><b>Lugar de actuación:</b> &nbsp;{{contract.location}}, {{contract.zone}}</mat-list-item>
+        <div *ngIf="contract.comments != null">
+          <mat-list-item><b>Comentarios:</b></mat-list-item>
+          <mat-list-item>{{contract.comments}}</mat-list-item>
+        </div>
+        <mat-list-item><b>Fecha de actuación:</b> &nbsp;{{date.getDay()}}/{{date.getMonth()}}/{{date.getFullYear()}} a las {{time.hour}}:{{time.minute}} horas</mat-list-item>
+      </mat-list>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" mat-raised-button color="warn" (click)="modalRef.close()">No</button>
+    <button type="button" mat-raised-button color="primary" (click)="saveContract(modalRef)">Sí</button>
+  </div>
+</ng-template>
+
