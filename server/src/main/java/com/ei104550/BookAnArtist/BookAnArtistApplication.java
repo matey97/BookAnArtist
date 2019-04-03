@@ -47,7 +47,6 @@ public class BookAnArtistApplication extends SpringBootServletInitializer {
 		user1.setUsername("Pepe");
 		user1.setPassword("pepe");
 		user1.setEmail("pepe@gmail.com");
-		user1.setUserType(UserType.ARTIST);
 
 		Artist artista1 = new Artist();
 		artista1.setUsername(user1.getUsername());
@@ -70,7 +69,6 @@ public class BookAnArtistApplication extends SpringBootServletInitializer {
 		user2.setUsername("Tomas");
 		user2.setPassword("tomas");
 		user2.setEmail("tomas@gmail.com");
-		user2.setUserType(UserType.ARTIST);
 
 		Artist artista2 = new Artist();
 		artista2.setUsername(user2.getUsername());
@@ -84,7 +82,6 @@ public class BookAnArtistApplication extends SpringBootServletInitializer {
 		user3.setUsername("Fermín");
 		user3.setPassword("fermin");
 		user3.setEmail("fermin@gmail.com");
-		user3.setUserType(UserType.ARTIST);
 
 		Artist artista3 = new Artist();
 		artista3.setUsername(user3.getUsername());
@@ -98,7 +95,6 @@ public class BookAnArtistApplication extends SpringBootServletInitializer {
 		user4.setUsername("Agapito");
 		user4.setPassword("agapito");
 		user4.setEmail("agapito@gmail.com");
-		user4.setUserType(UserType.ARTIST);
 
 		Artist artista4 = new Artist();
 		artista4.setUsername(user4.getUsername());
@@ -112,7 +108,6 @@ public class BookAnArtistApplication extends SpringBootServletInitializer {
 		user5.setUsername("Javier");
 		user5.setPassword("javier");
 		user5.setEmail("javier@gmail.com");
-		user5.setUserType(UserType.ARTIST);
 
 		Artist artista5 = new Artist();
 		artista5.setUsername(user5.getUsername());
@@ -125,7 +120,6 @@ public class BookAnArtistApplication extends SpringBootServletInitializer {
 		user6.setUsername("Juan");
 		user6.setPassword("juan");
 		user6.setEmail("juan@gmail.com");
-		user6.setUserType(UserType.ARTIST);
 
 		return args -> {
 			Stream.of(user1, user2, user3, user4, user5, user6).forEach((user) -> {

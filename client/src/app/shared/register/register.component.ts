@@ -21,18 +21,18 @@ export class RegisterComponent implements OnInit {
   }
 
   SignUp() {
-      let url = 'http://localhost:8080/register';
+      const url = 'http://localhost:8080/register';
       this.http.post<Observable<boolean>>(url, {
           username: this.model.username,
           password: this.model.password,
           email: this.model.email,
-          role: this.model.role
-      }).subscribe(isValid => {
-          if (isValid) {
-              sessionStorage.setItem('token', btoa(this.model.username + ':' + this.model.password));
-              this.router.navigate(['user']);
+          usertype: this.model.usertype
+      }).subscribe(user => {
+          if (user !== null) {
+            sessionStorage.setItem('token', btoa(this.model.username + ':' + this.model.password));
+            this.router.navigate(['user']);
           } else {
-              alert("Authentication failed.")
+              alert('Authentication failed.');
           }
       });
   }

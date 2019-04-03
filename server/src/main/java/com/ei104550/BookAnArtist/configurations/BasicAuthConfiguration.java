@@ -52,7 +52,7 @@ public class BasicAuthConfiguration extends WebSecurityConfigurerAdapter  {
                 .and()
                 .httpBasic().and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED).and()
-                .csrf().disable();
+                .csrf().disable().headers().frameOptions().disable();
     }
 
     @Bean

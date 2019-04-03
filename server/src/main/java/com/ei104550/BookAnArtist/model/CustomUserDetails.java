@@ -6,7 +6,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
-import com.ei104550.BookAnArtist.model.User;
 
 public class CustomUserDetails extends User implements UserDetails {
     public CustomUserDetails(final User user) {

@@ -26,12 +26,12 @@ public class UserController {
 
     @GetMapping("user/{username}")
     public User userByUsername(HttpServletResponse httpServletResponse, @PathVariable String username){
-        return userRepository.findById(username).get();
+        return userRepository.findById(username).orElse(null);
     }
 
     @GetMapping(value = "user-image/{username}")
     public Map<String, String> userImage(@PathVariable String username){
-        User user = userRepository.findById(username).get();
+        User user = userRepository.findById(username).orElse(null);
         Map<String, String> jsonMap = new HashMap<>();
         jsonMap.put("raw", Base64.getEncoder().encodeToString(user.getImage()));
         return jsonMap;

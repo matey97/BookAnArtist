@@ -31,23 +31,27 @@ export class LoginComponent implements OnInit {
     }
 
   login() {
-    let url = 'http://localhost:8080/login';
-    this.http.post<Observable<boolean>>(url, {
+    const url = 'http://localhost:8080/login';
+    this.http.post(url, {
       username: this.model.username,
       password: this.model.password
-    }).subscribe(isValid => {
-      if (isValid) {
-        sessionStorage.setItem('token', btoa(this.model.username + ':' + this.model.password));
-        this.router.navigate(['user']);
-
+    }).subscribe(user => {
+      if (user !== null) {
+        if (user['usertype'] !== null) {
+          sessionStorage.setItem('token', btoa(this.model.username + ':' + this.model.password));
+          this.loguedUserName = user['username'];
+          //this.user = new User(user);
+          this.router.navigate(['user']);
+        } else {
+          alert('Authentication failed.');
+        }
       } else {
-        alert("Authentication failed.")
+        alert('Authentication failed.');
       }
     });
   }
 
-
-    public getLoguedUser(){
+    public getLoguedUser() {
         return this.loguedUserName;
     }
 

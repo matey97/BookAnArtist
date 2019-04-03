@@ -36,7 +36,7 @@ public class LoginController {
     @RequestMapping("/login")
     public User user(@RequestBody User principal) {
        // logger.info("user logged "+ principal);
-        return principal;
+        return userService.find(principal.getUsername());
     }
 
 }

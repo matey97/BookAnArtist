@@ -24,12 +24,14 @@ public class User {
 
     @OneToMany(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn
-    private Set<Role> role;
+    private Set<Role> roles;
     @Lob
     private byte[] image;
     @ElementCollection()
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Contract> contracts;
+
+    private String usertype;
 
     public User(){
         this.contracts = new LinkedList<>();
@@ -39,19 +41,28 @@ public class User {
         this.username = user.getUsername();
         this.password = user.getPassword();
         this.email = user.getEmail();
-        this.role = user.getRoles();
+        this.roles = user.getRoles();
         this.image = user.getImage();
+        this.usertype= user.getUsertype();
 
     }
 
-
     public Set<Role> getRoles() {
-        return role;
+        return roles;
     }
 
     public void setRoles(Set<Role> roles) {
-        this.role = roles;
+        this.roles = roles;
     }
+
+    public String getUsertype() {
+        return usertype;
+    }
+
+    public void setUsertype(String usertype) {
+        this.usertype = usertype;
+    }
+
 
 
     public String getUsername() {
@@ -105,8 +116,9 @@ public class User {
                 "username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
-                ", role=" + role +
+                ", role=" + roles +
                 ", image=" + Arrays.toString(image) +
+                ", usertype=" + usertype +
                 '}';
     }
 }

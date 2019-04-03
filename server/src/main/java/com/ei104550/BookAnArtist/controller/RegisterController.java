@@ -16,14 +16,13 @@ public class RegisterController {
 
 
     @PostMapping("/register")
-    public boolean registerUser(@RequestBody User user) throws RegistrationForbiddenException {
+    public User registerUser(@RequestBody User user) throws RegistrationForbiddenException {
        if (validData(user) && userService.find(user.getUsername()) == null){
            user.setPassword(userService.EncodeUserPassword(user.getPassword()));
            userService.addNewUser(user);
-          return true;
+          return user;
        }
-       return false;
-
+       return null;
     }
 
     private boolean validData (User user){
