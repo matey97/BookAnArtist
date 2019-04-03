@@ -10,3 +10,7 @@ DROP COLUMN ARTISTIC_NAME FROM CONTRACT [42001-197]
 org.h2.jdbc.JdbcSQLException: Tabla "CONTRACT" no encontrada
 Table "CONTRACT" not found; SQL statement:
 insert into contract (artistic_username, comments, date, location, organizer_username, state, zone, id) values (?, ?, ?, ?, ?, ?, ?, ?) [42102-197]
+2019-04-01 16:51:16 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLException: Tabla "NOSE" no encontrada
+Table "NOSE" not found; SQL statement:
+select * from nose [42102-197]
