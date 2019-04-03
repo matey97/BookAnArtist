@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {ArtistService} from '../shared/artist/artist.service';
+import {PaymentService} from '../shared/payment/payment.service';
 import {UserService} from '../shared/user/user.service';
-import {MatInputModule} from '@angular/material/input';
-import {Artist} from '../model/Artist';
 import {NgForm} from '@angular/forms';
+import {Payment} from '../model/Payment';
+import {ContractService} from '../shared/contract/contract.service';
 
 @Component({
   selector: 'app-artist-list',
@@ -29,12 +30,17 @@ export class ArtistListComponent implements OnInit {
   zona: string;
   schedule: string;
 
+  // Prueba payment
+
+  payment: Payment;
+
   // Atributos para la paginación
   page: number;
   pageSize: number;
   searchValue: string;
 
   constructor(private artistService: ArtistService,
+              private paymentService: PaymentService,
               private userService: UserService) { }
 
   ngOnInit() {
