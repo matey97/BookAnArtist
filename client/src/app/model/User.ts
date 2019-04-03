@@ -8,7 +8,7 @@ export class User {
   image: string;
   contracts: Array<Contract>;
 
-  User(object: any) {
+  constructor(object: any) {
     this.username = object.username;
     this.email = object.email;
     this.password = object.password;
