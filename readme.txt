@@ -1,5 +1,3 @@
-# BookAnArtist
-
 Para hacer funcionar el proyecto hay que seguir los siguientes pasos:
   - Clonar el repositorio.
   - Abrir en distintos IDEs los proyectos en los directorios client y server.
