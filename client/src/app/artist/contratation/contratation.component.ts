@@ -20,16 +20,20 @@ export class ContratationComponent implements OnInit {
   artist: Artist;
   @Input()
   modal;
+  @Input()
+  loguedUser;
 
   myControl: FormControl;
   filteredZones: Observable<string[]>;
   currentDate: Date;
   dateFilter;
+  limitDateFilter;
 
   contract: Contract;
 
   date: Date;
   time: NgbTimeStruct;
+  limitDate: Date;
 
   constructor(private modalService: NgbModal,
               private contractService: ContractService,
@@ -46,6 +50,9 @@ export class ContratationComponent implements OnInit {
     this.dateFilter = (d: Date): boolean => {
       return d.getTime() > this.currentDate.getTime();
     };
+    this.limitDateFilter = (d: Date): boolean => {
+      return d.getTime() > this.currentDate.getTime() && d.getTime() < this.date.getTime();
+    };
   }
 
   private filter(value): string[] {
@@ -60,10 +67,11 @@ export class ContratationComponent implements OnInit {
   private saveContract(modalRef) {
     this.contract.id = -1;
     this.contract.state = null;
-    this.contract.organizerUsername = 'Pepe'; // TODO Cambiar por loguedUser
+    this.contract.organizerUsername = this.loguedUser.username;
     this.contract.artisticUsername = this.artist.username;
     this.date.setHours(this.time.hour, this.time.second);
     this.contract.date = this.date.getTime();
+    this.contract.limitDate = this.limitDate.getTime();
     this.contractService.postContract(this.contract).subscribe((item) => {
         console.log('Exito');
         if (item) {

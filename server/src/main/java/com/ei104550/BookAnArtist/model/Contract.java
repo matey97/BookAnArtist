@@ -17,6 +17,7 @@ public class Contract {
     private String location;
     private String comments;
     private Long date;
+    private Long limitDate;
     private ContractState state;
 
     public Contract(){
@@ -77,6 +78,14 @@ public class Contract {
 
     public void setDate(Long date) {
         this.date = date;
+    }
+
+    public Long getLimitDate() {
+        return limitDate;
+    }
+
+    public void setLimitDate(Long limitDate) {
+        this.limitDate = limitDate;
     }
 
     public ContractState getState() {

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Location} from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -21,7 +22,8 @@ export class LoginComponent implements OnInit {
         private router: Router,
         private http: HttpClient,
         private userService: UserService,
-        private appComponent: AppComponent
+        private appComponent: AppComponent,
+        private location: Location
     ) { }
 
     ngOnInit() {
@@ -38,8 +40,8 @@ export class LoginComponent implements OnInit {
                 this.userService.setUserName(this.model.username);
                 this.appComponent.ngOnInit();
                 sessionStorage.setItem('token', btoa(this.model.username + ':' + this.model.password));
-                this.router.navigate(['user']);
-
+                // this.router.navigate(['user']);
+                this.location.back(); // Permite volver a la página anterior
             } else {
                 alert("Authentication failed.")
             }
