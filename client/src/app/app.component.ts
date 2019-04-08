@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {UserService} from './shared/user/user.service';
 import {Observable} from 'rxjs';
 import 'hammerjs';
-import {LoginComponent} from "./shared/login/login.component";
+import {LoginService} from './shared/loginService/login.service';
 
 @Component({
   selector: 'app-root',
@@ -14,20 +14,15 @@ export class AppComponent implements OnInit {
   private title = 'BookAnArtist';
 
   private loguedUser = null;
-  private logincomponent: LoginComponent;
 
   constructor(private userService: UserService,
-              private loginService: LoginComponent) {
+              private loginService: LoginService) {
 
   }
 
   ngOnInit() {
-    this.userService.getLoguedUser().subscribe(user => {
-      if (user !== null) {
-        this.loguedUser = user;
-      }
-    });
     const user = this.loginService.getLoguedUser();
+    console.log(user);
     if (user !== null) {
       this.loguedUser = user;
     }

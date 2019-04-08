@@ -7,7 +7,7 @@ import {map, startWith} from 'rxjs/operators';
 import {MatSnackBar} from '@angular/material';
 import {User} from '../model/User';
 import {Artist, Image, Video} from '../model/Artist';
-import {LoginComponent} from '../shared/login/login.component';
+import {LoginService} from '../shared/loginService/login.service';
 
 export const ZONES = ['Álava', 'Albacete', 'Alicante', 'Almeria', 'Asturias', 'Ávila', 'Badajoz', 'Barcelona', 'Burgos', 'Cáceres', 'Cadiz',
   'Cantabria', 'Castellón', 'Ceuta', 'Ciudad real', 'Cordoba', 'Cuenca', 'Girona', 'Las palmas de Gran Canaria', 'Granada', 'Guadalajara',
@@ -40,7 +40,7 @@ export class ArtistProfileComponent implements OnInit {
   constructor(private userService: UserService,
               private artistService: ArtistService,
               private snackBar: MatSnackBar,
-              private loginService: LoginComponent) { }
+              private loginService: LoginService) { }
 
   ngOnInit() {
     const user = this.loginService.getLoguedUser();

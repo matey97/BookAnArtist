@@ -5,6 +5,7 @@ import {UserService} from '../user/user.service';
 import {User} from "../../model/User";
 import {Observable} from "rxjs";
 import { Location} from '@angular/common';
+import {LoginService} from '../loginService/login.service';
 
 @Component({
     selector: 'login',
@@ -23,7 +24,8 @@ export class LoginComponent implements OnInit {
         private router: Router,
         private http: HttpClient,
         private userService: UserService,
-        private location: Location
+        private location: Location,
+        private loginService: LoginService
     ) { }
 
     ngOnInit() {
@@ -31,29 +33,7 @@ export class LoginComponent implements OnInit {
     }
 
   login() {
-    const url = 'http://localhost:8080/login';
-    this.http.post(url, {
-      username: this.model.username,
-      password: this.model.password
-    }).subscribe(user => {
-      if (user !== null) {
-        if (user['usertype'] !== null) {
-          sessionStorage.setItem('token', btoa(this.model.username + ':' + this.model.password));
-          this.loguedUserName = user['username'];
-          this.user = new User(user);
-          console.log(this.user);
-          // this.userService.setUserName(this.user.username);
-          this.location.back(); // Permite volver a la página anterior
-        } else {
-          alert('Authentication failed.');
-        }
-      } else {
-        alert('Authentication failed.');
-      }
-    });
+      this.loginService.login(this.model.username, this.model.password);
   }
 
-  public getLoguedUser() {
-      return this.user;
-    }
 }
