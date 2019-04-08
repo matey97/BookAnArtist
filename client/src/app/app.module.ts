@@ -46,7 +46,7 @@ import { ContractListComponent } from './contract-list/contract-list.component';
     LoginComponent,
     RegisterComponent,
     ContratationComponent,
-    ContractListComponent
+    ContractListComponent,
   ],
   imports: [
     BrowserModule,

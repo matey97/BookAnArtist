@@ -35,22 +35,22 @@ export class ContractListComponent implements OnInit {
     } else {
       this.snackBar.open('No se ha podido tratar tu petición.', 'Cerrar', {duration: 3000});
     }
-  }
+  };
 
   errorSubscriber = (error) => {
     this.snackBar.open('Ha ocurrido un error', 'Cerrar', {duration: 3000});
-  }
-
+  };
 
 
   constructor(private contractService: ContractService,
               private userService: UserService,
-              private snackBar: MatSnackBar) { }
+              private snackBar: MatSnackBar) {
+  }
 
   ngOnInit() {
     this.userService.getLoguedUser().subscribe(user => {
       this.loguedUser = user;
-      if (this.loguedUser.userType === 'ARTIST') {
+      if (this.loguedUser.usertype === 'ARTIST') {
         this.isArtist = true;
         this.contractService.getArtistContracts(this.loguedUser.username).subscribe(contracts => {
           this.contracts = contracts;
