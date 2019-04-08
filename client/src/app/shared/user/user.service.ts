@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import { LoginComponent } from '../login/login.component';
 import { AppComponent } from 'src/app/app.component';
+import {User} from "../../model/User";
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,8 @@ import { AppComponent } from 'src/app/app.component';
 export class UserService {
 
   loguedUserName: string;
+  logincomponent: LoginComponent;
+  user: User;
 
   constructor(private http: HttpClient) { }
 
@@ -17,9 +20,21 @@ export class UserService {
     return this.http.get('api/users');
   }
 
-  getLoguedUser(): Observable<any> {
-    return this.http.get('api/user/' + this.loguedUserName);
+  getLoguedUser(): Observable<Object> {
+    return this.http.get<any>('api/user/' + this.loguedUserName);
   }
+
+  public setUser(user: User){
+    this.user = user;
+  }
+  public getUser(): User {
+    return this.user;
+  }
+
+// getLoguedUser(): User {
+  //
+  //   return this.logincomponent.getLoguedUser();
+  // }
 
   getProfileImage(userName: string): Observable<any> {
     return this.http.get('api/user-image/' + userName);

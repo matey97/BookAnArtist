@@ -5,7 +5,7 @@ import { ArtistProfileComponent} from './artist-profile/artist-profile.component
 import { ArtistComponent} from './artist/artist.component';
 import { LoginComponent } from './shared/login/login.component';
 import { HomeComponent } from './shared/home/home.component';
-import { RegisterComponent} from "./shared/register/register.component";
+import { RegisterComponent} from './shared/register/register.component';
 import {ContractListComponent} from './contract-list/contract-list.component';
 
 const routes: Routes = [
@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: 'user', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent},
- //{ path: '**', redirectTo: 'user' }
+ // { path: '**', redirectTo: 'user' }
   { path: 'profile/:username', component: ArtistProfileComponent },
   { path: 'artist/:username', component: ArtistComponent},
   { path: 'contracts/:username', component: ContractListComponent}

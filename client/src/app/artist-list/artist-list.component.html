@@ -76,7 +76,7 @@
                 <p class = "card-text">{{artist.description}}</p>
                 <p class="card-text">{{artist.habilities}}</p>
                 <p class="card-text">{{artist.price}}€/h</p>
-                <a href="./artist/{{artist.username}}" class="btn btn-outline-light">Ver perfil </a>
+                <a [routerLink]="['/artist',artist.username]" class="btn btn-outline-light">Ver perfil </a>
               </div>
               <div class="w-100"></div>
               <div class="card-footer w-100 text-muted">

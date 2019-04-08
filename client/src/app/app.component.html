@@ -24,10 +24,15 @@
         <a class="nav-link" href="#">Buscar</a>
       </li>
     </ul>
-    <a class="navbar-brand nav-link " routerLink="/login">
+    <a *ngIf="loguedUser == null" class="navbar-brand nav-link " routerLink="/login">
         <div class="LoginButton"  alt="shortLogo">login</div></a>
-        <a class="navbar-brand nav-link " routerLink="/register">
+        <a *ngIf="loguedUser == null"  class="navbar-brand nav-link " routerLink="/register">
           <div class="LoginButton"  alt="shortLogo">Sign up</div></a>
+    <div class="img-wrapper" *ngIf="loguedUser != null">
+      <img src="loguedUser.img">
+    </div>
+    <a *ngIf="loguedUser == null" class="navbar-brand nav-link " routerLink="/login">
+      <div class="UserPage"  alt="shortLogo">Usuario</div></a>
   </div>
 </nav>
 <router-outlet></router-outlet>

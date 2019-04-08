@@ -40,8 +40,12 @@ export class LoginComponent implements OnInit {
         if (user['usertype'] !== null) {
           sessionStorage.setItem('token', btoa(this.model.username + ':' + this.model.password));
           this.loguedUserName = user['username'];
-          //this.user = new User(user);
-          this.router.navigate(['user']);
+          this.user = new User(user);
+          this.userService.setUserName(this.user.username);
+          this.userService.getLoguedUser().subscribe(user =>{
+            this.userService.setUser(this.user);
+            this.router.navigate(['user']);
+          });
         } else {
           alert('Authentication failed.');
         }
@@ -51,8 +55,8 @@ export class LoginComponent implements OnInit {
     });
   }
 
-    public getLoguedUser() {
-        return this.loguedUserName;
+  public getLoguedUser() {
+      return this.user;
     }
 
 }
