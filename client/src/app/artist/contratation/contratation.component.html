@@ -27,16 +27,21 @@
         </div>
         <div class="col-sm-6">
           <mat-form-field>
-            <textarea matInput type="text" [(ngModel)]="contract.comments" placeholder="Comentarios" name="comments" rows="8"></textarea>
+            <textarea matInput type="text" [(ngModel)]="contract.comments" placeholder="Comentarios" name="comments" rows="11"></textarea>
           </mat-form-field>
         </div>
         <div class="col-sm-3">
           <mat-form-field>
-            <input matInput [matDatepickerFilter]="dateFilter" [(ngModel)]="date" [matDatepicker]="picker" placeholder="Elige una fecha" name="date" required>
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
+            <input matInput [matDatepickerFilter]="dateFilter" [(ngModel)]="date" [matDatepicker]="pickerA" placeholder="Elige una fecha" name="date" required>
+            <mat-datepicker-toggle matSuffix [for]="pickerA"></mat-datepicker-toggle>
+            <mat-datepicker #pickerA></mat-datepicker>
           </mat-form-field>
-          <ngb-timepicker [(ngModel)]="time" name="hour" required="true"></ngb-timepicker>
+          <ngb-timepicker [(ngModel)]="time" name="hour" required></ngb-timepicker>
+          <mat-form-field>
+            <input matInput [disabled]="date == null" [matDatepickerFilter]="limitDateFilter" [(ngModel)]="limitDate" [matDatepicker]="pickerB" placeholder="Fecha límite" name="limitDate" required>
+            <mat-datepicker-toggle matSuffix [for]="pickerB"></mat-datepicker-toggle>
+            <mat-datepicker #pickerB></mat-datepicker>
+          </mat-form-field>
         </div>
       </div>
     </form>

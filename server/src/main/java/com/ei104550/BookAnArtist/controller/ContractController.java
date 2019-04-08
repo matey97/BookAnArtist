@@ -9,6 +9,7 @@ import com.ei104550.BookAnArtist.repositories.ContractRepository;
 import com.ei104550.BookAnArtist.repositories.UserRepository;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,14 +45,26 @@ public class ContractController {
 
     @GetMapping("art-contract-list/{username}")
     public List<Contract> getArtistContracts(@PathVariable("username") String username){
-        return this.contractRepository.findAll().stream().filter(contract -> contract.getArtisticUsername().equals(username))
+        Date currentDate = new Date();
+        List<Contract> contractList = this.contractRepository.findAll().stream().filter(contract -> contract.getArtisticUsername().equals(username))
                 .collect(Collectors.toList());
+        contractList.forEach(contract -> {
+            if (contract.getLimitDate() < currentDate.getTime())
+                contract.setState(ContractState.CANCELLED);
+        });
+        return contractList;
     }
 
     @GetMapping("org-contract-list/{username}")
     public List<Contract> getOrganizerContracts(@PathVariable("username") String username){
-        return this.contractRepository.findAll().stream().filter(contract -> contract.getOrganizerUsername().equals(username))
+        Date currentDate = new Date();
+        List<Contract> contractList = this.contractRepository.findAll().stream().filter(contract -> contract.getOrganizerUsername().equals(username))
                 .collect(Collectors.toList());
+        contractList.forEach(contract -> {
+            if (contract.getState() != ContractState.CANCELLED && contract.getLimitDate() < currentDate.getTime())
+                contract.setState(ContractState.CANCELLED);
+        });
+        return contractList;
     }
 
     @PutMapping("contract/accept/{id}")

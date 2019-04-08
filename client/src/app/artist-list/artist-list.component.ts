@@ -3,9 +3,12 @@ import {ArtistService} from '../shared/artist/artist.service';
 import {PaymentService} from '../shared/payment/payment.service';
 import {UserService} from '../shared/user/user.service';
 import {NgForm} from '@angular/forms';
+
 import {Payment} from '../model/Payment';
 import {ContractService} from '../shared/contract/contract.service';
 import {HABILITIES, SCHEDULES, ZONES} from "../artist-profile/artist-profile.component";
+
+
 
 @Component({
   selector: 'app-artist-list',

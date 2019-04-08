@@ -13,7 +13,8 @@ public class LoginController {
 
     @PostMapping("/login")
     public boolean login(@RequestBody User user) {
-        return user.getUsername().equals("Pepe") && user.getPassword().equals("pepe");
+        return user.getUsername().equals("Fermín") && user.getPassword().equals("Fermin") ||
+                user.getUsername().equals("org1") && user.getPassword().equals("org1");
     }
 
 
