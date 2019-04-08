@@ -16,7 +16,8 @@ export class AppComponent implements OnInit {
   private loguedUser = null;
   private logincomponent: LoginComponent;
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService,
+              private loginService: LoginComponent) {
 
   }
 
@@ -26,6 +27,10 @@ export class AppComponent implements OnInit {
         this.loguedUser = user;
       }
     });
+    const user = this.loginService.getLoguedUser();
+    if (user !== null) {
+      this.loguedUser = user;
+    }
   }
 
 }

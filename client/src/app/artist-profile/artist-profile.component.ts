@@ -7,6 +7,7 @@ import {map, startWith} from 'rxjs/operators';
 import {MatSnackBar} from '@angular/material';
 import {User} from '../model/User';
 import {Artist, Image, Video} from '../model/Artist';
+import {LoginComponent} from '../shared/login/login.component';
 
 export const ZONES = ['Álava', 'Albacete', 'Alicante', 'Almeria', 'Asturias', 'Ávila', 'Badajoz', 'Barcelona', 'Burgos', 'Cáceres', 'Cadiz',
   'Cantabria', 'Castellón', 'Ceuta', 'Ciudad real', 'Cordoba', 'Cuenca', 'Girona', 'Las palmas de Gran Canaria', 'Granada', 'Guadalajara',
@@ -38,23 +39,23 @@ export class ArtistProfileComponent implements OnInit {
 
   constructor(private userService: UserService,
               private artistService: ArtistService,
-              private snackBar: MatSnackBar) { }
+              private snackBar: MatSnackBar,
+              private loginService: LoginComponent) { }
 
   ngOnInit() {
-    this.userService.getLoguedUser().subscribe(user => {
-      if (user !== null) {
-        this.user = user;
-        this.artistService.getArtistByUsername(this.user.username).subscribe(artist => {
-          if (artist.username == null) {
-            this.firstTime = true;
-            artist.username = user.username;
-          }
-          this.artist = artist;
-          this.myControl = new FormControl({value: '', disabled: !this.firstTime});
-          this.applyFilter();
-        });
-      }
-    });
+    const user = this.loginService.getLoguedUser();
+    if (user !== null) {
+      this.user = user;
+      this.artistService.getArtistByUsername(this.user.username).subscribe(artist => {
+        if (artist.username == null) {
+          this.firstTime = true;
+          artist.username = user.username;
+        }
+        this.artist = artist;
+        this.myControl = new FormControl({value: '', disabled: !this.firstTime});
+        this.applyFilter();
+      });
+    }
   }
 
   public changeEditMode(mode: boolean) {
