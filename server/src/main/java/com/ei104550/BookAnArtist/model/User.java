@@ -8,32 +8,62 @@ import javax.persistence.*;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
+@Table(name = "USER")
 public class User {
 
     @Id
+    @Column(name = "USERNAME")
     private String username;
+    @Column(name = "PASSWORD")
     private String password;
+    @Column(name = "EMAIL")
     private String email;
-    private UserType userType;
+
+    @OneToMany(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn
+    private Set<Role> roles;
     @Lob
     private byte[] image;
     @ElementCollection()
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Contract> contracts;
 
+    private String usertype;
+
     public User(){
         this.contracts = new LinkedList<>();
     }
 
-    public UserType getUserType() {
-        return userType;
+    public User(User user) {
+        this.username = user.getUsername();
+        this.password = user.getPassword();
+        this.email = user.getEmail();
+        this.roles = user.getRoles();
+        this.image = user.getImage();
+        this.usertype= user.getUsertype();
+
     }
 
-    public void setUserType(UserType userType) {
-        this.userType = userType;
+    public Set<Role> getRoles() {
+        return roles;
     }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public String getUsertype() {
+        return usertype;
+    }
+
+    public void setUsertype(String usertype) {
+        this.usertype = usertype;
+    }
+
+
 
     public String getUsername() {
         return username;
@@ -86,8 +116,9 @@ public class User {
                 "username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
-                ", tipo=" + userType +
+                ", role=" + roles +
                 ", image=" + Arrays.toString(image) +
+                ", usertype=" + usertype +
                 '}';
     }
 }

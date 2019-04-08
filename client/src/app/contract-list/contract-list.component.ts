@@ -5,6 +5,7 @@ import {UserService} from '../shared/user/user.service';
 import {User} from '../model/User';
 import {Contract} from '../model/Contract';
 import {MatPaginator, MatSnackBar, MatSort, MatTableDataSource} from '@angular/material';
+import {LoginService} from '../shared/loginService/login.service';
 
 @Component({
   selector: 'app-contract-list',
@@ -42,32 +43,31 @@ export class ContractListComponent implements OnInit {
   }
 
 
-
   constructor(private contractService: ContractService,
               private userService: UserService,
-              private snackBar: MatSnackBar) { }
+              private loginService: LoginService,
+              private snackBar: MatSnackBar) {
+  }
 
   ngOnInit() {
-    this.userService.getLoguedUser().subscribe(user => {
-      this.loguedUser = user;
-      if (this.loguedUser.userType === 'ARTIST') {
-        this.isArtist = true;
-        this.contractService.getArtistContracts(this.loguedUser.username).subscribe(contracts => {
-          this.contracts = contracts;
-          this.displayedColumns = this.artistDisplayedColumns;
-          this.configureDataSource(this.contracts);
-          this.configureTablePaginatorAndSorting();
-        });
-      } else {
-        this.isArtist = false;
-        this.contractService.getOrganizerContracts(this.loguedUser.username).subscribe(contracts => {
-          this.contracts = contracts;
-          this.displayedColumns = this.organizerDisplayedColumns;
-          this.configureDataSource(this.contracts);
-          this.configureTablePaginatorAndSorting();
-        });
-      }
-    });
+    this.loguedUser = this.loginService.getLoguedUser();
+    if (this.loguedUser.usertype === 'ARTIST') {
+      this.isArtist = true;
+      this.contractService.getArtistContracts(this.loguedUser.username).subscribe(contracts => {
+        this.contracts = contracts;
+        this.displayedColumns = this.artistDisplayedColumns;
+        this.configureDataSource(this.contracts);
+        this.configureTablePaginatorAndSorting();
+      });
+    } else {
+      this.isArtist = false;
+      this.contractService.getOrganizerContracts(this.loguedUser.username).subscribe(contracts => {
+        this.contracts = contracts;
+        this.displayedColumns = this.organizerDisplayedColumns;
+        this.configureDataSource(this.contracts);
+        this.configureTablePaginatorAndSorting();
+      });
+    }
   }
 
   private configureDataSource(contacts) {

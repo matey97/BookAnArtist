@@ -3,7 +3,8 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light navStyle">
   <a class="navbar-brand" href="#">
     <img class="LogoShortNavBar" src="../assets/images/LogoShortNamePurple.PNG" alt="shortLogo"></a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+          aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarText">
@@ -14,33 +15,49 @@
       <li class="nav-item">
         <a class="nav-link" routerLink="/artistList">Acceder a la lista de artistas</a>
       </li>
-      <li *ngIf = "loguedUser != null && loguedUser.userType == 'ARTIST'" class="nav-item">
+      <li *ngIf="loguedUser !== null && loguedUser.usertype == 'ARTIST'" class="nav-item">
         <a class="nav-link" [routerLink]="['/profile', loguedUser.username]">Perfil artístico</a>
       </li>
-      <li *ngIf = "loguedUser != null" class="nav-item">
+      <li *ngIf="loguedUser !== null" class="nav-item">
         <a class="nav-link" [routerLink]="['/contracts', loguedUser.username]">Contraciones</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">Buscar</a>
       </li>
     </ul>
-    <a class="navbar-brand nav-link " routerLink="/login">
-        <div class="LoginButton"  alt="shortLogo">login</div></a>
-        <a class="navbar-brand nav-link " routerLink="/register">
-          <div class="LoginButton"  alt="shortLogo">Sign up</div></a>
+    <a *ngIf="loguedUser == null" class="navbar-brand nav-link " routerLink="/login">
+      <div class="LoginButton" alt="shortLogo">login</div>
+    </a>
+    <a *ngIf="loguedUser == null" class="navbar-brand nav-link " routerLink="/register">
+      <div class="LoginButton" alt="shortLogo">Sign up</div>
+    </a>
+    <div class="img-wrapper" *ngIf="loguedUser != null">
+      <img src="loguedUser.img">
+    </div>
+    <a *ngIf="loguedUser == null" class="navbar-brand nav-link " routerLink="/login">
+      <div class="UserPage" alt="shortLogo">Usuario</div>
+    </a>
   </div>
 </nav>
 <router-outlet></router-outlet>
 
 <br>
 <div class="jumbotron text-center" style="margin-bottom:0">
-  <p>
-    <b>BookAnArtist - 2019</b><br><br>
-    Realizado por los estudiantes de Ingeniería Informática de la UJI:<br>
-    Sergio Jimenez Chovares<br>
-    Miguel Matey Sanz<br>
-    Albert Mestre Vicente
-  </p>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6">
+        <img style="width: 400px;height: 200px" src="../assets/images/LogoFullName.PNG"/>
+      </div>
+      <div class="col-sm-5">
+        <br>
+        <b>BookAnArtist © 2019</b><br><br>
+        Realizado por los estudiantes de Ingeniería Informática de la UJI:<br><br>
+        Sergio Jimenez Chovares<br>
+        Miguel Matey Sanz<br>
+        Albert Mestre Vicente
+      </div>
+    </div>
+  </div>
 </div>
 
 

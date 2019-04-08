@@ -4,7 +4,15 @@ export class User {
   username: string;
   password: string;
   email: string;
-  userType: 'ARTIST' | 'ADMIN' | 'ORGANIZER';
+  usertype: 'ARTIST' | 'ADMIN' | 'ORGANIZER';
   image: string;
   contracts: Array<Contract>;
+
+  constructor(object: any) {
+    this.username = object.username;
+    this.email = object.email;
+    this.password = object.password;
+    this.usertype = object.usertype;
+    this.image = object.image;
+  }
 }

@@ -1,6 +1,6 @@
 
-<div class="full form-group">
-  <form class="box " name="form" (ngSubmit)="f.form.valid && SignUp()" #f="ngForm" novalidate>
+<div class="full ">
+  <form class="box " name="form form-group" (ngSubmit)="f.form.valid && SignUp()" #f="ngForm" novalidate>
     <div [ngClass]="{ 'has-error': f.submitted && !username.valid }">
       <h1>Register</h1>
      
@@ -27,18 +27,18 @@
       <div *ngIf="f.submitted
         && !email.valid">se requiere email</div>
   </div>
-  <div class="tipoUsuarioText form-group">
+  <div class="tipoUsuarioText ">
     Selecciona tipo de usuario 
       <ul>
         <li>
-          <input class="form-control" #userType="ngModel" [(ngModel)]="model.userType" value="ARTIST" type="radio" name="1">
+          <input class="form-control" #usertype="ngModel" [(ngModel)]="model.usertype" value="ARTIST" type="radio" name="1">
           <div class="RadioLabelTextContainer">
             <label class="radioText">Artista</label>
           </div>
           <div class="bullet"></div>
         </li>
         <li>
-          <input class="form-control" #userType="ngModel" [(ngModel)]="model.userType"  value="ORGANIZER" type="radio" name="1">
+          <input class="form-control" #usertype="ngModel" [(ngModel)]="model.usertype"  value="ORGANIZER" type="radio" name="1">
           <div class="RadioLabelTextContainer">
             <label class="radioText">Organizador</label>
           </div>
