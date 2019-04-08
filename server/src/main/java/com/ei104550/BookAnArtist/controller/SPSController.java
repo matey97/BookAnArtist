@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 public class SPSController {
 
 
-    @GetMapping("payment/pay")
+    @PostMapping("payment/pay")
     public boolean realizarPago(@RequestBody Payment payment){
 
         // Simular el trabajo del sps
@@ -19,7 +19,7 @@ public class SPSController {
 
     }
 
-    @GetMapping("payment/receipt")
+    @PostMapping("payment/receipt")
     public boolean realizarCobro(@RequestBody Payment payment){
 
         // Simular el trabajo del sps
@@ -28,7 +28,7 @@ public class SPSController {
 
     }
 
-    @GetMapping("payment/devolution")
+    @PostMapping("payment/devolution")
     public boolean realizarDevolucion(@RequestBody Payment payment){
 
         // Simular el trabajo del sps

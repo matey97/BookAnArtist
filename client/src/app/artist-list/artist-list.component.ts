@@ -5,6 +5,7 @@ import {UserService} from '../shared/user/user.service';
 import {NgForm} from '@angular/forms';
 import {Payment} from '../model/Payment';
 import {ContractService} from '../shared/contract/contract.service';
+import {HABILITIES, SCHEDULES, ZONES} from "../artist-profile/artist-profile.component";
 
 @Component({
   selector: 'app-artist-list',
@@ -13,13 +14,9 @@ import {ContractService} from '../shared/contract/contract.service';
 })
 export class ArtistListComponent implements OnInit {
 
-  habilities = ['Músico', 'Grupo musical', 'Banda', 'DJ', 'Mago', 'Animador', 'Cómico'];
-  schedules = ['Mañana', 'Tarde', 'Noche'];
-  zones = ['Álava', 'Albacete', 'Alicante', 'Almeria', 'Asturias', 'Ávila', 'Badajoz', 'Barcelona', 'Burgos', 'Cáceres', 'Cadiz',
-    'Cantabria', 'Castellón', 'Ceuta', 'Ciudad real', 'Cordoba', 'Cuenca', 'Girona', 'Las palmas de Gran Canaria', 'Granada', 'Guadalajara',
-    'Guipúzcoa', 'Huelva', 'Huesca', 'Islas Baleares', 'Jaén', 'A Coruña', 'La Rioja', 'León', 'Lleida', 'Lugo', 'Madrid', 'Malaga', 'Melilla',
-    'Murcia', 'Navarra', 'Ourense', 'Palencia', 'Pontevedra', 'Salamanca', 'Segovia', 'Sevilla', 'Soria', 'Tarragona', 'Santa cruz de Tenerife',
-    'Teruel', 'Toledo', 'Valencia', 'Valladolid', 'Vizcaya', 'Zamora', 'Zaragoza'];
+  habilities = HABILITIES;
+  schedules = SCHEDULES;
+  zones = ZONES;
   artists: Array<any>;
   artistsFiltrate: Array<any>;
   setArtistasFiltado: Set<any>;
@@ -72,7 +69,6 @@ export class ArtistListComponent implements OnInit {
     this.artists[index].puntuation += value;
     this.artists[index].nPuntuations += 1;
   }
-
 
   onSubmit(f: NgForm) {
 
