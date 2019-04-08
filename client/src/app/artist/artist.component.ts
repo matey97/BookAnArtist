@@ -6,6 +6,7 @@ import {Artist} from '../model/Artist';
 import {User} from '../model/User';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ContratationComponent} from './contratation/contratation.component';
+import {LoginService} from '../shared/loginService/login.service';
 
 @Component({
   selector: 'app-artist',
@@ -24,6 +25,7 @@ export class ArtistComponent implements OnInit {
 
   constructor( private artistService: ArtistService,
                private userService: UserService,
+               private loginService: LoginService,
                private route: ActivatedRoute,
                private modalService: NgbModal) { }
 
@@ -35,9 +37,7 @@ export class ArtistComponent implements OnInit {
   private getArtistProfile() {
     this.artistService.getArtistByUsername(this.username).subscribe(data => {
       this.artist = data;
-      this.userService.getLoguedUser().subscribe(user =>{
-        this.loguedUser = user;
-      });
+      this.loguedUser = this.loginService.getLoguedUser();
       this.userService.getProfileImage(this.artist.username).subscribe(image => {
         this.profileImage = image.raw;
       });
