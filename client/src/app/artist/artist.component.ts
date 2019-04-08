@@ -45,7 +45,7 @@ export class ArtistComponent implements OnInit {
   }
 
   public openContratationModal(modal, authReq) {
-    if (this.loguedUser != null && this.loguedUser.userType === 'ORGANIZER') {
+    if (this.loguedUser != null && this.loguedUser.usertype === 'ORGANIZER') {
       this.modalService.open(modal, {centered: true, backdropClass: 'modal-backdrop-chachiguay', size: 'lg'});
     } else {
       this.modalService.open(authReq, {centered: true, backdropClass: 'modal-backdrop-chachiguay', size: 'lg'});
