@@ -22,7 +22,6 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.userService.getLoguedUser().subscribe(user => {
-      debugger;
       if (user !== null) {
         this.loguedUser = user;
       }

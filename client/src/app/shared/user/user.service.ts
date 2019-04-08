@@ -20,7 +20,7 @@ export class UserService {
     return this.http.get('api/users');
   }
 
-  getLoguedUser(): Observable<Object> {
+  getLoguedUser(): Observable<any> {
     return this.http.get<any>('api/user/' + this.loguedUserName);
   }
 
