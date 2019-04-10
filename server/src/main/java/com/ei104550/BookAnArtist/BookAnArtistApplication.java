@@ -1,5 +1,6 @@
 package com.ei104550.BookAnArtist;
 
+import com.ei104550.BookAnArtist.Services.EmailService;
 import com.ei104550.BookAnArtist.enums.UserType;
 import com.ei104550.BookAnArtist.model.*;
 import com.ei104550.BookAnArtist.repositories.*;
@@ -36,14 +37,15 @@ public class BookAnArtistApplication extends SpringBootServletInitializer {
 		SpringApplication.run(BookAnArtistApplication.class, args);
 	}
 
-	/*@Bean
+	@Bean
 	ApplicationRunner init(ArtistRepository repository,
 						   UserRepository userRepository,
 						   ArtistImageRepository imageRepository,
 						   ArtistVideoRepository videoRepository,
-						   ContractRepository contractRepository){
+						   ContractRepository contractRepository,
+						   EmailService emailService){
 
-		User user1 = new User();
+		/*User user1 = new User();
 		user1.setUsername("Pepe");
 		user1.setPassword("pepe");
 		user1.setEmail("pepe@gmail.com");
@@ -125,10 +127,12 @@ public class BookAnArtistApplication extends SpringBootServletInitializer {
 		user6.setUsername("Juan");
 		user6.setPassword("juan");
 		user6.setEmail("juan@gmail.com");
-		user6.setUsertype(UserType.ARTIST.toString());
+		user6.setUsertype(UserType.ARTIST.toString());*/
 
 		return args -> {
-			Stream.of(user1, user2, user3, user4, user5, user6).forEach((user) -> {
+			/*Contract c = contractRepository.findById(35L).get();
+			emailService.sendNewContractEmail("sergio",c);*/
+			/*Stream.of(user1, user2, user3, user4, user5, user6).forEach((user) -> {
 				File fileImage = new File("src/main/resources/profile-icon.png");
 				try{
 					byte[] bImageFile = Files.readAllBytes(fileImage.toPath());
@@ -177,9 +181,9 @@ public class BookAnArtistApplication extends SpringBootServletInitializer {
 				repository.save(artist);
 			});
 			repository.findAll().forEach(System.out::println);
-			userRepository.findAll().forEach(System.out::println);
+			userRepository.findAll().forEach(System.out::println);*/
 		};
 
-	}*/
+	}
 
 }
