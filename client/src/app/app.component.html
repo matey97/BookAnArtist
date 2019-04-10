@@ -34,7 +34,7 @@
     <div class="img-wrapper" *ngIf="loguedUser != null">
       <img src="loguedUser.img">
     </div>
-    <a *ngIf="loguedUser == null" class="navbar-brand nav-link " routerLink="/login">
+    <a *ngIf="loguedUser != null" class="navbar-brand nav-link " routerLink="/login">
       <div class="UserPage" alt="shortLogo">Usuario</div>
     </a>
   </div>

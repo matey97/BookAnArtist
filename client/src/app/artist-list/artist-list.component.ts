@@ -80,7 +80,7 @@ export class ArtistListComponent implements OnInit {
     this.artistsFiltrate = this.artistsFiltrate.filter(artist => artist.description.toLocaleLowerCase().indexOf(f.value.last.toString().toLocaleLowerCase()) > -1);
     this.artistsFiltrate = this.artistsFiltrate.filter(artist => artist.price > f.value.dineroMin);
     if (f.value.dineroMax === 1 || f.value.dineroMax === null) {
-      this.artistsFiltrate = this.artistsFiltrate.filter(artist => artist.price < 8000);
+      this.artistsFiltrate = this.artistsFiltrate.filter(artist => artist.price < 800000000000);
     } else {
       this.artistsFiltrate = this.artistsFiltrate.filter(artist => artist.price < f.value.dineroMax);
     }
