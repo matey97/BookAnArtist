@@ -1,4 +1,5 @@
 import {Contract} from './Contract';
+import {Valoracion} from './Valoracion';
 
 export class Artist {
   username: string;
@@ -6,7 +7,7 @@ export class Artist {
   description: string;
   price: number;
   puntuation: number;
-  nPuntuations: number;
+  valoraciones: Array<Valoracion>
   habilities: Array<string>;
   images: Array<Image>;
   videos: Array<Video>;

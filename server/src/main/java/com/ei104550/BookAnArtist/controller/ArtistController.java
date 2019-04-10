@@ -3,6 +3,7 @@ package com.ei104550.BookAnArtist.controller;
 import com.ei104550.BookAnArtist.model.Artist;
 import com.ei104550.BookAnArtist.model.ArtistImage;
 import com.ei104550.BookAnArtist.model.ArtistVideo;
+import com.ei104550.BookAnArtist.model.Valoracion;
 import com.ei104550.BookAnArtist.repositories.ArtistImageRepository;
 import com.ei104550.BookAnArtist.repositories.ArtistRepository;
 import com.ei104550.BookAnArtist.repositories.ArtistVideoRepository;
@@ -61,4 +62,17 @@ public class ArtistController {
         artistRepository.save(artist);
         System.out.println(artist);
     }
+
+    @PostMapping("artista/{username}/valoration")
+    public void saveArtistValoration(@PathVariable String username,
+                                     @RequestBody Valoracion valoration){
+
+        if(artistRepository.findById(username).isPresent()){
+            Artist artist = artistRepository.findById(username).get();
+            artist.addValoracion(valoration);
+        }
+
+    }
+
+
 }
