@@ -24,6 +24,7 @@ export class ArtistService {
   }
 
   postAddValoration(valoration: Valoracion): Observable<any> {
+
     return this.http.post('api/artista/' + valoration.valorado + '/valoration', valoration);
   }
 

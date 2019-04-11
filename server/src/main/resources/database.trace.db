@@ -1,1 +1,148 @@
 
+2019-04-10 16:33:26 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLException: Conversión de datos fallida, convirtiendo "'' (VALORACION: ID BIGINT NOT NULL)"
+Data conversion error converting "'' (VALORACION: ID BIGINT NOT NULL)"; SQL statement:
+INSERT INTO "PUBLIC"."VALORACION"("ID","COMENTARIO","PUNTUACION","VALORADO","VALORADOR")VALUES(?,?,?,?,?) -- (?1, ?2, ?3, ?4, ?5) [22018-197]
+2019-04-10 16:33:26 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLException: Conversión de datos fallida, convirtiendo "'' (VALORACION: ID BIGINT NOT NULL)"
+Data conversion error converting "'' (VALORACION: ID BIGINT NOT NULL)"; SQL statement:
+INSERT INTO "PUBLIC"."VALORACION"("ID","COMENTARIO","PUNTUACION","VALORADO","VALORADOR")VALUES(?,?,?,?,?) -- (?1, ?2, ?3, ?4, ?5) [22018-197]
+2019-04-10 16:36:17 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLException: Error de Sintaxis en sentencia SQL "SELECT * FROM ARTIST AS AJOIN ARTIST_VALORACIONES[*] AS B ON A.USERNAME = B.ARTIST_USERNAME "
+Syntax error in SQL statement "SELECT * FROM ARTIST AS AJOIN ARTIST_VALORACIONES[*] AS B ON A.USERNAME = B.ARTIST_USERNAME "; SQL statement:
+SELECT * FROM ARTIST as aJOIN ARTIST_VALORACIONES as b ON a.Username = b.artist_username [42000-197]
+2019-04-10 16:37:32 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLException: Tabla "VALORACIONES" no encontrada
+Table "VALORACIONES" not found; SQL statement:
+SELECT * FROM ARTIST as a JOIN ARTIST_VALORACIONES as b ON a.Username = b.artist_username JOIN VALORACIONES as c ON b.VALORACIONES_ID = c.ID [42102-197]
+2019-04-11 15:52:48 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLException: Tabla "VALORACIONES" no encontrada
+Table "VALORACIONES" not found; SQL statement:
+SELECT * FROM ARTIST_VALORACIONES as a JOIN VALORACIONES as b ON a.artist_username = b.valorado [42102-197]
+2019-04-11 15:54:50 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLException: Columna "B.VALORACIONES_ID" no encontrada
+Column "B.VALORACIONES_ID" not found; SQL statement:
+SELECT * FROM VALORACION as a JOIN ARTIST_VALORACIONES ON a.id = b.valoraciones_id [42122-197]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:357)
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.get(DbException.java:155)
+	at org.h2.expression.ExpressionColumn.optimize(ExpressionColumn.java:150)
+	at org.h2.expression.Comparison.optimize(Comparison.java:179)
+	at org.h2.command.dml.Select.prepare(Select.java:861)
+	at org.h2.command.Parser.prepareCommand(Parser.java:283)
+	at org.h2.engine.Session.prepareLocal(Session.java:611)
+	at org.h2.engine.Session.prepareCommand(Session.java:549)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1247)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:217)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:1077)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1386)
+	at org.h2.server.web.WebApp.query(WebApp.java:1060)
+	at org.h2.server.web.WebApp.query(WebApp.java:1036)
+	at org.h2.server.web.WebApp.process(WebApp.java:223)
+	at org.h2.server.web.WebApp.processRequest(WebApp.java:170)
+	at org.h2.server.web.WebServlet.doGet(WebServlet.java:124)
+	at org.h2.server.web.WebServlet.doPost(WebServlet.java:161)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:660)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:741)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.boot.actuate.web.trace.servlet.HttpTraceFilter.doFilterInternal(HttpTraceFilter.java:90)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:320)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:127)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:91)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:119)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:137)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:111)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:170)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)
+	at org.springframework.security.web.authentication.www.BasicAuthenticationFilter.doFilterInternal(BasicAuthenticationFilter.java:158)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:96)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:74)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:105)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:56)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:215)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:178)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:357)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:270)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:99)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:92)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilter.filterAndRecordMetrics(WebMvcMetricsFilter.java:117)
+	at org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilter.doFilterInternal(WebMvcMetricsFilter.java:106)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:200)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:200)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:490)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:139)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:408)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:834)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1415)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Thread.java:748)
+2019-04-11 15:55:26 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLException: Tabla "VALORACIOVALORACIONES_ID" no encontrada
+Table "VALORACIOVALORACIONES_ID" not found; SQL statement:
+SELECT * FROM VALORACIOVALORACIONES_ID N as a JOIN ARTIST_VALORACIONES  as b ON a.ID = b..VALORACIONES_ID [42102-197]
+2019-04-11 15:55:42 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLException: Tabla "VALORACIO" no encontrada
+Table "VALORACIO" not found; SQL statement:
+SELECT * FROM VALORACIO as a JOIN ARTIST_VALORACIONES  as b ON a.ID = b..VALORACIONES_ID [42102-197]
+2019-04-11 15:55:47 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLException: Error de Sintaxis en sentencia SQL "SELECT * FROM VALORACION AS A JOIN ARTIST_VALORACIONES  AS B ON A.ID = B..[*]VALORACIONES_ID "; se esperaba "identifier"
+Syntax error in SQL statement "SELECT * FROM VALORACION AS A JOIN ARTIST_VALORACIONES  AS B ON A.ID = B..[*]VALORACIONES_ID "; expected "identifier"; SQL statement:
+SELECT * FROM VALORACION as a JOIN ARTIST_VALORACIONES  as b ON a.ID = b..VALORACIONES_ID [42001-197]
+2019-04-11 15:55:48 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLException: Error de Sintaxis en sentencia SQL "SELECT * FROM VALORACION AS A JOIN ARTIST_VALORACIONES  AS B ON A.ID = B..[*]VALORACIONES_ID "; se esperaba "identifier"
+Syntax error in SQL statement "SELECT * FROM VALORACION AS A JOIN ARTIST_VALORACIONES  AS B ON A.ID = B..[*]VALORACIONES_ID "; expected "identifier"; SQL statement:
+SELECT * FROM VALORACION as a JOIN ARTIST_VALORACIONES  as b ON a.ID = b..VALORACIONES_ID [42001-197]
+2019-04-11 15:55:48 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLException: Error de Sintaxis en sentencia SQL "SELECT * FROM VALORACION AS A JOIN ARTIST_VALORACIONES  AS B ON A.ID = B..[*]VALORACIONES_ID "; se esperaba "identifier"
+Syntax error in SQL statement "SELECT * FROM VALORACION AS A JOIN ARTIST_VALORACIONES  AS B ON A.ID = B..[*]VALORACIONES_ID "; expected "identifier"; SQL statement:
+SELECT * FROM VALORACION as a JOIN ARTIST_VALORACIONES  as b ON a.ID = b..VALORACIONES_ID [42001-197]

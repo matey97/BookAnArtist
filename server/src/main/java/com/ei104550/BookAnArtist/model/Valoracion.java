@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+
 @Entity
 public class Valoracion {
 
@@ -54,6 +55,15 @@ public class Valoracion {
         this.comentario = comentario;
     }
 
-
+    @Override
+    public String toString(){
+        return "Artist{" +
+                "id='" + id + '\'' +
+                ", valorador='" + valorador + '\'' +
+                ", valorado='" + valorado + '\'' +
+                ", puntuacion=" + puntuacion +
+                ", comentario=" + comentario +
+                '}';
+    }
 
 }

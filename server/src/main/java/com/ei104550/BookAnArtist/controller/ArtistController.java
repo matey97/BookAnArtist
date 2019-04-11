@@ -6,6 +6,7 @@ import com.ei104550.BookAnArtist.model.ArtistVideo;
 import com.ei104550.BookAnArtist.model.Valoracion;
 import com.ei104550.BookAnArtist.repositories.ArtistImageRepository;
 import com.ei104550.BookAnArtist.repositories.ArtistRepository;
+import com.ei104550.BookAnArtist.repositories.ArtistValorationRepository;
 import com.ei104550.BookAnArtist.repositories.ArtistVideoRepository;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,13 +20,16 @@ public class ArtistController {
     private ArtistRepository artistRepository;
     private ArtistImageRepository imageRepository;
     private ArtistVideoRepository videoRepository;
+    private ArtistValorationRepository valorationRepository;
 
     public ArtistController(ArtistRepository artistRepository,
                             ArtistImageRepository imageRepository,
+                            ArtistValorationRepository valorationRepository,
                             ArtistVideoRepository videoRepository){
         this.artistRepository = artistRepository;
         this.imageRepository = imageRepository;
         this.videoRepository = videoRepository;
+        this.valorationRepository = valorationRepository;
     }
 
     @GetMapping("artistas")
@@ -67,9 +71,13 @@ public class ArtistController {
     public void saveArtistValoration(@PathVariable String username,
                                      @RequestBody Valoracion valoration){
 
+
         if(artistRepository.findById(username).isPresent()){
             Artist artist = artistRepository.findById(username).get();
             artist.addValoracion(valoration);
+
+            valorationRepository.save(valoration);
+            artistRepository.save(artist);
         }
 
     }
