@@ -71,16 +71,21 @@ public class ArtistController {
     public void saveArtistValoration(@PathVariable String username,
                                      @RequestBody Valoracion valoration){
 
-
         if(artistRepository.findById(username).isPresent()){
             Artist artist = artistRepository.findById(username).get();
             artist.addValoracion(valoration);
-
+            artist.setPuntuation(artist.getPuntuation());
             valorationRepository.save(valoration);
             artistRepository.save(artist);
         }
 
     }
 
+    @DeleteMapping("artista/valoration/{id}")
+    public void deleteArtistValoration(@PathVariable String id){
 
+        if(valorationRepository.findById(Long.parseLong(id)).isPresent()){
+            valorationRepository.deleteById(Long.parseLong(id));
+        }
+    }
 }

@@ -155,10 +155,11 @@ public class Artist{
         int puntuacionTotal = 0;
 
         for(Valoracion val : valoraciones){
-            puntuacionTotal+= val.puntuacion;
+            puntuacionTotal += val.puntuacion;
         }
 
         this.puntuation = puntuacionTotal/(valoraciones.size() * 1.0);
+
     }
 
 

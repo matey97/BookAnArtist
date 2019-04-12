@@ -6,7 +6,7 @@ export class Valoracion {
   valorado: string;
   puntuacion: number;
   comentario: string;
-
+  imgProfileValorador: any;
 
 
 }

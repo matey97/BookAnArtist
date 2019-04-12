@@ -25,6 +25,8 @@ export class ArtistComponent implements OnInit {
   valorationStarts: number;
   loguedUser;
   valoracionNueva: Valoracion;
+  userProfileImageValoracion: Array<any>;
+  noHaValorado: boolean;
 
 
   constructor( private artistService: ArtistService,
@@ -36,15 +38,26 @@ export class ArtistComponent implements OnInit {
   ngOnInit() {
     this.username = this.route.snapshot.paramMap.get('username');
     this.getArtistProfile();
+
   }
 
   private getArtistProfile() {
     this.artistService.getArtistByUsername(this.username).subscribe(data => {
       this.artist = data;
       this.listValoraciones = this.artist.valoraciones;
-      console.log('holaaaa');
-      console.log(this.listValoraciones)
       this.loguedUser = this.loginService.getLoguedUser();
+      this.noHaValorado = true;
+      this.listValoraciones.forEach( valoracion => {
+
+      if (this.loguedUser && valoracion.valorador === this.loguedUser.username) {
+        this.noHaValorado = false;
+      }
+
+      this.userService.getProfileImage(valoracion.valorador).subscribe( img => {
+          valoracion.imgProfileValorador = img;
+        });
+      });
+
       this.userService.getProfileImage(this.artist.username).subscribe(image => {
         this.profileImage = image.raw;
       });
@@ -78,8 +91,16 @@ export class ArtistComponent implements OnInit {
       }
 
     );
-
-
   }
 
+
+  borrarValoracion(valoracion: Valoracion) {
+
+    console.log('yyyyyyyyyyyyyyyyyyyyyyyy');
+    this.artistService.postDeleteValoracion(valoracion).subscribe(res => {
+      console.log(res);
+
+    });
+
+  }
 }
