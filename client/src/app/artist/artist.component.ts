@@ -7,8 +7,9 @@ import {User} from '../model/User';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ContratationComponent} from './contratation/contratation.component';
 import {LoginService} from '../shared/loginService/login.service';
-import {NgForm} from "@angular/forms";
-import {Valoracion} from "../model/Valoracion";
+import {NgForm} from '@angular/forms';
+import {Valoracion} from '../model/Valoracion';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-artist',
@@ -27,17 +28,24 @@ export class ArtistComponent implements OnInit {
   valoracionNueva: Valoracion;
   userProfileImageValoracion: Array<any>;
   noHaValorado: boolean;
+  page: any;
+  pageSize: number;
 
 
   constructor( private artistService: ArtistService,
                private userService: UserService,
                private loginService: LoginService,
                private route: ActivatedRoute,
+               private router: Router,
                private modalService: NgbModal) { }
 
   ngOnInit() {
     this.username = this.route.snapshot.paramMap.get('username');
     this.getArtistProfile();
+
+    this.page = 1;
+    this.pageSize = 5;
+
 
   }
 
@@ -74,9 +82,11 @@ export class ArtistComponent implements OnInit {
 
   public openValorationModal(modal) {
     if (this.loguedUser != null) {
-      this.valorationStarts = 5;
-      this.modalService.open(modal, {centered: true, backdropClass: 'modal-backdrop-chachiguay', size: 'lg'});
+     this.valorationStarts = 5;
+     this.modalService.open(modal, {centered: true, backdropClass: 'modal-backdrop-chachiguay', size: 'lg'});
     }
+
+
   }
 
   public onSubmit(f: NgForm) {
@@ -87,10 +97,12 @@ export class ArtistComponent implements OnInit {
     this.valoracionNueva.valorado = this.artist.username;
     this.valoracionNueva.valorador = this.loguedUser.username;
     this.artistService.postAddValoration(this.valoracionNueva).subscribe(res => {
-      console.log(res);
+     console.log(res);
       }
-
     );
+    this.modalService.dismissAll();
+    this.ngOnInit();
+
   }
 
 
