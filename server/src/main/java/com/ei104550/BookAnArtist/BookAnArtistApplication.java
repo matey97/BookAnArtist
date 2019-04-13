@@ -130,8 +130,13 @@ public class BookAnArtistApplication extends SpringBootServletInitializer {
 		user6.setUsertype(UserType.ARTIST.toString());*/
 
 		return args -> {
-			/*Contract c = contractRepository.findById(35L).get();
-			emailService.sendNewContractEmail("sergio",c);*/
+			Contract c = contractRepository.findById(35L).get();
+			emailService.sendNewContractEmail("sergio",c);
+			emailService.sendAcceptRejectContractEmail("org1", c, true);
+			emailService.sendAcceptRejectContractEmail("org1", c, false);
+			emailService.sendPayEmail("org1", c);
+			emailService.sendIncomeEmail("sergio", c);
+			emailService.sendPayBackEmail("org1", c);
 			/*Stream.of(user1, user2, user3, user4, user5, user6).forEach((user) -> {
 				File fileImage = new File("src/main/resources/profile-icon.png");
 				try{

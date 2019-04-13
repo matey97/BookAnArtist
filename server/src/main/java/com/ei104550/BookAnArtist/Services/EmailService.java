@@ -3,7 +3,9 @@ package com.ei104550.BookAnArtist.Services;
 import com.ei104550.BookAnArtist.model.Contract;
 import com.ei104550.BookAnArtist.model.Notification;
 import com.ei104550.BookAnArtist.model.User;
+import com.ei104550.BookAnArtist.repositories.UserRepository;
 import com.sun.mail.smtp.SMTPTransport;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.mail.*;
@@ -16,46 +18,117 @@ import java.util.Properties;
 @Service
 public class EmailService {
 
-    private final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
+    @Autowired
+    private UserRepository userRepository;
+
+    private String destinationEmail;
 
     public void sendNewContractEmail(String user, Contract contract){
-        Notification notification = new Notification();
-        notification.setDestinationUser(user);
-        notification.setDate(new Date());
+        Notification notification = buildBaseNotificationAndDestinationUser(user);
         notification.setSubject("Nueva oferta de contratación");
 
         StringBuilder sb = new StringBuilder();
         sb.append("Hola " + user + ",\n\n");
         sb.append("Enhorabuena, has recibido una oferta de contración. Accede a la plataforma para revisar la oferta y aceptarla o rechazarla.\n\n");
-        sb.append("Detalles de oferta: \n");
-        sb.append("\t-Organizador: " + contract.getOrganizerUsername() + "\n");
-        sb.append("\t-Descripción: " + contract.getComments() + "\n");
-        sb.append("\t-Lugar y fecha: " + contract.getLocation() + ", " + contract.getZone() + ", " + new Date(contract.getDate()).toString() + "\n");
-        sb.append("\nGracias por confiar en nosotros,\n");
-        sb.append("BookAnArtist.");
+
+        sb.append(buildContractDetails(contract));
+        sb.append(buildGreetings());
         notification.setMessage(sb.toString());
 
         sendEmail(notification);
     }
 
-    public void sendAcceptContractEmail(User user, Contract contract){
+    public void sendAcceptRejectContractEmail(String user, Contract contract, boolean accepted){
+        Notification notification = buildBaseNotificationAndDestinationUser(user);
+        notification.setSubject("Actualización en el estado de la oferta ID: " + contract.getId());
 
+        StringBuilder sb = new StringBuilder();
+        sb.append("Hola " + user + ",\n\n");
+        if (accepted)
+            sb.append("Enhorabuena, tu oferta con ID: " + contract.getId() + " ha sido aceptada. No olvides ponerte en contacto con el artista para fijar todos los detalles de la actuación.\n\n");
+        else
+            sb.append("Lo sentimos, tu oferta con ID: " + contract.getId() + " ha sido rechazada.\n\n");
+        sb.append(buildContractDetails(contract));
+        sb.append("Email de contacto del artista:" + destinationEmail + "\n");
+        sb.append(buildGreetings());
+        notification.setMessage(sb.toString());
+
+        sendEmail(notification);
     }
 
     /*public void sendReclamationEmail(User user,){
 
     }*/
 
-    public void sendPayEmail(User user){
+    public void sendPayEmail(String user, Contract contract){
+        Notification notification = buildBaseNotificationAndDestinationUser(user);
+        notification.setSubject("Pago de oferta ID: " + contract.getId());
 
+        StringBuilder sb = new StringBuilder();
+        sb.append("Hola " + user + ",\n\n");
+        sb.append("Debido a la aceptación de la oferta con ID: " + contract.getId() + ", se ha realizado el cobro del importe de la actuación.");
+        sb.append(" En caso de que el artista no cumpla con la actuación, se le reintegrará todo el importe de la actuación.\n\n");
+        sb.append(buildContractDetails(contract));
+        sb.append(buildGreetings());
+        notification.setMessage(sb.toString());
+
+        sendEmail(notification);
     }
 
-    public void sendIncomeEmail(User user){
+    public void sendIncomeEmail(String user, Contract contract){
+        Notification notification = buildBaseNotificationAndDestinationUser(user);
+        notification.setSubject("Cobro de oferta ID: " + contract.getId());
 
+        StringBuilder sb = new StringBuilder();
+        sb.append("Hola " + user + ",\n\n");
+        sb.append("Le informamos que se ha realizado el pago del importe de la actuación con ID: " + contract.getId() + ".\n\n");
+        sb.append(buildContractDetails(contract));
+        sb.append(buildGreetings());
+        notification.setMessage(sb.toString());
+
+        sendEmail(notification);
     }
 
-    public void sendPayBackEmail(User user){
+    public void sendPayBackEmail(String user, Contract contract){
+        Notification notification = buildBaseNotificationAndDestinationUser(user);
+        notification.setSubject("Reintegro de oferta ID: " + contract.getId());
 
+        StringBuilder sb = new StringBuilder();
+        sb.append("Hola " + user + ",\n\n");
+        sb.append("Debido a que la actuación con ID: " + contract.getId());
+        sb.append(" no se ha realizado, le informamos que se ha realizado el reintegro del importe de la misma.\n\n");
+        sb.append(buildContractDetails(contract));
+        sb.append(buildGreetings());
+        notification.setMessage(sb.toString());
+
+        sendEmail(notification);
+    }
+
+    private Notification buildBaseNotificationAndDestinationUser(String user){
+        Notification notification = new Notification();
+        notification.setDestinationUser(user);
+        notification.setDate(new Date());
+        //this.destinationEmail = userRepository.findOneByUsername(user).getEmail();
+        return notification;
+    }
+
+    private String buildContractDetails(Contract contract){
+        StringBuilder sb = new StringBuilder();
+        sb.append("Detalles de oferta: \n");
+        sb.append("\t-ID: " + contract.getId());
+        sb.append("\t-Organizador: " + contract.getOrganizerUsername() + "\n");
+        sb.append("\t-Artista: " + contract.getArtisticUsername() + "\n");
+        sb.append("\t-Descripción: " + contract.getComments() + "\n");
+        sb.append("\t-Lugar: " + contract.getLocation() + ", " + contract.getZone() + "\n");
+        sb.append("\t-Fecha: " + new Date(contract.getDate()).toString() + "\n\n");
+        return sb.toString();
+    }
+
+    private String buildGreetings(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("Gracias por confiar en nosotros,\n");
+        sb.append("BookAnArtist.");
+        return sb.toString();
     }
 
     private void sendEmail(Notification notification){
@@ -63,6 +136,7 @@ public class EmailService {
 
         Properties props = System.getProperties();
         props.setProperty("mail.smtps.host", "smtp.gmail.com");
+        String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
         props.setProperty("mail.smtp.socketFactory.class", SSL_FACTORY);
         props.setProperty("mail.smtp.socketFactory.fallback", "false");
         props.setProperty("mail.smtp.port", "465");
@@ -75,8 +149,9 @@ public class EmailService {
         final MimeMessage message = new MimeMessage(session);
 
         try{
-            message.setFrom(new InternetAddress("al341802@uji.es"));
-            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("al341933@uji.es", false));
+            String BNA_EMAIL = "noreply.bookanartist@gmail.com";
+            message.setFrom(new InternetAddress(BNA_EMAIL));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(destinationEmail, false));
             message.setRecipients(Message.RecipientType.CC, InternetAddress.parse("", false));
 
             message.setSubject(notification.getSubject());
@@ -84,7 +159,8 @@ public class EmailService {
             message.setSentDate(notification.getDate());
 
             SMTPTransport transport = (SMTPTransport)session.getTransport("smtps");
-            transport.connect("smtp.gmail.com", "", "");
+            String BNA_PASS = "bookanartist@2019";
+            transport.connect("smtp.gmail.com", BNA_EMAIL, BNA_PASS);
             transport.sendMessage(message, message.getAllRecipients());
             transport.close();
         }catch(Exception e){
