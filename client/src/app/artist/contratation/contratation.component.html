@@ -70,7 +70,7 @@
           <mat-list-item><b>Comentarios:</b></mat-list-item>
           <mat-list-item>{{contract.comments}}</mat-list-item>
         </div>
-        <mat-list-item><b>Fecha de actuación:</b> &nbsp;{{date.getDay()}}/{{date.getMonth()}}/{{date.getFullYear()}} a las {{time.hour}}:{{time.minute}} horas</mat-list-item>
+        <mat-list-item><b>Fecha de actuación:</b> &nbsp;{{date.toLocaleString()}}</mat-list-item>
       </mat-list>
     </div>
   </div>

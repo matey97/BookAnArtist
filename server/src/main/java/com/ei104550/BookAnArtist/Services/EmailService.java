@@ -3,6 +3,7 @@ package com.ei104550.BookAnArtist.Services;
 import com.ei104550.BookAnArtist.model.Contract;
 import com.ei104550.BookAnArtist.model.Notification;
 import com.ei104550.BookAnArtist.model.User;
+import com.ei104550.BookAnArtist.repositories.NotificationRepository;
 import com.ei104550.BookAnArtist.repositories.UserRepository;
 import com.sun.mail.smtp.SMTPTransport;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +21,11 @@ public class EmailService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private NotificationRepository notificationRepository;
 
     private String destinationEmail;
+    private User user;
 
     public void sendNewContractEmail(String user, Contract contract){
         Notification notification = buildBaseNotificationAndDestinationUser(user);
@@ -32,10 +36,12 @@ public class EmailService {
         sb.append("Enhorabuena, has recibido una oferta de contración. Accede a la plataforma para revisar la oferta y aceptarla o rechazarla.\n\n");
 
         sb.append(buildContractDetails(contract));
+        sb.append("Fecha límite de contestación: " + new Date(contract.getLimitDate()).toString() + ".\n\n");
         sb.append(buildGreetings());
         notification.setMessage(sb.toString());
 
         sendEmail(notification);
+        saveNotification(notification);
     }
 
     public void sendAcceptRejectContractEmail(String user, Contract contract, boolean accepted){
@@ -49,11 +55,13 @@ public class EmailService {
         else
             sb.append("Lo sentimos, tu oferta con ID: " + contract.getId() + " ha sido rechazada.\n\n");
         sb.append(buildContractDetails(contract));
-        sb.append("Email de contacto del artista:" + destinationEmail + "\n");
+        if (accepted)
+            sb.append("Email de contacto del artista:" + destinationEmail + "\n");
         sb.append(buildGreetings());
         notification.setMessage(sb.toString());
 
         sendEmail(notification);
+        saveNotification(notification);
     }
 
     /*public void sendReclamationEmail(User user,){
@@ -104,18 +112,25 @@ public class EmailService {
         sendEmail(notification);
     }
 
+    private void saveNotification(Notification n){
+        user.getNotifications().add(n);
+        notificationRepository.save(n);
+        userRepository.save(user);
+    }
+
     private Notification buildBaseNotificationAndDestinationUser(String user){
         Notification notification = new Notification();
         notification.setDestinationUser(user);
         notification.setDate(new Date());
-        //this.destinationEmail = userRepository.findOneByUsername(user).getEmail();
+        this.user = userRepository.findOneByUsername(user);
+        this.destinationEmail = this.user.getEmail();
         return notification;
     }
 
     private String buildContractDetails(Contract contract){
         StringBuilder sb = new StringBuilder();
         sb.append("Detalles de oferta: \n");
-        sb.append("\t-ID: " + contract.getId());
+        sb.append("\t-ID: " + contract.getId() + "\n");
         sb.append("\t-Organizador: " + contract.getOrganizerUsername() + "\n");
         sb.append("\t-Artista: " + contract.getArtisticUsername() + "\n");
         sb.append("\t-Descripción: " + contract.getComments() + "\n");

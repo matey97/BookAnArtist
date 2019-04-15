@@ -1,9 +1,6 @@
 package com.ei104550.BookAnArtist.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -14,6 +11,7 @@ public class Notification {
     private Long id;
     private String destinationUser;
     private String subject;
+    @Column(length=1024)
     private String message;
     private Date date;
     private boolean seen;

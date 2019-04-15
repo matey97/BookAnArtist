@@ -32,9 +32,13 @@ public class User {
     private List<Contract> contracts;
 
     private String usertype;
+    @ElementCollection()
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Notification> notifications;
 
     public User(){
         this.contracts = new LinkedList<>();
+        this.notifications = new LinkedList<>();
     }
 
     public User(User user) {
@@ -44,7 +48,7 @@ public class User {
         this.roles = user.getRoles();
         this.image = user.getImage();
         this.usertype= user.getUsertype();
-
+        this.notifications = user.getNotifications();
     }
 
     public Set<Role> getRoles() {
@@ -108,6 +112,14 @@ public class User {
 
     public void addContract(Contract c){
         this.contracts.add(c);
+    }
+
+    public List<Notification> getNotifications() {
+        return notifications;
+    }
+
+    public void setNotifications(List<Notification> notifications) {
+        this.notifications = notifications;
     }
 
     @Override

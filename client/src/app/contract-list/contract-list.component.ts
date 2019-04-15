@@ -32,7 +32,7 @@ export class ContractListComponent implements OnInit {
 
   successSubscriber = (item) => {
     if (item) {
-      this.snackBar.open('Cambios gueardados correctamente.', 'Cerrar', {duration: 3000});
+      this.snackBar.open('Cambios gueardados correctamente. Se ha enviado una notificacón al organizador', 'Cerrar', {duration: 3000});
     } else {
       this.snackBar.open('No se ha podido tratar tu petición.', 'Cerrar', {duration: 3000});
     }

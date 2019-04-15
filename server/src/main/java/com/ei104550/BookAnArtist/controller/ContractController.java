@@ -1,5 +1,6 @@
 package com.ei104550.BookAnArtist.controller;
 
+import com.ei104550.BookAnArtist.Services.EmailService;
 import com.ei104550.BookAnArtist.enums.ContractState;
 import com.ei104550.BookAnArtist.model.Artist;
 import com.ei104550.BookAnArtist.model.Contract;
@@ -20,11 +21,13 @@ public class ContractController {
     private ContractRepository contractRepository;
     private UserRepository userRepository;
     private ArtistRepository artistRepository;
+    private EmailService emailService;
 
-    public ContractController(ContractRepository contractRepository, UserRepository userRepository, ArtistRepository artistRepository) {
+    public ContractController(ContractRepository contractRepository, UserRepository userRepository, ArtistRepository artistRepository, EmailService emailService) {
         this.contractRepository = contractRepository;
         this.userRepository = userRepository;
         this.artistRepository = artistRepository;
+        this.emailService = emailService;
     }
 
     @PostMapping("contract/{artistUsername}_{organizatorUsername}")
@@ -40,6 +43,7 @@ public class ContractController {
         artist.addContract(contract);
         userRepository.save(user);
         artistRepository.save(artist);
+        emailService.sendNewContractEmail(artistUsername, contract);
         return true;
     }
 
@@ -72,6 +76,7 @@ public class ContractController {
         Contract c = this.contractRepository.findById(Long.parseLong(id)).get();
         c.setState(ContractState.ACCEPTED);
         this.contractRepository.save(c);
+        emailService.sendAcceptRejectContractEmail(c.getOrganizerUsername(), c, true);
         return true;
     }
 
@@ -80,6 +85,7 @@ public class ContractController {
         Contract c = this.contractRepository.findById(Long.parseLong(id)).get();
         c.setState(ContractState.REJECTED);
         this.contractRepository.save(c);
+        emailService.sendAcceptRejectContractEmail(c.getOrganizerUsername(), c, false);
         return true;
     }
 

@@ -130,7 +130,7 @@ public class BookAnArtistApplication extends SpringBootServletInitializer {
 		user6.setUsertype(UserType.ARTIST.toString());*/
 
 		return args -> {
-			Contract c = contractRepository.findById(35L).get();
+			/*Contract c = contractRepository.findById(35L).get();
 			emailService.sendNewContractEmail("sergio",c);
 			emailService.sendAcceptRejectContractEmail("org1", c, true);
 			emailService.sendAcceptRejectContractEmail("org1", c, false);
