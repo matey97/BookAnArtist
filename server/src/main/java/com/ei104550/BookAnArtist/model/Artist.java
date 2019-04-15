@@ -163,6 +163,19 @@ public class Artist{
     }
 
 
+    public boolean deleteValoracion(String id){
+
+        for(int i = 0; i < this.valoraciones.size() ; i++){
+            Valoracion valoracion = this.valoraciones.get(i);
+
+            if (valoracion.getId().toString().compareTo(id) == 0){
+                return this.valoraciones.contains(this.valoraciones.remove(i));
+            }
+        }
+        return false;
+    }
+
+
     @Override
     public String toString() {
         return "Artist{" +

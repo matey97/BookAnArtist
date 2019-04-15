@@ -80,7 +80,7 @@
               <mat-card-title>
                 <div class="row">
                   <div class="col-sm-3">
-                    <img class="card-img-top" src="data:image/PNG;base64,{{valoracion.imgProfileValorador}}">
+                    <img class="profileValoration" src="data:image/PNG;base64,{{valoracion.imgProfileValorador}}">
                   </div>
                   <div class="col-sm-6">
                     {{valoracion.valorador}}
@@ -115,7 +115,7 @@
   </div>
 
   <div *ngIf="loguedUser; else veALoguearte">
-      <div *ngIf="noHaValorado && loguedUser.username != artist.username">
+      <div *ngIf="noHaValorado && HaContratado && loguedUser.username != artist.username ">
         <button mat-raised-button color="primary" style="font-size: larger; width: 30%" type="button" (click)="openValorationModal(modalValoration)" value="contratar">Valorar</button>
       </div>
   </div>
@@ -124,24 +124,33 @@
 </div>
 
 <ng-template #modalValoration let-modRefVal>
-    <h3>Realiza una valoracion</h3>
+  <div class="modal-header d-block">
+    <div class="d-flex">
+      <h3>Realiza una valoracion</h3>
+    </div>
+  </div>
     <form #f="ngForm" (ngSubmit)="onSubmit(f)" class="form-valorar">
+      <div class="modal-body">
       <div class="row">
-        <div class="col-sm-3">
-          <h4>Puntuacion</h4>
+        <div class="col-sm-2">
+          <h4>Puntuación:</h4>
+        </div>
+        <div class="col-sm-6">
           <ngb-rating [(rate)]="valorationStarts"  [readonly]=false >
             <ng-template let-fill="fill" >
               <span class="star" [class.filled]="fill === 100" >&#9733;</span>
             </ng-template>
           </ngb-rating>
         </div>
-        <div class="col-sm-9">
-          <mat-form-field>
-            <textarea matInput ngModel name="comentario" placeholder="Comentario"></textarea>
-          </mat-form-field>
         </div>
+        <mat-form-field style="width: 400px;">
+          <textarea matInput ngModel name="comentario" placeholder="Comentario"></textarea>
+        </mat-form-field>
       </div>
-      <button mat-raised-button [routerLink]="['/artist',artist.username]" >Valorar</button>
+
+      <div class="modal-footer">
+        <button mat-raised-button >Valorar</button>
+      </div>
     </form>
 </ng-template>
 

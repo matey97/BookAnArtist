@@ -10,6 +10,8 @@ import {LoginService} from '../shared/loginService/login.service';
 import {NgForm} from '@angular/forms';
 import {Valoracion} from '../model/Valoracion';
 import { Router } from '@angular/router';
+import {Contract} from '../model/Contract';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'app-artist',
@@ -22,12 +24,13 @@ export class ArtistComponent implements OnInit {
   artist: Artist;
   profileImage: string;
   username: string;
-  listValoraciones: Array<any>
+  listValoraciones: Array<any>;
   valorationStarts: number;
   loguedUser;
   valoracionNueva: Valoracion;
   userProfileImageValoracion: Array<any>;
   noHaValorado: boolean;
+  HaContratado: boolean;
   page: any;
   pageSize: number;
 
@@ -37,6 +40,7 @@ export class ArtistComponent implements OnInit {
                private loginService: LoginService,
                private route: ActivatedRoute,
                private router: Router,
+               private snackBar: MatSnackBar,
                private modalService: NgbModal) { }
 
   ngOnInit() {
@@ -61,8 +65,19 @@ export class ArtistComponent implements OnInit {
         this.noHaValorado = false;
       }
 
+      this.HaContratado = false;
+
+      this.artist.contracts.forEach(contract => {
+
+        if (this.loguedUser) {
+          if (contract.organizerUsername === this.loguedUser.username && (contract.state === 'DONE' || contract.state === 'CANCELLED' || contract.state === 'ACCEPTED')) {
+            this.HaContratado = true;
+          }
+        }
+      });
+
       this.userService.getProfileImage(valoracion.valorador).subscribe( img => {
-          valoracion.imgProfileValorador = img;
+          valoracion.imgProfileValorador = img.raw;
         });
       });
 
@@ -83,7 +98,7 @@ export class ArtistComponent implements OnInit {
   public openValorationModal(modal) {
     if (this.loguedUser != null) {
      this.valorationStarts = 5;
-     this.modalService.open(modal, {centered: true, backdropClass: 'modal-backdrop-chachiguay', size: 'lg'});
+     this.modalService.open(modal, {centered: true, backdropClass: 'modal-backdrop-chachiguay',  size: 'lg'});
     }
 
 
@@ -97,22 +112,23 @@ export class ArtistComponent implements OnInit {
     this.valoracionNueva.valorado = this.artist.username;
     this.valoracionNueva.valorador = this.loguedUser.username;
     this.artistService.postAddValoration(this.valoracionNueva).subscribe(res => {
-     console.log(res);
+      this.ngOnInit();
       }
     );
     this.modalService.dismissAll();
-    this.ngOnInit();
+    this.snackBar.open('Comentario reguistado con éxito', 'Cerrar', {duration: 3000});
 
   }
 
 
   borrarValoracion(valoracion: Valoracion) {
 
-    console.log('yyyyyyyyyyyyyyyyyyyyyyyy');
-    this.artistService.postDeleteValoracion(valoracion).subscribe(res => {
-      console.log(res);
+    this.artistService.postDeleteValoracion(valoracion).subscribe( () => {
 
+      this.snackBar.open('Se ha eliminado tu comentario', 'Cerrar', {duration: 3000});
+      this.ngOnInit();
     });
+
 
   }
 }
