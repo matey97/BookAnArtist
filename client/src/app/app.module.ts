@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {HttpClientModule} from '@angular/common/http';
@@ -33,6 +34,7 @@ import { RegisterComponent } from './shared/register/register.component';
 import { MatSliderModule } from '@angular/material/slider';
 import { ContratationComponent } from './artist/contratation/contratation.component';
 import { ContractListComponent } from './contract-list/contract-list.component';
+import {StorageServiceModule} from 'angular-webstorage-service';
 
 
 @NgModule({
@@ -80,7 +82,9 @@ import { ContractListComponent } from './contract-list/contract-list.component';
     VgBufferingModule,
     ReactiveFormsModule,
     VgBufferingModule,
-    FormsModule
+    FormsModule,
+    BrowserModule,
+    StorageServiceModule
   ],
   providers: [{provide: MAT_DATE_LOCALE, useValue: 'es-ES'}],
   bootstrap: [AppComponent]

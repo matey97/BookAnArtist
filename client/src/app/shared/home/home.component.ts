@@ -14,20 +14,22 @@ export class HomeComponent implements OnInit {
     constructor(private http: HttpClient) { }
 
     ngOnInit() {
-        let url = 'http://localhost:8080/user';
+        const url = 'http://localhost:8080/user';
 
-        let headers: HttpHeaders = new HttpHeaders({
-            'Authorization': 'Basic ' + sessionStorage.getItem('token')
+        const headers: HttpHeaders = new HttpHeaders({
+            Authorization: 'Basic ' + sessionStorage.getItem('token')
         });
-
-        let options = { headers: headers };
-        this.http.post<Observable<Object>>(url, {}, options).
+        console.log(sessionStorage.getItem('token'));
+        const options = { headers };
+        this.http.post<Observable<object>>(url, {}, options).
             subscribe(principal => {
+              console.log(principal);
                 this.username = principal['name'];
             },
             error => {
-                if(error.status == 401)
+                if(error.status == 401) {
                     alert('Unauthorized');
+                }
             }
         );
     }
@@ -45,5 +47,5 @@ export class HomeComponent implements OnInit {
         }
         return throwError(
           'Something bad happened; please try again later.');
-      };
+      }
 }

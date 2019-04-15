@@ -35,7 +35,6 @@ public class LoginController {
     @CrossOrigin
     @RequestMapping("/login")
     public User user(@RequestBody User principal) {
-       // logger.info("user logged "+ principal);
         return userService.find(principal.getUsername());
     }
 

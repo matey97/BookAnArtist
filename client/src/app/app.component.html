@@ -31,10 +31,10 @@
     <a *ngIf="loguedUser == null" class="navbar-brand nav-link " routerLink="/register">
       <div class="LoginButton" alt="shortLogo">Sign up</div>
     </a>
-    <div class="img-wrapper" *ngIf="loguedUser != null">
+    <div class="img-wrapper" *ngIf="userImages != null">
       <img src="loguedUser.img">
     </div>
-    <a *ngIf="loguedUser != null" class="navbar-brand nav-link " routerLink="/login">
+    <a *ngIf="loguedUser != null" class="navbar-brand nav-link " routerLink="/user/{{loguedUser.username}}">
       <div class="UserPage" alt="shortLogo">Usuario</div>
     </a>
   </div>

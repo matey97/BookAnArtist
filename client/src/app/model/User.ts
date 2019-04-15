@@ -5,7 +5,7 @@ export class User {
   password: string;
   email: string;
   usertype: 'ARTIST' | 'ADMIN' | 'ORGANIZER';
-  image: string;
+  image: Array<any>;
   contracts: Array<Contract>;
 
   constructor(object: any) {

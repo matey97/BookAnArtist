@@ -11,13 +11,14 @@ import {ContractListComponent} from './contract-list/contract-list.component';
 const routes: Routes = [
   { path: 'artistList', component: ArtistListComponent },
   { path: '', component: ArtistListComponent },
-  { path: 'user', component: HomeComponent },
+  { path: 'user/:username', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent},
  // { path: '**', redirectTo: 'user' }
   { path: 'profile/:username', component: ArtistProfileComponent },
   { path: 'artist/:username', component: ArtistComponent},
   { path: 'contracts/:username', component: ContractListComponent}
+  // { path: 'user/:username', component: HomeComponent}
 ];
 
 @NgModule({
