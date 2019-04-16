@@ -7,6 +7,7 @@ import com.ei104550.BookAnArtist.repositories.NotificationRepository;
 import com.ei104550.BookAnArtist.repositories.UserRepository;
 import com.sun.mail.smtp.SMTPTransport;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.mail.*;
@@ -27,6 +28,7 @@ public class EmailService {
     private String destinationEmail;
     private User user;
 
+    @Async("asyncExecutor")
     public void sendNewContractEmail(String user, Contract contract){
         Notification notification = buildBaseNotificationAndDestinationUser(user);
         notification.setSubject("Nueva oferta de contratación");
@@ -44,6 +46,7 @@ public class EmailService {
         saveNotification(notification);
     }
 
+    @Async("asyncExecutor")
     public void sendAcceptRejectContractEmail(String user, Contract contract, boolean accepted){
         Notification notification = buildBaseNotificationAndDestinationUser(user);
         notification.setSubject("Actualización en el estado de la oferta ID: " + contract.getId());
@@ -56,7 +59,7 @@ public class EmailService {
             sb.append("Lo sentimos, tu oferta con ID: " + contract.getId() + " ha sido rechazada.\n\n");
         sb.append(buildContractDetails(contract));
         if (accepted)
-            sb.append("Email de contacto del artista:" + destinationEmail + "\n");
+            sb.append("Email de contacto del artista: " + destinationEmail + "\n");
         sb.append(buildGreetings());
         notification.setMessage(sb.toString());
 
@@ -64,10 +67,13 @@ public class EmailService {
         saveNotification(notification);
     }
 
-    /*public void sendReclamationEmail(User user,){
+    /*
+    @Async("asyncExecutor")
+    public void sendReclamationEmail(User user,){
 
     }*/
 
+    @Async("asyncExecutor")
     public void sendPayEmail(String user, Contract contract){
         Notification notification = buildBaseNotificationAndDestinationUser(user);
         notification.setSubject("Pago de oferta ID: " + contract.getId());
@@ -83,6 +89,7 @@ public class EmailService {
         sendEmail(notification);
     }
 
+    @Async("asyncExecutor")
     public void sendIncomeEmail(String user, Contract contract){
         Notification notification = buildBaseNotificationAndDestinationUser(user);
         notification.setSubject("Cobro de oferta ID: " + contract.getId());
@@ -97,6 +104,7 @@ public class EmailService {
         sendEmail(notification);
     }
 
+    @Async("asyncExecutor")
     public void sendPayBackEmail(String user, Contract contract){
         Notification notification = buildBaseNotificationAndDestinationUser(user);
         notification.setSubject("Reintegro de oferta ID: " + contract.getId());
@@ -146,13 +154,13 @@ public class EmailService {
         return sb.toString();
     }
 
+
     private void sendEmail(Notification notification){
         Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
 
         Properties props = System.getProperties();
         props.setProperty("mail.smtps.host", "smtp.gmail.com");
-        String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
-        props.setProperty("mail.smtp.socketFactory.class", SSL_FACTORY);
+        props.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
         props.setProperty("mail.smtp.socketFactory.fallback", "false");
         props.setProperty("mail.smtp.port", "465");
         props.setProperty("mail.smtp.socketFactory.port", "465");
@@ -165,6 +173,7 @@ public class EmailService {
 
         try{
             String BNA_EMAIL = "noreply.bookanartist@gmail.com";
+            String BNA_PASS = "bookanartist@2019";
             message.setFrom(new InternetAddress(BNA_EMAIL));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(destinationEmail, false));
             message.setRecipients(Message.RecipientType.CC, InternetAddress.parse("", false));
@@ -174,9 +183,9 @@ public class EmailService {
             message.setSentDate(notification.getDate());
 
             SMTPTransport transport = (SMTPTransport)session.getTransport("smtps");
-            String BNA_PASS = "bookanartist@2019";
             transport.connect("smtp.gmail.com", BNA_EMAIL, BNA_PASS);
             transport.sendMessage(message, message.getAllRecipients());
+            System.out.println("Email enviado");
             transport.close();
         }catch(Exception e){
             e.printStackTrace();
