@@ -8,4 +8,5 @@ export class Contract {
   date: number;
   limitDate: number;
   state: 'ACCEPTED' | 'REJECTED' | 'DONE' | 'ACCEPTANCE_PENDING' | 'CANCELLED';
+  haSidoValorado: boolean;
 }

@@ -6,6 +6,8 @@ import {User} from '../model/User';
 import {Contract} from '../model/Contract';
 import {MatPaginator, MatSnackBar, MatSort, MatTableDataSource} from '@angular/material';
 import {LoginService} from '../shared/loginService/login.service';
+import {ArtistService} from "../shared/artist/artist.service";
+import {Artist} from "../model/Artist";
 
 @Component({
   selector: 'app-contract-list',
@@ -24,10 +26,8 @@ export class ContractListComponent implements OnInit {
 
   loguedUser: User;
   contracts: Contract[];
-
   dataSource;
   displayedColumns;
-
   isArtist: boolean;
 
   successSubscriber = (item) => {
@@ -46,6 +46,7 @@ export class ContractListComponent implements OnInit {
   constructor(private contractService: ContractService,
               private userService: UserService,
               private loginService: LoginService,
+              private artistService: ArtistService,
               private snackBar: MatSnackBar) {
   }
 
@@ -63,11 +64,29 @@ export class ContractListComponent implements OnInit {
       this.isArtist = false;
       this.contractService.getOrganizerContracts(this.loguedUser.username).subscribe(contracts => {
         this.contracts = contracts;
-        this.displayedColumns = this.organizerDisplayedColumns;
-        this.configureDataSource(this.contracts);
-        this.configureTablePaginatorAndSorting();
+        this.contracts.forEach( contrat => {
+          contrat.haSidoValorado = false;
+          this.artistService.getArtistByUsername(contrat.artisticUsername).subscribe(data => {
+            data.valoraciones.forEach( valoracion => {
+              if (valoracion.valorador === this.loguedUser.username) {
+                console.log(contrat.haSidoValorado);
+                contrat.haSidoValorado = true;
+                console.log(contrat.haSidoValorado);
+
+              }
+            });
+            this.displayedColumns = this.organizerDisplayedColumns;
+            this.configureDataSource(this.contracts);
+            this.configureTablePaginatorAndSorting();
+          });
+        });
+
       });
     }
+
+
+
+
   }
 
   private configureDataSource(contacts) {

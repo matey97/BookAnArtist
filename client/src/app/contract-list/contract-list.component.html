@@ -42,8 +42,13 @@
         <div *ngIf="element.state == 'ACCEPTANCE_PENDING' && !isArtist">
           <button mat-raised-button color="warn" type="button" value="cancel" (click)="cancelContract(element)">Cancelar</button>
         </div>
-        <div *ngIf="element.state != 'ACCEPTANCE_PENDING'">
-          Nada por ahora!
+        <div *ngIf="element.state != 'ACCEPTANCE_PENDING'" class="row">
+          <div *ngIf="element.haSidoValorado">
+            Nada por ahora!
+          </div>
+          <div *ngIf="!element.haSidoValorado">
+            <a [routerLink]="['/artist', element.artisticUsername]" class="btn btn-info">Valora al artista!</a>
+          </div>
         </div>
       </td>
     </ng-container>

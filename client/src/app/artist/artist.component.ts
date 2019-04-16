@@ -64,11 +64,8 @@ export class ArtistComponent implements OnInit {
       if (this.loguedUser && valoracion.valorador === this.loguedUser.username) {
         this.noHaValorado = false;
       }
-
       this.HaContratado = false;
-
       this.artist.contracts.forEach(contract => {
-
         if (this.loguedUser) {
           if (contract.organizerUsername === this.loguedUser.username && (contract.state === 'DONE' || contract.state === 'CANCELLED' || contract.state === 'ACCEPTED')) {
             this.HaContratado = true;
