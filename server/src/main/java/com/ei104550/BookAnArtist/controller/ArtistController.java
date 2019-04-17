@@ -84,17 +84,12 @@ public class ArtistController {
     @DeleteMapping("artista/valoration/{id}")
     public void deleteArtistValoration(@PathVariable String id){
 
-
-        System.out.println("ÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑññññññññññÑ" + id);
-
         if(valorationRepository.findById(Long.parseLong(id)).isPresent()){
 
             Valoracion valoracion = valorationRepository.findById(Long.parseLong(id)).get();
             Artist artista = artistRepository.findById(valoracion.getValorado()).get();
-            System.out.println("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO"+artista.deleteValoracion(id));
-            System.out.println(artistRepository.save(artista) + "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP");
-
-
+            artista.deleteValoracion(id);
+            artistRepository.save(artista);
             valorationRepository.deleteById(Long.parseLong(id));
 
 

@@ -8,6 +8,7 @@ import {MatPaginator, MatSnackBar, MatSort, MatTableDataSource} from '@angular/m
 import {LoginService} from '../shared/loginService/login.service';
 import {ArtistService} from "../shared/artist/artist.service";
 import {Artist} from "../model/Artist";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-contract-list',
@@ -47,6 +48,7 @@ export class ContractListComponent implements OnInit {
               private userService: UserService,
               private loginService: LoginService,
               private artistService: ArtistService,
+              private modalService: NgbModal,
               private snackBar: MatSnackBar) {
   }
 
@@ -115,5 +117,11 @@ export class ContractListComponent implements OnInit {
   public cancelContract(contract) {
     contract.state = 'CANCELLED';
     this.contractService.cancelContract(contract.id).subscribe(this.successSubscriber, this.errorSubscriber);
+  }
+
+  public openValorationModal(modal) {
+    if (this.loguedUser != null) {
+      this.modalService.open(modal, {centered: true, backdropClass: 'modal-backdrop-chachiguay', size: 'lg'});
+    }
   }
 }

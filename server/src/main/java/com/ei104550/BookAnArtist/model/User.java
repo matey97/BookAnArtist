@@ -63,8 +63,6 @@ public class User {
         this.usertype = usertype;
     }
 
-
-
     public String getUsername() {
         return username;
     }
@@ -88,7 +86,6 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
-
 
     public byte[] getImage() {
         return image;

@@ -14,5 +14,6 @@ export class User {
     this.password = object.password;
     this.usertype = object.usertype;
     this.image = object.image;
+    this.contracts = object.contracts;
   }
 }
