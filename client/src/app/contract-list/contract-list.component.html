@@ -42,7 +42,10 @@
         <div *ngIf="element.state == 'ACCEPTANCE_PENDING' && !isArtist">
           <button mat-raised-button color="warn" type="button" value="cancel" (click)="cancelContract(element)">Cancelar</button>
         </div>
-        <div *ngIf="element.state != 'ACCEPTANCE_PENDING'">
+        <div *ngIf="element.state == 'ACCEPTED' && !isArtist && currentDate.getTime() > element.date">
+          <button mat-raised-button color="primary" type="button" value="accept" (click)="completeContract(element)">Actuación completa</button>
+        </div>
+        <div *ngIf="element.state == 'DONE' || (element.state == 'ACCEPTED' && currentDate.getTime() < element.date) || (element.state == 'ACCEPTED' && currentDate.getTime() > element.date && isArtist)">
           Nada por ahora!
         </div>
       </td>

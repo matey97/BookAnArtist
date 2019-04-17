@@ -33,4 +33,8 @@ export class ContractService {
   cancelContract(id: number): Observable<any> {
     return this.http.put('api/contract/cancel/' + id, null);
   }
+
+  completeContract(id: number): Observable<any> {
+    return this.http.put('api/contract/complete/' + id, null);
+  }
 }

@@ -105,7 +105,7 @@ public class EmailService {
     }
 
     @Async("asyncExecutor")
-    public void sendPayBackEmail(String user, Contract contract){
+    public void sendPayBackEmail(String user, Contract contract){ //Seria por reclamaciones
         Notification notification = buildBaseNotificationAndDestinationUser(user);
         notification.setSubject("Reintegro de oferta ID: " + contract.getId());
 

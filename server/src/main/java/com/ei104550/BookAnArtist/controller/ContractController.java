@@ -77,6 +77,7 @@ public class ContractController {
         c.setState(ContractState.ACCEPTED);
         this.contractRepository.save(c);
         emailService.sendAcceptRejectContractEmail(c.getOrganizerUsername(), c, true);
+        emailService.sendPayEmail(c.getOrganizerUsername(), c);
         return true;
     }
 
@@ -96,4 +97,14 @@ public class ContractController {
         this.contractRepository.save(c);
         return true;
     }
+
+    @PutMapping("contract/complete/{id}")
+    public boolean completeContractById(@PathVariable("id") String id){
+        Contract c = this.contractRepository.findById(Long.parseLong(id)).get();
+        c.setState(ContractState.DONE);
+        this.contractRepository.save(c);
+        emailService.sendIncomeEmail(c.getArtisticUsername(), c);
+        return true;
+    }
+
 }

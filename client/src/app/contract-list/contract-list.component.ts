@@ -28,11 +28,12 @@ export class ContractListComponent implements OnInit {
   dataSource;
   displayedColumns;
 
+  currentDate: Date;
   isArtist: boolean;
 
   successSubscriber = (item) => {
     if (item) {
-      this.snackBar.open('Cambios gueardados correctamente. Se ha enviado una notificacón al organizador', 'Cerrar', {duration: 3000});
+      this.snackBar.open('Cambios gueardados correctamente.', 'Cerrar', {duration: 3000});
     } else {
       this.snackBar.open('No se ha podido tratar tu petición.', 'Cerrar', {duration: 3000});
     }
@@ -50,6 +51,7 @@ export class ContractListComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.currentDate = new Date();
     this.loguedUser = this.loginService.getLoguedUser();
     if (this.loguedUser.usertype === 'ARTIST') {
       this.isArtist = true;
@@ -96,5 +98,10 @@ export class ContractListComponent implements OnInit {
   public cancelContract(contract) {
     contract.state = 'CANCELLED';
     this.contractService.cancelContract(contract.id).subscribe(this.successSubscriber, this.errorSubscriber);
+  }
+
+  public completeContract(contract) {
+    contract.state = 'DONE';
+    this.contractService.completeContract(contract.id).subscribe(this.successSubscriber, this.errorSubscriber);
   }
 }
