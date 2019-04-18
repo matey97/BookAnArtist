@@ -162,7 +162,6 @@ public class Artist{
 
     }
 
-
     public boolean deleteValoracion(String id){
 
         for(int i = 0; i < this.valoraciones.size() ; i++){

@@ -9,6 +9,8 @@ import {LoginService} from '../shared/loginService/login.service';
 import {ArtistService} from "../shared/artist/artist.service";
 import {Artist} from "../model/Artist";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {NgForm} from "@angular/forms";
+import {Valoracion} from "../model/Valoracion";
 
 @Component({
   selector: 'app-contract-list',
@@ -30,6 +32,12 @@ export class ContractListComponent implements OnInit {
   dataSource;
   displayedColumns;
   isArtist: boolean;
+  valoracionNueva: Valoracion;
+  valorationStarts: number;
+  usernameOrganizer: string;
+  listValoraciones: Array<any>;
+
+
 
   successSubscriber = (item) => {
     if (item) {
@@ -68,7 +76,9 @@ export class ContractListComponent implements OnInit {
         this.contracts = contracts;
         this.contracts.forEach( contrat => {
           contrat.haSidoValorado = false;
-          this.artistService.getArtistByUsername(contrat.artisticUsername).subscribe(data => {
+
+
+          this.userService.getUserByUsername(contrat.artisticUsername).subscribe(data => {
             data.valoraciones.forEach( valoracion => {
               if (valoracion.valorador === this.loguedUser.username) {
                 console.log(contrat.haSidoValorado);
@@ -77,6 +87,7 @@ export class ContractListComponent implements OnInit {
 
               }
             });
+
             this.displayedColumns = this.organizerDisplayedColumns;
             this.configureDataSource(this.contracts);
             this.configureTablePaginatorAndSorting();
@@ -119,9 +130,41 @@ export class ContractListComponent implements OnInit {
     this.contractService.cancelContract(contract.id).subscribe(this.successSubscriber, this.errorSubscriber);
   }
 
-  public openValorationModal(modal) {
+  public openValorationModal(modal, usernameOrganizer) {
     if (this.loguedUser != null) {
       this.modalService.open(modal, {centered: true, backdropClass: 'modal-backdrop-chachiguay', size: 'lg'});
+      this.valorationStarts = 5;
+      this.usernameOrganizer = usernameOrganizer;
+
     }
+  }
+
+  public onSubmit(f: NgForm) {
+
+    this.valoracionNueva = new Valoracion();
+    this.valoracionNueva.puntuacion = this.valorationStarts;
+    this.valoracionNueva.comentario = f.value.comentario;
+    this.valoracionNueva.valorado = this.usernameOrganizer;
+    this.valoracionNueva.valorador = this.loguedUser.username;
+
+
+    this.userService.postAddValoration(this.valoracionNueva).subscribe(res => {
+        this.ngOnInit();
+      }
+    );
+
+
+    this.modalService.dismissAll();
+    this.snackBar.open('Comentario reguistado con éxito', 'Cerrar', {duration: 3000});
+
+  }
+
+  openListValorationModal(modalPuntuacionArtista: any, usernameOrganizer: string) {
+
+    this.userService.getUserByUsername(usernameOrganizer).subscribe(user => {
+      this.listValoraciones = user.valoraciones;
+      this.modalService.open(modalPuntuacionArtista, {centered: true, backdropClass: 'modal-backdrop-chachiguay', size: 'lg'});
+
+    });
   }
 }

@@ -93,8 +93,6 @@ public class ArtistController {
             valorationRepository.deleteById(Long.parseLong(id));
 
 
-
-
         }
     }
 }

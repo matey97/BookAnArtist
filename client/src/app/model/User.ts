@@ -1,4 +1,5 @@
 import {Contract} from './Contract';
+import {Valoracion} from './Valoracion';
 
 export class User {
   username: string;
@@ -7,6 +8,8 @@ export class User {
   usertype: 'ARTIST' | 'ADMIN' | 'ORGANIZER';
   image: string;
   contracts: Array<Contract>;
+  puntuation: number;
+  valoraciones: Array<Valoracion>
 
   constructor(object: any) {
     this.username = object.username;
@@ -15,5 +18,7 @@ export class User {
     this.usertype = object.usertype;
     this.image = object.image;
     this.contracts = object.contracts;
+    this.puntuation = object.puntuacion;
+    this.valoraciones = object.valoraciones;
   }
 }
