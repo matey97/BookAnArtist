@@ -6,11 +6,11 @@ import {User} from '../model/User';
 import {Contract} from '../model/Contract';
 import {MatPaginator, MatSnackBar, MatSort, MatTableDataSource} from '@angular/material';
 import {LoginService} from '../shared/loginService/login.service';
-import {ArtistService} from "../shared/artist/artist.service";
-import {Artist} from "../model/Artist";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {NgForm} from "@angular/forms";
-import {Valoracion} from "../model/Valoracion";
+import {ArtistService} from '../shared/artist/artist.service';
+import {Artist} from '../model/Artist';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {NgForm} from '@angular/forms';
+import {Valoracion} from '../model/Valoracion';
 
 @Component({
   selector: 'app-contract-list',
@@ -66,9 +66,21 @@ export class ContractListComponent implements OnInit {
       this.isArtist = true;
       this.contractService.getArtistContracts(this.loguedUser.username).subscribe(contracts => {
         this.contracts = contracts;
-        this.displayedColumns = this.artistDisplayedColumns;
-        this.configureDataSource(this.contracts);
-        this.configureTablePaginatorAndSorting();
+
+        this.contracts.forEach( contrat => {
+          this.userService.getUserByUsername(contrat.organizerUsername).subscribe(data => {
+            data.valoraciones.forEach(valoracion => {
+              if (valoracion.valorador === this.loguedUser.username) {
+                console.log(contrat.haSidoValorado);
+                contrat.haSidoValorado = true;
+                console.log(contrat.haSidoValorado);
+              }
+            });
+          });
+          this.displayedColumns = this.artistDisplayedColumns;
+          this.configureDataSource(this.contracts);
+          this.configureTablePaginatorAndSorting();
+        });
       });
     } else {
       this.isArtist = false;
@@ -76,8 +88,6 @@ export class ContractListComponent implements OnInit {
         this.contracts = contracts;
         this.contracts.forEach( contrat => {
           contrat.haSidoValorado = false;
-
-
           this.userService.getUserByUsername(contrat.artisticUsername).subscribe(data => {
             data.valoraciones.forEach( valoracion => {
               if (valoracion.valorador === this.loguedUser.username) {

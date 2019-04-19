@@ -69,15 +69,40 @@
 <ng-template #modalPuntuacionArtista let-modRefVal>
   <div class="modal-header d-block">
     <div class="d-flex">
-      <h3>Realiza una valoracion</h3>
+      <h3>Valoraciones del organizador</h3>
+    </div>
+    <div>
+      <div class="row">
+        <div class="col-sm-3">
+          Puntuación
+        </div>
+        <div class="col-sm-5">
+          Puntuación
+        </div>
+        <div class="col-sm-4">
+          Comentario
+        </div>
+      </div>
     </div>
   </div>
   <form #f="ngForm" (ngSubmit)="onSubmit(f)" class="form-valorar">
     <div class="modal-body">
         <div *ngFor="let valoracion of listValoraciones">
-          {{valoracion.puntuacion}}
-          {{valoracion.comentario}}
-
+          <div class="row">
+            <div class="col-sm-2">
+              {{valoracion.valorador}}
+            </div>
+            <div class="col-sm-6">
+              <ngb-rating [rate]="valoracion.puntuacion"  [readonly]=true disabled="true" >
+                <ng-template let-fill="fill" >
+                  <span class="star" [class.filled]="fill === 100" >&#9733;</span>
+                </ng-template>
+              </ngb-rating>
+            </div>
+            <div class="col-sm-4">
+              {{valoracion.comentario}}
+            </div>
+          </div>
         </div>
     </div>
     <div class="modal-footer">
