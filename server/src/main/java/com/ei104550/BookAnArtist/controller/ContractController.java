@@ -65,8 +65,10 @@ public class ContractController {
         List<Contract> contractList = this.contractRepository.findAll().stream().filter(contract -> contract.getOrganizerUsername().equals(username))
                 .collect(Collectors.toList());
         contractList.forEach(contract -> {
-            if (contract.getState() != ContractState.CANCELLED && contract.getLimitDate() < currentDate.getTime())
+            if (contract.getState() == ContractState.ACCEPTANCE_PENDING && contract.getLimitDate() < currentDate.getTime()) {
                 contract.setState(ContractState.CANCELLED);
+                contractRepository.save(contract);
+            }
         });
         return contractList;
     }

@@ -53,7 +53,7 @@ public class BookAnArtistApplication extends SpringBootServletInitializer {
 		return executor;
 	}
 
-	/*@Bean
+	@Bean
 	ApplicationRunner init(ArtistRepository repository,
 						   UserRepository userRepository,
 						   ArtistImageRepository imageRepository,
@@ -61,7 +61,7 @@ public class BookAnArtistApplication extends SpringBootServletInitializer {
 						   ContractRepository contractRepository,
 						   EmailService emailService){
 
-		User user1 = new User();
+		/*User user1 = new User();
 		user1.setUsername("Pepe");
 		user1.setPassword("pepe");
 		user1.setEmail("pepe@gmail.com");
@@ -143,7 +143,7 @@ public class BookAnArtistApplication extends SpringBootServletInitializer {
 		user6.setUsername("Juan");
 		user6.setPassword("juan");
 		user6.setEmail("juan@gmail.com");
-		user6.setUsertype(UserType.ARTIST.toString());
+		user6.setUsertype(UserType.ARTIST.toString());*/
 
 		return args -> {
 			/*Contract c = contractRepository.findById(35L).get();
@@ -202,9 +202,9 @@ public class BookAnArtistApplication extends SpringBootServletInitializer {
 				repository.save(artist);
 			});
 			repository.findAll().forEach(System.out::println);
-			userRepository.findAll().forEach(System.out::println);
+			userRepository.findAll().forEach(System.out::println);*/
 		};
 
-	}*/
+	}
 
 }

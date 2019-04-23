@@ -28,6 +28,18 @@ public class EmailService {
     private String destinationEmail;
     private User user;
 
+    public void sendTestEmail(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("<p>Hola!</p>");
+        sb.append("<p>Adios!</p>");
+        Notification n = new Notification();
+        n.setMessage(sb.toString());
+        n.setSubject("Test");
+        this.destinationEmail = "al341802@uji.es";
+        n.setDate(new Date().getTime());
+        sendEmail(n);
+    }
+
     @Async("asyncExecutor")
     public void sendNewContractEmail(String user, Contract contract){
         Notification notification = buildBaseNotificationAndDestinationUser(user);
@@ -49,7 +61,7 @@ public class EmailService {
     @Async("asyncExecutor")
     public void sendAcceptRejectContractEmail(String user, Contract contract, boolean accepted){
         Notification notification = buildBaseNotificationAndDestinationUser(user);
-        notification.setSubject("Actualización en el estado de la oferta ID: " + contract.getId());
+        notification.setSubject("Actualización de oferta ID: " + contract.getId());
 
         StringBuilder sb = new StringBuilder();
         sb.append("Hola " + user + ",\n\n");
@@ -87,6 +99,7 @@ public class EmailService {
         notification.setMessage(sb.toString());
 
         sendEmail(notification);
+        saveNotification(notification);
     }
 
     @Async("asyncExecutor")
@@ -102,6 +115,7 @@ public class EmailService {
         notification.setMessage(sb.toString());
 
         sendEmail(notification);
+        saveNotification(notification);
     }
 
     @Async("asyncExecutor")
@@ -118,6 +132,7 @@ public class EmailService {
         notification.setMessage(sb.toString());
 
         sendEmail(notification);
+        saveNotification(notification);
     }
 
     private void saveNotification(Notification n){
@@ -129,7 +144,7 @@ public class EmailService {
     private Notification buildBaseNotificationAndDestinationUser(String user){
         Notification notification = new Notification();
         notification.setDestinationUser(user);
-        notification.setDate(new Date());
+        notification.setDate(new Date().getTime());
         this.user = userRepository.findOneByUsername(user);
         this.destinationEmail = this.user.getEmail();
         return notification;
@@ -180,7 +195,7 @@ public class EmailService {
 
             message.setSubject(notification.getSubject());
             message.setText(notification.getMessage());
-            message.setSentDate(notification.getDate());
+            message.setSentDate(new Date(notification.getDate()));
 
             SMTPTransport transport = (SMTPTransport)session.getTransport("smtps");
             transport.connect("smtp.gmail.com", BNA_EMAIL, BNA_PASS);

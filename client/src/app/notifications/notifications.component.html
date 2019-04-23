@@ -1,0 +1,46 @@
+<button mat-icon-button [matMenuTriggerFor]="notifications" [matBadge]="user.notifications.length" [matBadgeHidden]="user.notifications.length == 0" matBadgePosition="above before" matBadgeColor="accent">
+  <mat-icon>notifications</mat-icon>
+</button>
+<mat-menu #notifications="matMenu" class="my-chachi-panel">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-10">
+        <div style="margin-top: 8px">
+          <b>Notificaciones</b>
+        </div>
+      </div>
+      <div class="col-sm-2">
+        <button mat-icon-button style="float: right;" (click)="$event.stopPropagation()">
+          <mat-icon>sync</mat-icon>
+        </button>
+      </div>
+    </div>
+    <mat-divider></mat-divider><br>
+    <div class="row">
+      <div class="col-sm-12">
+      <p style="text-align: center" *ngIf="user.notifications.length == 0">
+        No tienes notificaciones pendientes
+      </p>
+      <mat-accordion>
+        <mat-expansion-panel *ngFor="let notification of user.notifications" (click)="$event.stopPropagation()">
+          <mat-expansion-panel-header style="margin-top: 8px">
+            <mat-panel-title >
+              <div>
+              <mat-icon >fiber_new</mat-icon>
+              </div>
+              <div style="margin-left: 5px">
+              {{notification.subject}}
+              </div>
+            </mat-panel-title>
+            <mat-panel-description>
+              {{getDate(notification.date)}}
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <mat-divider></mat-divider><br>
+          <span style="white-space: pre-line">{{notification.message}}</span>
+        </mat-expansion-panel>
+      </mat-accordion>
+      </div>
+    </div>
+  </div>
+</mat-menu>

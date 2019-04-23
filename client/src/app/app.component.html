@@ -25,6 +25,7 @@
         <a class="nav-link" href="#">Buscar</a>
       </li>
     </ul>
+    <app-notifications *ngIf="loguedUser != null"></app-notifications>
     <a *ngIf="loguedUser == null" class="navbar-brand nav-link " routerLink="/login">
       <div class="LoginButton" alt="shortLogo">login</div>
     </a>

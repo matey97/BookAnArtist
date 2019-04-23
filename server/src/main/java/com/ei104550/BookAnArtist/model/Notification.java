@@ -13,7 +13,7 @@ public class Notification {
     private String subject;
     @Column(length=1024)
     private String message;
-    private Date date;
+    private Long date;
     private boolean seen;
 
     public Notification(){
@@ -52,11 +52,11 @@ public class Notification {
         this.message = message;
     }
 
-    public Date getDate() {
+    public Long getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(Long date) {
         this.date = date;
     }
 
