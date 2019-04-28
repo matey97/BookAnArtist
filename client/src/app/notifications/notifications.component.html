@@ -9,10 +9,13 @@
           <b>Notificaciones</b>
         </div>
       </div>
-      <div class="col-sm-2">
-        <button mat-icon-button style="float: right;" (click)="$event.stopPropagation()">
+      <div class="col-sm-2" >
+        <button *ngIf="!refreshing; else loadBar" mat-icon-button style="float: right;" (click)="$event.stopPropagation(); refreshNotifications()">
           <mat-icon>sync</mat-icon>
         </button>
+        <ng-template #loadBar>
+          <mat-spinner color="accent" style="float: right; margin-top: 8px; margin-bottom: 10px; margin-right: 8px" [diameter]="20"></mat-spinner>
+        </ng-template>
       </div>
     </div>
     <mat-divider></mat-divider><br>

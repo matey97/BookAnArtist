@@ -3,6 +3,7 @@ import {LoginService} from '../shared/loginService/login.service';
 import {User} from '../model/User';
 import {Notification} from '../model/Notification';
 import {NotificationService} from '../shared/notification/notification.service';
+import {Observable, EMPTY} from 'rxjs';
 
 @Component({
   selector: 'app-notifications',
@@ -19,6 +20,7 @@ export class NotificationsComponent implements OnInit {
   seenNotifications: Array<Notification>;
 
   showSeenNotifications = false;
+  refreshing = false;
 
   notificationSorter = (n1, n2) => {
     return n1.date - n2.date;
@@ -52,9 +54,37 @@ export class NotificationsComponent implements OnInit {
 
   public notificationBoxClosed() {
     this.showSeenNotifications = false;
-    this.notificationService.seenNotificationBatch(this.recentySeen).subscribe(value => {
-      console.log('Exito');
+    console.log(this.recentySeen);
+    if (this.recentySeen.length !== 0) {
+       console.log(this.recentySeen.length);
+       this.notificationService.seenNotificationBatch(this.recentySeen).subscribe(() => {
+         this.recentySeen = new Array<Notification>();
+       });
+    }
+  }
+
+  public refreshNotifications() {
+    this.refreshing = true;
+    if (this.recentySeen.length !== 0) {
+      this.notificationService.seenNotificationBatch(this.recentySeen).subscribe(() => {
+        this.recentySeen = new Array<Notification>();
+        this.doRefresh();
+      });
+    } else {
+      this.doRefresh();
+    }
+  }
+
+  private doRefresh() {
+    this.notificationService.getUserNotifications(this.user.username).subscribe(notifications => {
+      notifications.filter(n => n.seen !== true).forEach(n => {
+        if (this.newNotifications.indexOf(n) === -1) {
+          this.newNotifications.push(n);
+        }
+      });
+      this.refreshing = false;
+    }, error1 => {
+      this.refreshing = false;
     });
-    this.recentySeen = new Array<Notification>();
   }
 }

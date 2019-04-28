@@ -10,6 +10,10 @@ export class NotificationService {
 
   constructor(private http: HttpClient) { }
 
+  public getUserNotifications(username: string): Observable<any> {
+    return this.http.get('api/notification/user/' + username);
+  }
+
   public seenNotificationBatch(notifications: Array<Notification>): Observable<any> {
     return this.http.post('api/notification/seen', notifications);
   }
