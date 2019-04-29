@@ -53,7 +53,7 @@ public class ContractController {
         List<Contract> contractList = this.contractRepository.findAll().stream().filter(contract -> contract.getArtisticUsername().equals(username))
                 .collect(Collectors.toList());
         contractList.forEach(contract -> {
-            if (contract.getLimitDate() < currentDate.getTime())
+            if (contract.getState() == ContractState.ACCEPTANCE_PENDING && contract.getLimitDate() < currentDate.getTime())
                 contract.setState(ContractState.CANCELLED);
         });
         return contractList;

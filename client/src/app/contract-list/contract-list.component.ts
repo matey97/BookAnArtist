@@ -57,6 +57,7 @@ export class ContractListComponent implements OnInit {
       this.isArtist = true;
       this.contractService.getArtistContracts(this.loguedUser.username).subscribe(contracts => {
         this.contracts = contracts;
+        console.log(this.contracts);
         this.displayedColumns = this.artistDisplayedColumns;
         this.configureDataSource(this.contracts);
         this.configureTablePaginatorAndSorting();
@@ -65,6 +66,7 @@ export class ContractListComponent implements OnInit {
       this.isArtist = false;
       this.contractService.getOrganizerContracts(this.loguedUser.username).subscribe(contracts => {
         this.contracts = contracts;
+        console.log(this.contracts);
         this.displayedColumns = this.organizerDisplayedColumns;
         this.configureDataSource(this.contracts);
         this.configureTablePaginatorAndSorting();
