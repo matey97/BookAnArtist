@@ -4,6 +4,7 @@ import {User} from '../model/User';
 import {Notification} from '../model/Notification';
 import {NotificationService} from '../shared/notification/notification.service';
 import {Observable, EMPTY} from 'rxjs';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'app-notifications',
@@ -23,11 +24,12 @@ export class NotificationsComponent implements OnInit {
   refreshing = false;
 
   notificationSorter = (n1, n2) => {
-    return n1.date - n2.date;
+    return n2.date - n1.date;
   }
 
   constructor(private loginService: LoginService,
-              private notificationService: NotificationService) { }
+              private notificationService: NotificationService,
+              private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.user = this.loginService.getLoguedUser();
@@ -35,8 +37,8 @@ export class NotificationsComponent implements OnInit {
     this.seenNotifications = this.user.notifications.filter(notification => notification.seen);
     this.newNotifications = this.user.notifications.filter(notification => !notification.seen);
 
-    this.seenNotifications.reverse();
-    this.newNotifications.reverse();
+    this.seenNotifications.sort(this.notificationSorter);
+    this.newNotifications.sort(this.notificationSorter);
     console.log(this.user);
   }
 
@@ -76,15 +78,21 @@ export class NotificationsComponent implements OnInit {
   }
 
   private doRefresh() {
+    let updated = false;
     this.notificationService.getUserNotifications(this.user.username).subscribe(notifications => {
-      notifications.filter(n => n.seen !== true).forEach(n => {
-        if (this.newNotifications.indexOf(n) === -1) {
+      notifications.filter(n => n.seen === false).forEach(n => {
+        if (this.newNotifications.findIndex( elem => elem.id === n.id) === -1) {
           this.newNotifications.push(n);
+          updated = true;
         }
       });
+      if (updated) {
+        this.newNotifications.sort(this.notificationSorter);
+      }
       this.refreshing = false;
     }, error1 => {
       this.refreshing = false;
+      this.snackBar.open('Ha ocurrido un error', 'Cerrar', {duration: 3000});
     });
   }
 }
