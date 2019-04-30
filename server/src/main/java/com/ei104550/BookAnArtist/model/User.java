@@ -36,6 +36,29 @@ public class User {
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Notification> notifications;
 
+
+    public Double getPuntuation() {
+        return puntuation;
+    }
+
+    public void setPuntuation(Double puntuation) {
+        this.puntuation = puntuation;
+    }
+
+    public List<Valoracion> getValoraciones() {
+        return valoraciones;
+    }
+
+    public void setValoraciones(List<Valoracion> valoraciones) {
+        this.valoraciones = valoraciones;
+    }
+
+    private Double puntuation;
+    @ElementCollection()
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Valoracion> valoraciones;
+
+
     public User(){
         this.contracts = new LinkedList<>();
         this.notifications = new LinkedList<>();
@@ -66,8 +89,6 @@ public class User {
     public void setUsertype(String usertype) {
         this.usertype = usertype;
     }
-
-
 
     public String getUsername() {
         return username;
@@ -121,6 +142,35 @@ public class User {
     public void setNotifications(List<Notification> notifications) {
         this.notifications = notifications;
     }
+
+    public void addValoracion(Valoracion valoracion){
+
+        this.valoraciones.add(valoracion);
+        int puntuacionTotal = 0;
+
+        for(Valoracion val : valoraciones){
+            puntuacionTotal += val.puntuacion;
+        }
+
+        this.puntuation = puntuacionTotal/(valoraciones.size() * 1.0);
+
+    }
+
+    public boolean deleteValoracion(String id){
+
+        for(int i = 0; i < this.valoraciones.size() ; i++){
+
+            System.out.println(id + "asdaaaaaaaaaaaaaaaPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP");
+
+            Valoracion valoracion = this.valoraciones.get(i);
+
+            if (valoracion.getId().toString().compareTo(id) == 0){
+                return this.valoraciones.contains(this.valoraciones.remove(i));
+            }
+        }
+        return false;
+    }
+
 
     @Override
     public String toString() {
