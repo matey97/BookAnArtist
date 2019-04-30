@@ -1,5 +1,6 @@
 package com.ei104550.BookAnArtist.controller;
 
+import com.ei104550.BookAnArtist.Services.EmailService;
 import com.ei104550.BookAnArtist.enums.ContractState;
 import com.ei104550.BookAnArtist.model.Artist;
 import com.ei104550.BookAnArtist.model.Contract;
@@ -20,11 +21,13 @@ public class ContractController {
     private ContractRepository contractRepository;
     private UserRepository userRepository;
     private ArtistRepository artistRepository;
+    private EmailService emailService;
 
-    public ContractController(ContractRepository contractRepository, UserRepository userRepository, ArtistRepository artistRepository) {
+    public ContractController(ContractRepository contractRepository, UserRepository userRepository, ArtistRepository artistRepository, EmailService emailService) {
         this.contractRepository = contractRepository;
         this.userRepository = userRepository;
         this.artistRepository = artistRepository;
+        this.emailService = emailService;
     }
 
     @PostMapping("contract/{artistUsername}_{organizatorUsername}")
@@ -40,6 +43,7 @@ public class ContractController {
         artist.addContract(contract);
         userRepository.save(user);
         artistRepository.save(artist);
+        emailService.sendNewContractEmail(artistUsername, contract);
         return true;
     }
 
@@ -49,7 +53,7 @@ public class ContractController {
         List<Contract> contractList = this.contractRepository.findAll().stream().filter(contract -> contract.getArtisticUsername().equals(username))
                 .collect(Collectors.toList());
         contractList.forEach(contract -> {
-            if (contract.getLimitDate() < currentDate.getTime())
+            if (contract.getState() == ContractState.ACCEPTANCE_PENDING && contract.getLimitDate() < currentDate.getTime())
                 contract.setState(ContractState.CANCELLED);
         });
         return contractList;
@@ -61,8 +65,10 @@ public class ContractController {
         List<Contract> contractList = this.contractRepository.findAll().stream().filter(contract -> contract.getOrganizerUsername().equals(username))
                 .collect(Collectors.toList());
         contractList.forEach(contract -> {
-            if (contract.getState() != ContractState.CANCELLED && contract.getLimitDate() < currentDate.getTime())
+            if (contract.getState() == ContractState.ACCEPTANCE_PENDING && contract.getLimitDate() < currentDate.getTime()) {
                 contract.setState(ContractState.CANCELLED);
+                contractRepository.save(contract);
+            }
         });
         return contractList;
     }
@@ -72,6 +78,8 @@ public class ContractController {
         Contract c = this.contractRepository.findById(Long.parseLong(id)).get();
         c.setState(ContractState.ACCEPTED);
         this.contractRepository.save(c);
+        emailService.sendAcceptRejectContractEmail(c.getOrganizerUsername(), c, true);
+        emailService.sendPayEmail(c.getOrganizerUsername(), c);
         return true;
     }
 
@@ -80,6 +88,7 @@ public class ContractController {
         Contract c = this.contractRepository.findById(Long.parseLong(id)).get();
         c.setState(ContractState.REJECTED);
         this.contractRepository.save(c);
+        emailService.sendAcceptRejectContractEmail(c.getOrganizerUsername(), c, false);
         return true;
     }
 
@@ -90,4 +99,14 @@ public class ContractController {
         this.contractRepository.save(c);
         return true;
     }
+
+    @PutMapping("contract/complete/{id}")
+    public boolean completeContractById(@PathVariable("id") String id){
+        Contract c = this.contractRepository.findById(Long.parseLong(id)).get();
+        c.setState(ContractState.DONE);
+        this.contractRepository.save(c);
+        emailService.sendIncomeEmail(c.getArtisticUsername(), c);
+        return true;
+    }
+
 }

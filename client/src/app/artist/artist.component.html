@@ -10,12 +10,13 @@
             <h4 class="card-title" >{{artist.artisticName}}</h4>
           </div>
           <div class="card-footer">
-            <ngb-rating [rate]="artist.puntuation/artist.nPuntuations"  [readonly]=false >
+            <ngb-rating [rate]="artist.puntuation"  [readonly]=true >
               <ng-template let-fill="fill" >
                 <span class="star" [class.filled]="fill === 100" >&#9733;</span>
               </ng-template>
             </ngb-rating>
           </div>
+
         </div>
         <br>
         <mat-divider></mat-divider>
@@ -67,7 +68,92 @@
           </div>
       </div>
     </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <hr>
+      <h3>Valoraciones</h3>
+      <ngb-pagination class="d-flex justify-content-center" *ngIf="listValoraciones != null" [collectionSize]="listValoraciones.length" [pageSize]="pageSize" [(page)]="page" [boundaryLinks]="true"></ngb-pagination>
+      <div *ngIf="listValoraciones.length > 0; else sinValoraciones">
+        <div *ngFor="let valoracion of listValoraciones | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; ">
+          <mat-card class="example-card">
+            <mat-card-header>
+              <mat-card-title>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <img class="profileValoration" src="data:image/PNG;base64,{{valoracion.imgProfileValorador}}">
+                  </div>
+                  <div class="col-sm-6">
+                    {{valoracion.valorador}}
+                  </div>
+                  <div class="col-sm-3">
+                    <ngb-rating [rate]="valoracion.puntuacion"  [readonly]=true >
+                      <ng-template let-fill="fill" >
+                        <span class="star" [class.filled]="fill === 100" >&#9733;</span>
+                      </ng-template>
+                    </ngb-rating>
+                  </div>
+                </div>
+              </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              {{valoracion.comentario}}
+            </mat-card-content>
+            <mat-card-actions>
+              <div *ngIf="loguedUser">
+                <div *ngIf="valoracion.valorador == loguedUser.username">
+                    <button mat-raised-button color="error" style="font-size: larger; width: 30%" type="button" (click)="borrarValoracion(valoracion)" value="contratar">Borrar comentario</button>
+                  </div>
+              </div>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+      </div>
+      <ng-template #sinValoraciones>
+        No hay ninguna valoracion para este artista
+      </ng-template>
+    </div>
+  </div>
+
+  <div *ngIf="loguedUser; else veALoguearte">
+      <div *ngIf="noHaValorado && HaContratado && loguedUser.username != artist.username ">
+        <button mat-raised-button color="primary" style="font-size: larger; width: 30%" type="button" (click)="openValorationModal(modalValoration)" value="contratar">Valorar</button>
+      </div>
+  </div>
+  <ng-template #veALoguearte>
+  </ng-template>
 </div>
+
+<ng-template #modalValoration let-modRefVal>
+  <div class="modal-header d-block">
+    <div class="d-flex">
+      <h3>Realiza una valoracion</h3>
+    </div>
+  </div>
+    <form #f="ngForm" (ngSubmit)="onSubmit(f)" class="form-valorar">
+      <div class="modal-body">
+      <div class="row">
+        <div class="col-sm-2">
+          <h4>Puntuación:</h4>
+        </div>
+        <div class="col-sm-6">
+          <ngb-rating [(rate)]="valorationStarts"  [readonly]=false >
+            <ng-template let-fill="fill" >
+              <span class="star" [class.filled]="fill === 100" >&#9733;</span>
+            </ng-template>
+          </ngb-rating>
+        </div>
+        </div>
+        <mat-form-field style="width: 400px;" >
+          <textarea matInput ngModel name="comentario" placeholder="Comentario" rows="10"></textarea>
+        </mat-form-field>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" mat-raised-button color="warn" (click)="modRefVal.close()" >Cancelar</button>
+        <button type="submit" mat-raised-button color="primary">Finalizar</button>
+      </div>
+    </form>
+</ng-template>
 
 <ng-template #modal let-modRef>
   <app-contratation [artist]="artist" [loguedUser]="loguedUser" [modal]="modRef"></app-contratation>

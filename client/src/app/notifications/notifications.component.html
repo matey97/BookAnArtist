@@ -1,0 +1,69 @@
+<button mat-icon-button [matMenuTriggerFor]="notifications" [matBadge]="newNotifications.length" [matBadgeHidden]="newNotifications.length == 0" matBadgePosition="above before" matBadgeColor="accent">
+  <mat-icon>notifications</mat-icon>
+</button>
+<mat-menu #notifications="matMenu" class="my-chachi-panel" (close)="notificationBoxClosed()">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-10">
+        <div style="margin-top: 8px">
+          <b>Notificaciones</b>
+        </div>
+      </div>
+      <div class="col-sm-2" >
+        <button *ngIf="!refreshing; else loadBar" mat-icon-button style="float: right;" (click)="$event.stopPropagation(); refreshNotifications()">
+          <mat-icon>sync</mat-icon>
+        </button>
+        <ng-template #loadBar>
+          <mat-spinner color="accent" style="float: right; margin-top: 8px; margin-bottom: 10px; margin-right: 8px" [diameter]="20"></mat-spinner>
+        </ng-template>
+      </div>
+    </div>
+    <mat-divider></mat-divider><br>
+    <div class="row">
+      <div class="col-sm-12">
+      <p style="text-align: center" *ngIf="newNotifications.length == 0">
+        No tienes notificaciones pendientes
+      </p>
+      <mat-accordion>
+        <mat-expansion-panel *ngFor="let notification of newNotifications" (click)="$event.stopPropagation()" (afterCollapse)="newNotificationSeen(notification)">
+          <mat-expansion-panel-header style="margin-top: 8px">
+            <mat-panel-title>
+              <div>
+              <mat-icon>fiber_new</mat-icon>
+              </div>
+              <div style="margin-left: 5px">
+              {{notification.subject}}
+              </div>
+            </mat-panel-title>
+            <mat-panel-description>
+              {{getDate(notification.date)}}
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <mat-divider></mat-divider><br>
+          <span style="white-space: pre-line">{{notification.message}}</span>
+        </mat-expansion-panel>
+      </mat-accordion>
+      <br><mat-divider></mat-divider><br>
+      <div *ngIf="!showSeenNotifications && seenNotifications.length != 0" style="text-align: center">
+        <button mat-raised-button color="primary" value="Ver notificaciónes anteriores" (click)="showSeenNotifications = true; $event.stopPropagation()">Ver notificaciones anteriores</button>
+      </div>
+      <mat-accordion *ngIf="showSeenNotifications">
+        <mat-expansion-panel *ngFor="let notification of seenNotifications" (click)="$event.stopPropagation()">
+          <mat-expansion-panel-header style="margin-top: 8px">
+            <mat-panel-title>
+              <div>
+                {{notification.subject}}
+              </div>
+            </mat-panel-title>
+            <mat-panel-description>
+              {{getDate(notification.date)}}
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <mat-divider></mat-divider><br>
+          <span style="white-space: pre-line">{{notification.message}}</span>
+        </mat-expansion-panel>
+      </mat-accordion>
+      </div>
+    </div>
+  </div>
+</mat-menu>

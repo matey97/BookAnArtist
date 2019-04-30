@@ -1,5 +1,6 @@
 package com.ei104550.BookAnArtist;
 
+import com.ei104550.BookAnArtist.Services.EmailService;
 import com.ei104550.BookAnArtist.enums.UserType;
 import com.ei104550.BookAnArtist.model.*;
 import com.ei104550.BookAnArtist.repositories.*;
@@ -15,6 +16,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
@@ -27,23 +31,37 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.Executor;
 import java.util.stream.Stream;
 
 @SpringBootApplication
+@EnableAsync
 public class BookAnArtistApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
 		SpringApplication.run(BookAnArtistApplication.class, args);
 	}
 
-	/*@Bean
+	@Bean(name = "asyncExecutor")
+	public Executor taskExecutor(){
+		ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+		executor.setCorePoolSize(8);
+		executor.setMaxPoolSize(8);
+		executor.setQueueCapacity(50);
+		executor.setThreadNamePrefix("BNA-");
+		executor.initialize();
+		return executor;
+	}
+
+	@Bean
 	ApplicationRunner init(ArtistRepository repository,
 						   UserRepository userRepository,
 						   ArtistImageRepository imageRepository,
 						   ArtistVideoRepository videoRepository,
-						   ContractRepository contractRepository){
+						   ContractRepository contractRepository,
+						   EmailService emailService){
 
-		User user1 = new User();
+		/*User user1 = new User();
 		user1.setUsername("Pepe");
 		user1.setPassword("pepe");
 		user1.setEmail("pepe@gmail.com");
@@ -125,10 +143,17 @@ public class BookAnArtistApplication extends SpringBootServletInitializer {
 		user6.setUsername("Juan");
 		user6.setPassword("juan");
 		user6.setEmail("juan@gmail.com");
-		user6.setUsertype(UserType.ARTIST.toString());
+		user6.setUsertype(UserType.ARTIST.toString());*/
 
 		return args -> {
-			Stream.of(user1, user2, user3, user4, user5, user6).forEach((user) -> {
+			/*Contract c = contractRepository.findById(35L).get();
+			emailService.sendNewContractEmail("sergio",c);
+			emailService.sendAcceptRejectContractEmail("org1", c, true);
+			emailService.sendAcceptRejectContractEmail("org1", c, false);
+			emailService.sendPayEmail("org1", c);
+			emailService.sendIncomeEmail("sergio", c);
+			emailService.sendPayBackEmail("org1", c);
+			/*Stream.of(user1, user2, user3, user4, user5, user6).forEach((user) -> {
 				File fileImage = new File("src/main/resources/profile-icon.png");
 				try{
 					byte[] bImageFile = Files.readAllBytes(fileImage.toPath());
@@ -177,9 +202,9 @@ public class BookAnArtistApplication extends SpringBootServletInitializer {
 				repository.save(artist);
 			});
 			repository.findAll().forEach(System.out::println);
-			userRepository.findAll().forEach(System.out::println);
+			userRepository.findAll().forEach(System.out::println);*/
 		};
 
-	}*/
+	}
 
 }

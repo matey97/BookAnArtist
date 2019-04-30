@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {HttpClientModule} from '@angular/common/http';
@@ -19,7 +18,7 @@ import {
   MatPaginator, MatPaginatorModule, MatSelectModule, MatSnackBarModule, MatSortModule, MatTableModule,
   MatProgressSpinnerModule,
   MatOptionModule,
-  MatToolbarModule
+  MatToolbarModule, MatMenuModule, MatBadgeModule, MatExpansionModule
 } from '@angular/material';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {VgCoreModule} from 'videogular2/core';
@@ -34,6 +33,7 @@ import { RegisterComponent } from './shared/register/register.component';
 import { MatSliderModule } from '@angular/material/slider';
 import { ContratationComponent } from './artist/contratation/contratation.component';
 import { ContractListComponent } from './contract-list/contract-list.component';
+import { NotificationsComponent } from './notifications/notifications.component';
 import {StorageServiceModule} from 'angular-webstorage-service';
 
 
@@ -49,6 +49,7 @@ import {StorageServiceModule} from 'angular-webstorage-service';
     RegisterComponent,
     ContratationComponent,
     ContractListComponent,
+    NotificationsComponent,
   ],
   imports: [
     BrowserModule,
@@ -73,6 +74,9 @@ import {StorageServiceModule} from 'angular-webstorage-service';
     MatNativeDateModule,
     MatTableModule,
     MatSortModule,
+    MatMenuModule,
+    MatBadgeModule,
+    MatExpansionModule,
     MatPaginatorModule,
     FormsModule,
     NgbModule,

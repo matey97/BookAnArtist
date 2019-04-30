@@ -61,6 +61,7 @@ export class ContratationComponent implements OnInit {
   }
 
   private askConfirmation(confModal) {
+    this.date.setHours(this.time.hour, this.time.minute);
     this.modalService.open(confModal, {centered: true, backdropClass: 'modal-backdrop-chachiguay'});
   }
 
@@ -69,7 +70,7 @@ export class ContratationComponent implements OnInit {
     this.contract.state = null;
     this.contract.organizerUsername = this.loguedUser.username;
     this.contract.artisticUsername = this.artist.username;
-    this.date.setHours(this.time.hour, this.time.second);
+    this.date.setHours(this.time.hour, this.time.minute);
     this.contract.date = this.date.getTime();
     this.contract.limitDate = this.limitDate.getTime();
     this.contractService.postContract(this.contract).subscribe((item) => {

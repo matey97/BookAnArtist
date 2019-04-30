@@ -34,6 +34,15 @@
             <mat-option *ngFor="let schedule of schedules" value="{{schedule}}">{{schedule}}</mat-option>
           </mat-select>
         </mat-form-field>
+        <h5>Puntuación</h5>
+        <mat-slider
+          thumbLabel
+          (ngModel) = prueba
+          name="puntuacionElegida"
+          tickInterval="1"
+          min="1"
+          max="10"></mat-slider>
+
         <h5>Coste mínimo</h5>
           <mat-slider
             thumbLabel
@@ -80,7 +89,7 @@
               </div>
               <div class="w-100"></div>
               <div class="card-footer w-100 text-muted">
-                <ngb-rating [rate]="artist.puntuation/artist.nPuntuations"  [readonly]=false (rateChange)="onPuntuado($event,i)">
+                <ngb-rating [rate]="artist.puntuation"  [readonly]=true disabled="true" >
                   <ng-template let-fill="fill" >
                     <span class="star" [class.filled]="fill === 100" >&#9733;</span>
                   </ng-template>

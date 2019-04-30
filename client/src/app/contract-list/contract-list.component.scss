@@ -14,3 +14,19 @@ mat-paginator {
 th,td{
   max-width: 150pt;
 }
+
+/*
+Estilo de las estrellas de valoración
+ */
+
+.star {
+  font-size: 1.5rem;
+  color: #F2EDD0;
+  position: relative;
+  left: 2vw;
+}
+.filled {
+  color: #FCDE1F;
+}
+
+

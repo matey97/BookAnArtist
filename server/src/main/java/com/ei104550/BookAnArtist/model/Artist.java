@@ -17,7 +17,9 @@ public class Artist{
     private String description;
     private Double price;
     private Double puntuation;
-    private int nPuntuations;
+    @ElementCollection()
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Valoracion> valoraciones;
     @ElementCollection()
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<String> habilities;
@@ -71,6 +73,14 @@ public class Artist{
         this.description = description;
     }
 
+    public List<Valoracion> getValoraciones() {
+        return valoraciones;
+    }
+
+    public void setValoraciones(List<Valoracion> valoraciones) {
+        this.valoraciones = valoraciones;
+    }
+
     public Double getPrice() {
         return price;
     }
@@ -111,10 +121,6 @@ public class Artist{
         this.videos = videos;
     }
 
-    public int getnPuntuations() { return nPuntuations; }
-
-    public void setnPuntuations(int nPuntuations) { this.nPuntuations = nPuntuations; }
-
     public List<String> getZones() {
         return zones;
     }
@@ -143,6 +149,32 @@ public class Artist{
         this.contracts.add(c);
     }
 
+    public void addValoracion(Valoracion valoracion){
+
+        this.valoraciones.add(valoracion);
+        int puntuacionTotal = 0;
+
+        for(Valoracion val : valoraciones){
+            puntuacionTotal += val.puntuacion;
+        }
+
+        this.puntuation = puntuacionTotal/(valoraciones.size() * 1.0);
+
+    }
+
+    public boolean deleteValoracion(String id){
+
+        for(int i = 0; i < this.valoraciones.size() ; i++){
+            Valoracion valoracion = this.valoraciones.get(i);
+
+            if (valoracion.getId().toString().compareTo(id) == 0){
+                return this.valoraciones.contains(this.valoraciones.remove(i));
+            }
+        }
+        return false;
+    }
+
+
     @Override
     public String toString() {
         return "Artist{" +
@@ -151,7 +183,7 @@ public class Artist{
                 ", description='" + description + '\'' +
                 ", price=" + price +
                 ", puntuation=" + puntuation +
-                ", nPuntuations=" + nPuntuations +
+                ", valoraciones=" + valoraciones+
                 ", habilities=" + habilities +
                 ", images=" + images +
                 ", videos=" + videos +
