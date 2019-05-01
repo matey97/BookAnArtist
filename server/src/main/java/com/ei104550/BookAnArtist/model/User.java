@@ -5,10 +5,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "USER")
@@ -72,6 +69,8 @@ public class User {
         this.image = user.getImage();
         this.usertype= user.getUsertype();
         this.notifications = user.getNotifications();
+        this.puntuation = 0.0;
+        this.valoraciones = new ArrayList<>();
     }
 
     public Set<Role> getRoles() {

@@ -80,10 +80,11 @@ export class ContractListComponent implements OnInit {
                 console.log(contrat.haSidoValorado);
               }
             });
+            this.displayedColumns = this.artistDisplayedColumns;
+            this.configureDataSource(this.contracts);
+            this.configureTablePaginatorAndSorting();
           });
-          this.displayedColumns = this.artistDisplayedColumns;
-          this.configureDataSource(this.contracts);
-          this.configureTablePaginatorAndSorting();
+
         });
       });
     } else {
@@ -95,16 +96,14 @@ export class ContractListComponent implements OnInit {
           this.userService.getUserByUsername(contrat.artisticUsername).subscribe(data => {
             data.valoraciones.forEach( valoracion => {
               if (valoracion.valorador === this.loguedUser.username) {
-                console.log(contrat.haSidoValorado);
                 contrat.haSidoValorado = true;
-                console.log(contrat.haSidoValorado);
-
               }
-            });
 
+            });
             this.displayedColumns = this.organizerDisplayedColumns;
             this.configureDataSource(this.contracts);
             this.configureTablePaginatorAndSorting();
+
           });
         });
 

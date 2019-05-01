@@ -27,12 +27,14 @@ export class ArtistComponent implements OnInit {
   listValoraciones: Array<any>;
   valorationStarts: number;
   loguedUser;
+  usernameData: User;
   valoracionNueva: Valoracion;
   userProfileImageValoracion: Array<any>;
   noHaValorado: boolean;
   HaContratado: boolean;
   page: any;
   pageSize: number;
+  private valorationEditar: Valoracion;
 
 
   constructor( private artistService: ArtistService,
@@ -45,6 +47,9 @@ export class ArtistComponent implements OnInit {
 
   ngOnInit() {
     this.username = this.route.snapshot.paramMap.get('username');
+    this.userService.getUserByUsername(this.username).subscribe( data => {
+      this.usernameData = data;
+    });
     this.getArtistProfile();
 
     this.page = 1;
@@ -111,6 +116,14 @@ export class ArtistComponent implements OnInit {
      this.valorationStarts = 5;
      this.modalService.open(modal, {centered: true, backdropClass: 'modal-backdrop-chachiguay',  size: 'lg'});
     }
+  }
+
+  public openValorationModalEditar(modal, valoration) {
+    if (this.loguedUser != null) {
+      this.valorationStarts = valoration.puntuacion;
+      this.valorationEditar = valoration;
+      this.modalService.open(modal, {centered: true, backdropClass: 'modal-backdrop-chachiguay',  size: 'lg'});
+    }
 
 
   }
@@ -154,6 +167,29 @@ export class ArtistComponent implements OnInit {
       this.ngOnInit();
     });
 
+
+  }
+
+  onSubmitEdit(f: NgForm) {
+
+    this.valoracionNueva = this.valorationEditar;
+    this.valoracionNueva.id = this.valorationEditar.id;
+    this.valoracionNueva.puntuacion = this.valorationStarts;
+    this.valoracionNueva.comentario = f.value.comentario;
+    this.valoracionNueva.valorado = this.artist.username;
+    this.valoracionNueva.valorador = this.loguedUser.username;
+
+    console.log('ewrewrwrw');
+    console.log(this.valoracionNueva.id);
+
+    this.userService.postEditValoracion(this.valoracionNueva).subscribe(res => {
+        this.ngOnInit();
+      }
+    );
+
+
+    this.modalService.dismissAll();
+    this.snackBar.open('Comentario editado con éxito', 'Cerrar', {duration: 3000});
 
   }
 }

@@ -75,7 +75,29 @@ public class UserController {
             userRepository.save(user);
             valorationRepository.deleteById(Long.parseLong(id));
 
-
         }
     }
+
+    @PostMapping("user/valoration/{id}")
+    public void updateArtistValoration(@PathVariable String id,
+                                       @RequestBody Valoracion valorationNew){
+        //Borramos
+        if(valorationRepository.findById(Long.parseLong(id)).isPresent()){
+            Valoracion valoracion = valorationRepository.findById(Long.parseLong(id)).get();
+            User user = userRepository.findById(valoracion.getValorado()).get();
+            user.deleteValoracion(id);
+            userRepository.save(user);
+            valorationRepository.deleteById(Long.parseLong(id));
+
+            user.addValoracion(valorationNew);
+            user.setPuntuation(user.getPuntuation());
+            userRepository.save(user);
+            valorationRepository.save(valorationNew);
+
+        }
+
+    }
+
+
+
 }

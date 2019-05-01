@@ -61,4 +61,10 @@ export class UserService {
   }
 
 
+  postEditValoracion(valoracion: Valoracion): Observable<any> {
+    console.log('Aqu llego bien');
+    return this.http.post('api/user/valoration/' + valoracion.id , valoracion);
+    console.log('Me contestan guay');
+
+  }
 }

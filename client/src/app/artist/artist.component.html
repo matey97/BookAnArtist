@@ -10,7 +10,7 @@
             <h4 class="card-title" >{{artist.artisticName}}</h4>
           </div>
           <div class="card-footer">
-            <ngb-rating [rate]="artist.puntuation"  [readonly]=true >
+            <ngb-rating [rate]="usernameData.puntuation"  [readonly]=true >
               <ng-template let-fill="fill" >
                 <span class="star" [class.filled]="fill === 100" >&#9733;</span>
               </ng-template>
@@ -101,8 +101,9 @@
             <mat-card-actions>
               <div *ngIf="loguedUser">
                 <div *ngIf="valoracion.valorador == loguedUser.username">
-                    <button mat-raised-button color="error" style="font-size: larger; width: 30%" type="button" (click)="borrarValoracion(valoracion)" value="contratar">Borrar comentario</button>
-                  </div>
+                    <button mat-raised-button color="error" style="font-size: larger; width: 15%" type="button" (click)="borrarValoracion(valoracion)" >Borrar comentario</button>
+                  <button mat-raised-button color="accent" style="font-size: larger; width: 15%" type="button" (click)="openValorationModalEditar(modalEditValoration, valoracion)" value="contratar">Editar</button>
+                </div>
               </div>
             </mat-card-actions>
           </mat-card>
@@ -154,6 +155,42 @@
       </div>
     </form>
 </ng-template>
+
+
+<ng-template #modalEditValoration let-modRefValEdit>
+  <div class="modal-header d-block">
+    <div class="d-flex">
+      <h3>Realiza una valoracion</h3>
+    </div>
+  </div>
+  <form #f="ngForm" (ngSubmit)="onSubmitEdit(f)" class="form-valorar">
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-sm-2">
+          <h4>Puntuación:</h4>
+        </div>
+        <div class="col-sm-6">
+          <ngb-rating [(rate)]="valorationStarts"  [readonly]=false >
+            <ng-template let-fill="fill" >
+              <span class="star" [class.filled]="fill === 100" >&#9733;</span>
+            </ng-template>
+          </ngb-rating>
+        </div>
+      </div>
+      <mat-form-field style="width: 400px;" >
+        <textarea matInput ngModel name="comentario" placeholder="Comentario editar" rows="10"></textarea>
+      </mat-form-field>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" mat-raised-button color="warn"  (click)="modRefValEdit.close()" >Cancelar</button>
+      <button mat-raised-button color="accent" style="font-size: larger; width: 20%" type="submit">Editar comentario</button>
+    </div>
+  </form>
+</ng-template>
+
+
+
 
 <ng-template #modal let-modRef>
   <app-contratation [artist]="artist" [loguedUser]="loguedUser" [modal]="modRef"></app-contratation>
