@@ -101,8 +101,14 @@
             <mat-card-actions>
               <div *ngIf="loguedUser">
                 <div *ngIf="valoracion.valorador == loguedUser.username">
-                    <button mat-raised-button color="error" style="font-size: larger; width: 15%" type="button" (click)="borrarValoracion(valoracion)" >Borrar comentario</button>
-                  <button mat-raised-button color="accent" style="font-size: larger; width: 15%" type="button" (click)="openValorationModalEditar(modalEditValoration, valoracion)" value="contratar">Editar</button>
+                  <div class="row">
+                    <div class="col-sm-2">
+                      <button mat-raised-button color="error" style="font-size: larger; "type="button" (click)="borrarValoracion(valoracion)" >Borrar comentario</button>
+                    </div>
+                    <div class="col-sm-6">
+                      <button mat-raised-button color="accent" style="font-size: larger; "type="button" (click)="openValorationModalEditar(modalEditValoration, valoracion)" value="contratar">Editar</button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </mat-card-actions>
@@ -160,7 +166,7 @@
 <ng-template #modalEditValoration let-modRefValEdit>
   <div class="modal-header d-block">
     <div class="d-flex">
-      <h3>Realiza una valoracion</h3>
+      <h3>Realiza una valoración</h3>
     </div>
   </div>
   <form #f="ngForm" (ngSubmit)="onSubmitEdit(f)" class="form-valorar">
@@ -178,13 +184,13 @@
         </div>
       </div>
       <mat-form-field style="width: 400px;" >
-        <textarea matInput ngModel name="comentario" placeholder="Comentario editar" rows="10"></textarea>
+        <textarea matInput [ngModel]="valorationEditar.comentario" name="comentario" placeholder="Comentario editar" rows="10"></textarea>
       </mat-form-field>
     </div>
 
     <div class="modal-footer">
       <button type="button" mat-raised-button color="warn"  (click)="modRefValEdit.close()" >Cancelar</button>
-      <button mat-raised-button color="accent" style="font-size: larger; width: 20%" type="submit">Editar comentario</button>
+      <button mat-raised-button color="accent"  type="submit">Editar comentario</button>
     </div>
   </form>
 </ng-template>

@@ -184,12 +184,13 @@ export class ArtistComponent implements OnInit {
 
     this.userService.postEditValoracion(this.valoracionNueva).subscribe(res => {
         this.ngOnInit();
+        this.modalService.dismissAll();
+        this.snackBar.open('Comentario editado con éxito', 'Cerrar', {duration: 3000});
       }
     );
 
 
-    this.modalService.dismissAll();
-    this.snackBar.open('Comentario editado con éxito', 'Cerrar', {duration: 3000});
+
 
   }
 }

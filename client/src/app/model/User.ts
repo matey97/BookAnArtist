@@ -11,7 +11,7 @@ export class User {
   contracts: Array<Contract>;
   notifications: Array<Notification>;
   puntuation: number;
-  valoraciones: Array<Valoracion>
+  valoraciones: Array<Valoracion>;
 
   constructor(object: any) {
     this.username = object.username;

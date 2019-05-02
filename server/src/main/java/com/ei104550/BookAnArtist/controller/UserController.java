@@ -72,6 +72,7 @@ public class UserController {
             Valoracion valoracion = valorationRepository.findById(Long.parseLong(id)).get();
             User user = userRepository.findById(valoracion.getValorado()).get();
             user.deleteValoracion(id);
+            user.updatePuntuacion();
             userRepository.save(user);
             valorationRepository.deleteById(Long.parseLong(id));
 
@@ -83,17 +84,24 @@ public class UserController {
                                        @RequestBody Valoracion valorationNew){
         //Borramos
         if(valorationRepository.findById(Long.parseLong(id)).isPresent()){
+
+            System.out.println(id + "SE BUSCA LA VALORACION PARA EDITAAAR");
+
+
             Valoracion valoracion = valorationRepository.findById(Long.parseLong(id)).get();
+            valoracion.setComentario(valorationNew.getComentario());
+            valoracion.setPuntuacion(valorationNew.getPuntuacion());
+
+            System.out.println(id + "SE HACE EL UPDATE EN MEMORIAAAAAAAAAA");
+
+            valorationRepository.save(valoracion);
+
+            System.out.println(id + "SE HACE EL UPDATE EN DISCOOOOOOOOOO");
+
+            //Para que se actualice la puntuacion del uuario al actualizar la puntuacion de la valoracion
             User user = userRepository.findById(valoracion.getValorado()).get();
-            user.deleteValoracion(id);
+            user.updatePuntuacion();
             userRepository.save(user);
-            valorationRepository.deleteById(Long.parseLong(id));
-
-            user.addValoracion(valorationNew);
-            user.setPuntuation(user.getPuntuation());
-            userRepository.save(user);
-            valorationRepository.save(valorationNew);
-
         }
 
     }

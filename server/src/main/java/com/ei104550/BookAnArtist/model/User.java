@@ -113,7 +113,6 @@ public class User {
         this.email = email;
     }
 
-
     public byte[] getImage() {
         return image;
     }
@@ -159,15 +158,37 @@ public class User {
 
         for(int i = 0; i < this.valoraciones.size() ; i++){
 
-            System.out.println(id + "asdaaaaaaaaaaaaaaaPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP");
-
             Valoracion valoracion = this.valoraciones.get(i);
 
             if (valoracion.getId().toString().compareTo(id) == 0){
                 return this.valoraciones.contains(this.valoraciones.remove(i));
             }
         }
+
+        int puntuacionTotal = 0;
+        for(Valoracion val : valoraciones){
+            puntuacionTotal += val.puntuacion;
+        }
+
+        this.puntuation = puntuacionTotal/(valoraciones.size() * 1.0);
+
         return false;
+    }
+
+    public double updatePuntuacion(){
+
+        int puntuacionTotal = 0;
+
+        if(valoraciones.size() == 0){
+            this.puntuation = 0.0;
+            return this.puntuation;
+        }
+        else{
+            for(Valoracion val : valoraciones){
+                puntuacionTotal += val.puntuacion;
+            }
+            return this.puntuation = puntuacionTotal/(valoraciones.size() * 1.0);
+        }
     }
 
 
