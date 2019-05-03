@@ -79,10 +79,10 @@
     </div>
     <div>
       <div class="row">
-        <div class="col-sm-3">
-          Puntuación
+        <div class="col-sm-4">
+          Valorador
         </div>
-        <div class="col-sm-5">
+        <div class="col-sm-4">
           Puntuación
         </div>
         <div class="col-sm-4">
@@ -98,7 +98,7 @@
             <div class="col-sm-2">
               {{valoracion.valorador}}
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-5">
               <ngb-rating [rate]="valoracion.puntuacion"  [readonly]=true disabled="true" >
                 <ng-template let-fill="fill" >
                   <span class="star" [class.filled]="fill === 100" >&#9733;</span>
@@ -107,6 +107,13 @@
             </div>
             <div class="col-sm-4">
               {{valoracion.comentario}}
+            </div>
+            <div class="col-sm-1">
+              <div *ngIf="valoracion.valorador == loguedUser.username">
+                <button type="button" mat-icon-button  matBadgePosition="above before" matBadgeColor="accent" (click)="openEditValorationModal(modalEditValoration , valoracion)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -145,6 +152,39 @@
     <div class="modal-footer">
       <button type="button" mat-raised-button color="warn" (click)="modRefVal.close()" >Cancelar</button>
       <button type="submit" mat-raised-button color="primary">Finalizar</button>
+    </div>
+  </form>
+</ng-template>
+
+
+<ng-template #modalEditValoration let-modRefValEdit>
+  <div class="modal-header d-block">
+    <div class="d-flex">
+      <h3>Realiza una valoración</h3>
+    </div>
+  </div>
+  <form #f="ngForm" (ngSubmit)="onSubmitEdit(f)" class="form-valorar">
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-sm-2">
+          <h4>Puntuación:</h4>
+        </div>
+        <div class="col-sm-6">
+          <ngb-rating [(rate)]="valorationStarts"  [readonly]=false >
+            <ng-template let-fill="fill" >
+              <span class="star" [class.filled]="fill === 100" >&#9733;</span>
+            </ng-template>
+          </ngb-rating>
+        </div>
+      </div>
+      <mat-form-field style="width: 400px;" >
+        <textarea matInput [ngModel]="valorationEditar.comentario" name="comentario" placeholder="Comentario editar" rows="10"></textarea>
+      </mat-form-field>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" mat-raised-button color="warn"  (click)="modRefValEdit.close()" >Cancelar</button>
+      <button mat-raised-button color="accent"  type="submit">Editar comentario</button>
     </div>
   </form>
 </ng-template>
