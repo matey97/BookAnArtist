@@ -76,7 +76,6 @@ export class ArtistComponent implements OnInit {
 
       this.userService.getUserByUsername(this.artist.username).subscribe( user => {
         this.listValoraciones = user.valoraciones;
-        console.log(this.listValoraciones.length + ' La lista');
 
         this.listValoraciones.forEach( valoracion => {
 
@@ -88,9 +87,6 @@ export class ArtistComponent implements OnInit {
             valoracion.imgProfileValorador = img.raw;
           });
         });
-        console.log(this.HaContratado + 'Ha contratado');
-        console.log(this.noHaValorado + 'No ha valorado');
-        console.log(this.listValoraciones.length + ' La lista');
 
       });
       this.userService.getProfileImage(this.artist.username).subscribe(image => {
@@ -114,7 +110,9 @@ export class ArtistComponent implements OnInit {
   public openValorationModal(modal) {
     if (this.loguedUser != null) {
      this.valorationStarts = 5;
-     this.modalService.open(modal, {centered: true, backdropClass: 'modal-backdrop-chachiguay',  size: 'lg'});
+     // this.modalService.open(modal, {centered: true, backdropClass: 'modal-backdrop-chachiguay',  size: 'lg'});
+     this.modalService.open(modal,  { windowClass : 'myCustomModalClass'});
+
     }
   }
 
@@ -122,7 +120,9 @@ export class ArtistComponent implements OnInit {
     if (this.loguedUser != null) {
       this.valorationStarts = valoration.puntuacion;
       this.valorationEditar = valoration;
-      this.modalService.open(modal, {centered: true, backdropClass: 'modal-backdrop-chachiguay',  size: 'lg'});
+      // this.modalService.open(modal, {centered: true, backdropClass: 'modal-backdrop-chachiguay',  size: 'lg'});
+      this.modalService.open(modal,  { windowClass : 'myCustomModalClass'});
+
     }
 
 
@@ -179,8 +179,6 @@ export class ArtistComponent implements OnInit {
     this.valoracionNueva.valorado = this.artist.username;
     this.valoracionNueva.valorador = this.loguedUser.username;
 
-    console.log('ewrewrwrw');
-    console.log(this.valoracionNueva.id);
 
     this.userService.postEditValoracion(this.valoracionNueva).subscribe(res => {
         this.ngOnInit();

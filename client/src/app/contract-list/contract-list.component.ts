@@ -76,9 +76,7 @@ export class ContractListComponent implements OnInit {
           this.userService.getUserByUsername(contrat.organizerUsername).subscribe(data => {
             data.valoraciones.forEach(valoracion => {
               if (valoracion.valorador === this.loguedUser.username) {
-                console.log(contrat.haSidoValorado);
                 contrat.haSidoValorado = true;
-                console.log(contrat.haSidoValorado);
               }
             });
             this.displayedColumns = this.artistDisplayedColumns;
@@ -188,11 +186,12 @@ export class ContractListComponent implements OnInit {
     if (this.loguedUser != null) {
       this.valorationStarts = valoracion.puntuacion;
       this.valorationEditar = valoracion;
-      this.modalService.open(modalPuntuacionArtista, {
-        centered: true,
-        backdropClass: 'modal-backdrop-chachiguay',
-        size: 'lg'
-      });
+      // this.modalService.open(modalPuntuacionArtista, {
+      //   centered: true,
+      //   backdropClass: 'modal-backdrop-chachiguay',
+      //   size: 'lg'
+      // });
+      this.modalService.open(modalPuntuacionArtista,  { windowClass : 'myCustomModalClass'});
     }
   }
 
@@ -205,8 +204,6 @@ export class ContractListComponent implements OnInit {
     this.valoracionNueva.valorado = this.valorationEditar.valorado;
     this.valoracionNueva.valorador = this.loguedUser.username;
 
-    console.log('ewrewrwrw');
-    console.log(this.valoracionNueva.id);
 
     this.userService.postEditValoracion(this.valoracionNueva).subscribe(res => {
         this.ngOnInit();

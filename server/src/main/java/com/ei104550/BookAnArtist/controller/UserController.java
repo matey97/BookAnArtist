@@ -64,10 +64,8 @@ public class UserController {
 
     @DeleteMapping("user/valoration/{id}")
     public void deleteArtistValoration(@PathVariable String id){
-        System.out.println("JAJAJAAAJAJAJAJAAJJJAJAAJAJJJAJAJJAAJAJAJAJAJAJAJAJAAJAJAJ");
 
         if(valorationRepository.findById(Long.parseLong(id)).isPresent()){
-            System.out.println(id + "POLALALAALALALLALALAALALLAALALALALALLAALLAALALLALLALLALAALAL");
 
             Valoracion valoracion = valorationRepository.findById(Long.parseLong(id)).get();
             User user = userRepository.findById(valoracion.getValorado()).get();
@@ -85,18 +83,15 @@ public class UserController {
         //Borramos
         if(valorationRepository.findById(Long.parseLong(id)).isPresent()){
 
-            System.out.println(id + "SE BUSCA LA VALORACION PARA EDITAAAR");
 
 
             Valoracion valoracion = valorationRepository.findById(Long.parseLong(id)).get();
             valoracion.setComentario(valorationNew.getComentario());
             valoracion.setPuntuacion(valorationNew.getPuntuacion());
 
-            System.out.println(id + "SE HACE EL UPDATE EN MEMORIAAAAAAAAAA");
 
             valorationRepository.save(valoracion);
 
-            System.out.println(id + "SE HACE EL UPDATE EN DISCOOOOOOOOOO");
 
             //Para que se actualice la puntuacion del uuario al actualizar la puntuacion de la valoracion
             User user = userRepository.findById(valoracion.getValorado()).get();

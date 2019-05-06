@@ -3,8 +3,8 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import { LoginComponent } from '../login/login.component';
 import { AppComponent } from 'src/app/app.component';
-import {User} from "../../model/User";
-import {Valoracion} from "../../model/Valoracion";
+import {User} from '../../model/User';
+import {Valoracion} from '../../model/Valoracion';
 
 @Injectable({
   providedIn: 'root'
@@ -56,15 +56,12 @@ export class UserService {
   }
 
   postDeleteValoracion(valoracion: Valoracion): Observable<any> {
-    console.log('api/user/valoration/' + valoracion.id);
     return this.http.delete('api/user/valoration/' + valoracion.id );
   }
 
 
   postEditValoracion(valoracion: Valoracion): Observable<any> {
-    console.log('Aqu llego bien');
     return this.http.post('api/user/valoration/' + valoracion.id , valoracion);
-    console.log('Me contestan guay');
 
   }
 }

@@ -133,13 +133,13 @@
 <ng-template #modalValoration let-modRefVal>
   <div class="modal-header d-block">
     <div class="d-flex">
-      <h3>Realiza una valoracion</h3>
+      <h3><b>Realiza una valoracion</b></h3>
     </div>
   </div>
     <form #f="ngForm" (ngSubmit)="onSubmit(f)" class="form-valorar">
       <div class="modal-body">
       <div class="row">
-        <div class="col-sm-2">
+        <div class="col-sm-4">
           <h4>Puntuación:</h4>
         </div>
         <div class="col-sm-6">
@@ -150,6 +150,7 @@
           </ngb-rating>
         </div>
         </div>
+        <hr>
         <mat-form-field style="width: 400px;" >
           <textarea matInput ngModel name="comentario" placeholder="Comentario" rows="10"></textarea>
         </mat-form-field>
@@ -166,14 +167,14 @@
 <ng-template #modalEditValoration let-modRefValEdit>
   <div class="modal-header d-block">
     <div class="d-flex">
-      <h3>Realiza una valoración</h3>
+      <h3><b>Edita la valoración</b></h3>
     </div>
   </div>
   <form #f="ngForm" (ngSubmit)="onSubmitEdit(f)" class="form-valorar">
     <div class="modal-body">
       <div class="row">
-        <div class="col-sm-2">
-          <h4>Puntuación:</h4>
+        <div class="col-sm-4">
+          <h4><b>Puntuación: </b></h4>
         </div>
         <div class="col-sm-6">
           <ngb-rating [(rate)]="valorationStarts"  [readonly]=false >
@@ -183,14 +184,15 @@
           </ngb-rating>
         </div>
       </div>
+      <hr>
       <mat-form-field style="width: 400px;" >
-        <textarea matInput [ngModel]="valorationEditar.comentario" name="comentario" placeholder="Comentario editar" rows="10"></textarea>
+        <textarea matInput [ngModel]="valorationEditar.comentario" name="comentario" placeholder="Comentario" rows="10"></textarea>
       </mat-form-field>
     </div>
 
     <div class="modal-footer">
       <button type="button" mat-raised-button color="warn"  (click)="modRefValEdit.close()" >Cancelar</button>
-      <button mat-raised-button color="accent"  type="submit">Editar comentario</button>
+      <button mat-raised-button color="accent"  type="submit">Editar</button>
     </div>
   </form>
 </ng-template>

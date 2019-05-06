@@ -30,7 +30,6 @@ export class ArtistService {
 
 
   postDeleteValoracion(valoracion: Valoracion): Observable<any> {
-    console.log('api/artista/valoration/' + valoracion.id);
     return this.http.delete('api/artista/valoration/' + valoracion.id );
   }
 }
