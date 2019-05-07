@@ -33,21 +33,7 @@ export class AppComponent implements OnInit {
       this.loguedUser = user;
       console.log(this.loguedUser);
     });
-
-    // this.location.subscribe(() => this.loguedUser = this.loginService.getLoguedUser());
-/*    const user = this.loginService.getLoguedUser();
-    const userDetails = atob(window.sessionStorage.getItem('token')).split(':', 2);
-    console.log('userdetails ---->' + userDetails[0]);
-    const userfromSesion = this.userService.getUserByUsername(userDetails[0]);
-    if (userfromSesion !== undefined || userfromSesion !== null) {
-      this.loginService.setLoguedUser(userfromSesion);
-    }
-    console.log(userfromSesion);
-    if (user !== null  ) {
-      this.loguedUser = user;
-    }*/
   }
-
   onLoguedUserChanged(user: User) {
     this.loguedUser = user;
   }
