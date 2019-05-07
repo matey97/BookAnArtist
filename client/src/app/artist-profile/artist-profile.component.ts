@@ -32,7 +32,7 @@ export class ArtistProfileComponent implements OnInit {
   myControl: FormControl;
   filteredZones: Observable<string[]>;
 
-  user: User;
+  user;
   artist: Artist;
   firstTime = false;
   editMode = false;
@@ -43,19 +43,20 @@ export class ArtistProfileComponent implements OnInit {
               private loginService: LoginService) { }
 
   ngOnInit() {
-    const user = this.loginService.getLoguedUser();
-    if (user !== null) {
-      this.user = user;
-      this.artistService.getArtistByUsername(this.user.username).subscribe(artist => {
-        if (artist.username == null) {
-          this.firstTime = true;
-          artist.username = user.username;
-        }
-        this.artist = artist;
-        this.myControl = new FormControl({value: '', disabled: !this.firstTime});
-        this.applyFilter();
-      });
-    }
+    const user = this.loginService.getLoguedUser(this).subscribe(user => {
+      if (user !== null) {
+        this.user = user;
+        this.artistService.getArtistByUsername(this.user.username).subscribe(artist => {
+          if (artist.username == null) {
+            this.firstTime = true;
+            artist.username = user.username;
+          }
+          this.artist = artist;
+          this.myControl = new FormControl({value: '', disabled: !this.firstTime});
+          this.applyFilter();
+        });
+      }
+    });
   }
 
   public changeEditMode(mode: boolean) {

@@ -32,14 +32,20 @@ export class NotificationsComponent implements OnInit {
               private snackBar: MatSnackBar) { }
 
   ngOnInit() {
-    this.user = this.loginService.getLoguedUser();
-    this.recentySeen = new Array<Notification>();
-    this.seenNotifications = this.user.notifications.filter(notification => notification.seen);
-    this.newNotifications = this.user.notifications.filter(notification => !notification.seen);
+    this.loginService.getLoguedUser(this).subscribe(user => {
+      this.user = user;
+      this.recentySeen = new Array<Notification>();
+      this.seenNotifications = this.user.notifications.filter(notification => notification.seen);
+      this.newNotifications = this.user.notifications.filter(notification => !notification.seen);
 
-    this.seenNotifications.sort(this.notificationSorter);
-    this.newNotifications.sort(this.notificationSorter);
-    console.log(this.user);
+      this.seenNotifications.sort(this.notificationSorter);
+      this.newNotifications.sort(this.notificationSorter);
+      console.log(this.user);
+    });
+  }
+
+  onLoguedUserChanged(user: User) {
+    this.user = user;
   }
 
   public getDate(timestamp: number): string {

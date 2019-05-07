@@ -6,6 +6,7 @@ import {LoginService} from './shared/loginService/login.service';
 import {Location} from '@angular/common';
 import {HttpHeaders} from '@angular/common/http';
 import {LOCAL_STORAGE, WebStorageService} from 'angular-webstorage-service';
+import {User} from './model/User';
 
 @Component({
   selector: 'app-root',
@@ -28,22 +29,26 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loginService.getLoguedUser(this).subscribe(user => {
+      this.loguedUser = user;
+      console.log(this.loguedUser);
+    });
 
-    this.location.subscribe(() => this.loguedUser = this.loginService.getLoguedUser());
-    const user = this.loginService.getLoguedUser();
-    //const session = this.loginService.data['token'];
-    // const session = this.storage.get('token;');
-    //console.log('AppComponent --> ' + session);
-
-    console.log(window.sessionStorage.getItem('token'));
-    console.log(atob(window.sessionStorage.getItem('token')));
+    // this.location.subscribe(() => this.loguedUser = this.loginService.getLoguedUser());
+/*    const user = this.loginService.getLoguedUser();
     const userDetails = atob(window.sessionStorage.getItem('token')).split(':', 2);
-    console.log('userdetails ---->' + userDetails);
-    this.loginService.login(userDetails[0], userDetails[1]);
+    console.log('userdetails ---->' + userDetails[0]);
+    const userfromSesion = this.userService.getUserByUsername(userDetails[0]);
+    if (userfromSesion !== undefined || userfromSesion !== null) {
+      this.loginService.setLoguedUser(userfromSesion);
+    }
+    console.log(userfromSesion);
     if (user !== null  ) {
       this.loguedUser = user;
-      // this.userImage = user.images[0].image;
-     // console.log(userImage);
-    }
+    }*/
+  }
+
+  onLoguedUserChanged(user: User) {
+    this.loguedUser = user;
   }
 }

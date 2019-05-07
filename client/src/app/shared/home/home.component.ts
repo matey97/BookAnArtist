@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map, tap} from 'rxjs/operators';
+import {LoginService} from '../loginService/login.service';
 @Component({
     selector: 'home',
     templateUrl: './home.component.html'
@@ -11,7 +12,8 @@ export class HomeComponent implements OnInit {
 
     username: string;
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient,
+                private loginService: LoginService) { }
 
     ngOnInit() {
         const url = 'http://localhost:8080/user';
@@ -36,6 +38,7 @@ export class HomeComponent implements OnInit {
 
     logout() {
         sessionStorage.setItem('token', '');
+        this.loginService.setLoguedUser(null);
     }
     private handleError(error: HttpErrorResponse) {
         if (error.error instanceof ErrorEvent) {

@@ -27,7 +27,7 @@ export class ContractListComponent implements OnInit {
 
   stateTransformation = new Map([['ACCEPTANCE_PENDING', 'Pendiente de aceptación'], ['ACCEPTED', 'Aceptado'], ['DONE', 'Realizado'], ['REJECTED', 'Rechazado'], ['CANCELLED', 'Cancelado']]);
 
-  loguedUser: User;
+  loguedUser;
   contracts: Contract[];
 
   dataSource;
@@ -65,8 +65,8 @@ export class ContractListComponent implements OnInit {
 
   ngOnInit() {
     this.currentDate = new Date();
-    this.loguedUser = this.loginService.getLoguedUser();
-    if (this.loguedUser.usertype === 'ARTIST') {
+    this.loguedUser = this.loginService.getLoguedUser(this).subscribe(user => {
+      if (this.loguedUser.usertype === 'ARTIST') {
       this.isArtist = true;
       this.contractService.getArtistContracts(this.loguedUser.username).subscribe(contracts => {
         this.contracts = contracts;
@@ -110,6 +110,7 @@ export class ContractListComponent implements OnInit {
 
       });
     }
+    });
   }
 
   private configureDataSource(contacts) {
