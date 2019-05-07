@@ -13,6 +13,7 @@ public class Reclamation {
 
     @Id @GeneratedValue
     private Long id;
+    private Long contractId;
     private String reclamingUser;
     private String reclamedUser;
     @Column(length=2048)
@@ -38,6 +39,14 @@ public class Reclamation {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getContractId() {
+        return contractId;
+    }
+
+    public void setContractId(Long contractId) {
+        this.contractId = contractId;
     }
 
     public String getReclamingUser() {

@@ -7,6 +7,6 @@ export class Contract {
   comments: string;
   date: number;
   limitDate: number;
-  state: 'ACCEPTED' | 'REJECTED' | 'DONE' | 'ACCEPTANCE_PENDING' | 'CANCELLED';
+  state: 'ACCEPTED' | 'REJECTED' | 'DONE' | 'ACCEPTANCE_PENDING' | 'CANCELLED' | 'RECLAMATION';
   haSidoValorado: boolean;
 }

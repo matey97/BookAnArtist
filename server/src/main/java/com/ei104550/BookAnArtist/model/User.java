@@ -189,12 +189,20 @@ public class User {
         this.reclamationsDone = reclamationsDone;
     }
 
+    public void addReclamationDone(Reclamation reclamation){
+        this.reclamationsDone.add(reclamation);
+    }
+
     public List<Reclamation> getReclamationsReceived() {
         return reclamationsReceived;
     }
 
     public void setReclamationsReceived(List<Reclamation> reclamationsReceived) {
         this.reclamationsReceived = reclamationsReceived;
+    }
+
+    public void addReclamationReceived(Reclamation reclamation) {
+        this.reclamationsReceived.add(reclamation);
     }
 
     @Override

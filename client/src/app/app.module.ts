@@ -35,6 +35,7 @@ import { ContratationComponent } from './artist/contratation/contratation.compon
 import { ContractListComponent } from './contract-list/contract-list.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import {StorageServiceModule} from 'angular-webstorage-service';
+import { ReclamationComponent } from './contract-list/reclamation/reclamation.component';
 
 
 @NgModule({
@@ -50,6 +51,7 @@ import {StorageServiceModule} from 'angular-webstorage-service';
     ContratationComponent,
     ContractListComponent,
     NotificationsComponent,
+    ReclamationComponent,
   ],
   imports: [
     BrowserModule,

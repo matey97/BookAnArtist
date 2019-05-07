@@ -2,6 +2,7 @@ package com.ei104550.BookAnArtist.Services;
 
 import com.ei104550.BookAnArtist.model.Contract;
 import com.ei104550.BookAnArtist.model.Notification;
+import com.ei104550.BookAnArtist.model.Reclamation;
 import com.ei104550.BookAnArtist.model.User;
 import com.ei104550.BookAnArtist.repositories.NotificationRepository;
 import com.ei104550.BookAnArtist.repositories.UserRepository;
@@ -79,11 +80,26 @@ public class EmailService {
         saveNotification(notification);
     }
 
-    /*
-    @Async("asyncExecutor")
-    public void sendReclamationEmail(User user,){
 
-    }*/
+    @Async("asyncExecutor")
+    public void sendReclamationEmail(Reclamation reclamation){
+        Notification notification = buildBaseNotificationAndDestinationUser(reclamation.getReclamedUser());
+        notification.setSubject("Reclamación en oferta ID: " + reclamation.getContractId());
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("Hola" + reclamation.getReclamedUser() + ",\n\n");
+        sb.append("Se ha interpuesto una reclamación sobre la oferta con ID: " + reclamation.getContractId());
+        sb.append(" . Puede acceder a la plataforma para obtener más información sobre la reclamación así como realizar posibles réplicas. \n\n");
+        sb.append("Detalles de la reclamación:\n");
+        sb.append("\t-ID: " + reclamation.getId() + "\n");
+        sb.append("\t-ID Contrato: " + reclamation.getContractId() + "\n");
+        sb.append("\t-Descripción: " + reclamation.getReclamation() + "\n\n");
+        sb.append(buildGreetings());
+        notification.setMessage(sb.toString());
+
+        sendEmail(notification);
+        saveNotification(notification);
+    }
 
     @Async("asyncExecutor")
     public void sendPayEmail(String user, Contract contract){

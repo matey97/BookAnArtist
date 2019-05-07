@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {ContractService} from '../shared/contract/contract.service';
 import {ActivatedRoute} from '@angular/router';
 import {UserService} from '../shared/user/user.service';
@@ -15,7 +15,8 @@ import {Valoracion} from '../model/Valoracion';
 @Component({
   selector: 'app-contract-list',
   templateUrl: './contract-list.component.html',
-  styleUrls: ['./contract-list.component.scss']
+  styleUrls: ['./contract-list.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ContractListComponent implements OnInit {
 
@@ -25,7 +26,7 @@ export class ContractListComponent implements OnInit {
   artistDisplayedColumns = ['organizerUsername', 'comments', 'location', 'zone', 'date', 'state', 'operations'];
   organizerDisplayedColumns = ['artisticUsername', 'comments', 'location', 'zone', 'date', 'state', 'operations'];
 
-  stateTransformation = new Map([['ACCEPTANCE_PENDING', 'Pendiente de aceptación'], ['ACCEPTED', 'Aceptado'], ['DONE', 'Realizado'], ['REJECTED', 'Rechazado'], ['CANCELLED', 'Cancelado']]);
+  stateTransformation = new Map([['ACCEPTANCE_PENDING', 'Pendiente de aceptación'], ['ACCEPTED', 'Aceptado'], ['DONE', 'Realizado'], ['REJECTED', 'Rechazado'], ['CANCELLED', 'Cancelado'], ['RECLAMATION', 'En reclamación']]);
 
   loguedUser: User;
   contracts: Contract[];
@@ -39,6 +40,8 @@ export class ContractListComponent implements OnInit {
   valorationStarts: number;
   usernameOrganizer: string;
   listValoraciones: Array<any>;
+
+  contractOnReclamation: Contract;
 
 
 
@@ -75,9 +78,7 @@ export class ContractListComponent implements OnInit {
           this.userService.getUserByUsername(contrat.organizerUsername).subscribe(data => {
             data.valoraciones.forEach(valoracion => {
               if (valoracion.valorador === this.loguedUser.username) {
-                console.log(contrat.haSidoValorado);
                 contrat.haSidoValorado = true;
-                console.log(contrat.haSidoValorado);
               }
             });
           });
@@ -95,10 +96,7 @@ export class ContractListComponent implements OnInit {
           this.userService.getUserByUsername(contrat.artisticUsername).subscribe(data => {
             data.valoraciones.forEach( valoracion => {
               if (valoracion.valorador === this.loguedUser.username) {
-                console.log(contrat.haSidoValorado);
                 contrat.haSidoValorado = true;
-                console.log(contrat.haSidoValorado);
-
               }
             });
 
@@ -176,6 +174,11 @@ export class ContractListComponent implements OnInit {
       this.modalService.open(modalPuntuacionArtista, {centered: true, backdropClass: 'modal-backdrop-chachiguay', size: 'lg'});
 
     });
+  }
+
+  openReclamationContract(modalReclamation, contract: Contract) {
+    this.contractOnReclamation = contract;
+    this.modalService.open(modalReclamation, {centered: true, backdropClass: 'modal-backdrop-chachiguay', size: 'lg'});
   }
 
   public completeContract(contract) {

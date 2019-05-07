@@ -2,6 +2,7 @@ import {Image, Video} from './Artist';
 
 export class Reclamation {
   id: number;
+  contractId: number;
   reclamingUser: string;
   reclamedUser: string;
   reclamation: string;
