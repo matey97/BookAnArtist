@@ -5,7 +5,8 @@ import { catchError, map, tap} from 'rxjs/operators';
 import {LoginService} from '../loginService/login.service';
 @Component({
     selector: 'home',
-    templateUrl: './home.component.html'
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.scss']
 })
 
 export class HomeComponent implements OnInit {
