@@ -1,7 +1,6 @@
 <header>
   <div class="col-md-6 col-md-offset-3">
     <h1>Hola {{username}}!</h1>
-    <p><a [routerLink]="['/login']" (click) ="logout()">Logout</a></p>
   </div>
 </header>
 <!-- Extended material form grid -->
@@ -78,5 +77,6 @@
   </div>
   <!-- Grid row -->
   <button type="submit" class="btn btn-primary btn-md">Sign in</button>
+  <p><a class="btn btn-primary btn-md" [routerLink]="['/login']" (click) ="logout()">Logout</a></p>
 </form>
 <!-- Extended material form grid -->

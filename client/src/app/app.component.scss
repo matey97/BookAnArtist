@@ -41,3 +41,83 @@ nav .navbar-nav li a:active{
     -moz-box-shadow: 10px 10px 47px 0px rgba(0,0,0,0.75);
     box-shadow: 10px 10px 47px 0px rgba(0,0,0,0.75);
 }
+
+
+
+//------------------------------------
+
+.profile-image  {
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+/*
+ * Navbar
+ */
+.navbar-top {
+  margin-bottom: 10px;
+  background-color: #428bca;
+  border-color: #3174b0;
+}
+.navbar-top .navbar-brand {
+  color: #ffffff;
+}
+.navbar-top .navbar-brand:hover, .navbar-top .navbar-brand:focus {
+  color: #ecf0f1;
+}
+.navbar-top .navbar-text {
+  color: #ffffff;
+}
+.navbar-top .navbar-nav > li > a {
+  color: #ffffff;
+}
+.navbar-top .navbar-nav > li > a:hover, .navbar-top .navbar-nav > li > a:focus {
+  color: #ecf0f1;
+  background-color: #3174b0;
+}
+.navbar-top .navbar-nav > .active > a, .navbar-top .navbar-nav > .active > a:hover, .navbar-top .navbar-nav > .active > a:focus {
+  color: #ecf0f1;
+  background-color: #3174b0;
+}
+.navbar-top .navbar-nav > .open > a, .navbar-top .navbar-nav > .open > a:hover, .navbar-top .navbar-nav > .open > a:focus {
+  color: #ecf0f1;
+  background-color: #3174b0;
+}
+.navbar-top .navbar-toggle {
+  border-color: #3174b0;
+}
+.navbar-top .navbar-toggle:hover, .navbar-top .navbar-toggle:focus {
+  background-color: #3174b0;
+}
+.navbar-top .navbar-toggle .icon-bar {
+  background-color: #ffffff;
+}
+.navbar-top .navbar-collapse,
+.navbar-top .navbar-form {
+  border-color: #ffffff;
+}
+.navbar-top .navbar-link {
+  color: #ffffff;
+}
+.navbar-top .navbar-link:hover {
+  color: #ecf0f1;
+}
+
+.textNavDrop{
+  color: black;
+}
+.img-circle {
+  border-radius: 50%;
+}
+.userMenu{
+  position:relative;
+  right: 8vw;
+}
+
+.dropdown-menu{
+  background-image: linear-gradient(1650deg,$purple,$blue, $blue);
+  text-align: center;
+ // height: 10px;
+}
+
+
