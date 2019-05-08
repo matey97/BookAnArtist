@@ -27,3 +27,20 @@ button {
 button:hover{
   cursor: pointer;
 }
+
+.formUser{
+  position: relative;
+  //top: 10vh;
+  padding: 5vw;
+}
+
+.modifyBtn{
+  position: relative;
+  left: 75vw;
+  top:10vh;
+}
+.userHeader{
+  text-align: center;
+  padding: 5vw;
+  color: #ecf0f1;
+}
