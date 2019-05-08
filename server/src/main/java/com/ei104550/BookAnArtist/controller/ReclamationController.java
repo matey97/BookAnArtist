@@ -7,10 +7,11 @@ import com.ei104550.BookAnArtist.model.Contract;
 import com.ei104550.BookAnArtist.model.Reclamation;
 import com.ei104550.BookAnArtist.model.User;
 import com.ei104550.BookAnArtist.repositories.*;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("api/")
@@ -50,11 +51,20 @@ public class ReclamationController {
         User reclamed = userRepository.findById(reclamation.getReclamedUser()).get();
         reclamed.addReclamationReceived(reclamation);
         User reclaming = userRepository.findById(reclamation.getReclamingUser()).get();
-        reclamed.addReclamationDone(reclamation);
+        reclaming.addReclamationDone(reclamation);
         userRepository.save(reclamed);
         userRepository.save(reclaming);
 
         emailService.sendReclamationEmail(reclamation);
         return true;
+    }
+
+    @GetMapping("reclamation/user/{username}")
+    public Map<String, List<Reclamation>> getReclamationsByUsername(@PathVariable("username") String username){
+        User user = this.userRepository.findById(username).get();
+        Map<String, List<Reclamation>> map = new HashMap<>();
+        map.put("done", user.getReclamationsDone());
+        map.put("received", user.getReclamationsReceived());
+        return map;
     }
 }

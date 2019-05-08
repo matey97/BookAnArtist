@@ -90,6 +90,7 @@ export class ReclamationComponent implements OnInit {
     this.reclamation.contractId = this.contract.id;
     this.reclamation.creationDate = new Date().getTime();
     this.reclamation.updateDate = null;
+    console.log(this.reclamation);
 
     this.reclamationService.postReclamation(this.reclamation).subscribe((success) => {
       if (success) {

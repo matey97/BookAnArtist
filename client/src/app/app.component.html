@@ -21,6 +21,9 @@
       <li *ngIf="loguedUser !== null" class="nav-item">
         <a class="nav-link" [routerLink]="['/contracts', loguedUser.username]">Contraciones</a>
       </li>
+      <li *ngIf="loguedUser !== null" class="nav-item">
+        <a class="nav-link" [routerLink]="['/reclamations']">Reclamaciones</a>
+      </li>
     </ul>
     <app-notifications *ngIf="loguedUser != null"></app-notifications>
     <a *ngIf="loguedUser == null" class="navbar-brand nav-link " routerLink="/login">

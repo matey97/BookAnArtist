@@ -1,0 +1,137 @@
+<div *ngIf="loguedUser != null">
+  <div class="jumbotron" style="text-align: center">
+    <h2>Reclamaciones</h2>
+    <p>Hola {{loguedUser.username}}, aquí puedes ver las reclamaciones que has realizado y que te han interpuesto.</p>
+    <p>Sobre las reclamaciones puedes ver su estado y las contestaciones del usuario afectado</p>
+  </div>
+
+  <div style="width: 90%; margin: 0 auto">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <b>Reclamaciones realizadas</b>
+        </mat-panel-title>
+        <mat-panel-description>
+          Visualiza el estado de las reclamaciones realizadas
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div *ngIf="reclamationDoneList.length == 0; else hayRealizada">
+        <p>No has realizado ninguna reclamación</p>
+      </div>
+      <ng-template #hayRealizada>
+        <mat-accordion>
+          <mat-expansion-panel *ngFor="let reclamationDone of reclamationDoneList">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <b>ID Reclamacion: {{reclamationDone.id}} | ID Contrato: {{reclamationDone.contractId}}</b>
+              </mat-panel-title>
+              <mat-panel-description>
+                Creada: {{getDate(reclamationDone.creationDate)}} | Actualizada: {{getDate(reclamationDone.updateDate)}}
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <mat-divider></mat-divider><br>
+            <div>
+              <div class="container">
+                <div class="row">
+                  <h6><b>Descripción:</b></h6>
+                  <p>{{reclamationDone.reclamation}}</p>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <mat-divider></mat-divider>
+                    <br>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <h6><b>Imágenes:</b></h6>
+                    <ngb-carousel *ngIf="reclamationDone.images">
+                      <ng-template ngbSlide *ngFor="let image of reclamationDone.images">
+                        <img class="w-100" src="data:image/PNG;base64,{{image.image}}">
+                      </ng-template>
+                    </ngb-carousel>
+                  </div>
+                  <div class="col-sm-6">
+                    <h6><b>Vídeos:</b></h6>
+                    <ngb-carousel *ngIf="reclamationDone.videos">
+                      <ng-template ngbSlide *ngFor="let video of reclamationDone.videos">
+                        <video controls>
+                          <source class="w-100" src="data:video/mp4;base64,{{video.video}}" type='video/mp4'>
+                        </video>
+                      </ng-template>
+                    </ngb-carousel>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </ng-template>
+
+    </mat-expansion-panel>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <b>Reclamaciones recibidas</b>
+        </mat-panel-title>
+        <mat-panel-description>
+          Visualiza el estado de las reclamaciones recibidas
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div *ngIf="reclamationReceivedList.length == 0; else hayRecibida">
+        <p>No has recibido ninguna reclamación</p>
+      </div>
+      <ng-template #hayRecibida>
+        <mat-accordion>
+          <mat-expansion-panel *ngFor="let reclamationReceived of reclamationReceivedList">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <b>ID Reclamacion: {{reclamationReceived.id}} | ID Contrato: {{reclamationReceived.contractId}}</b>
+              </mat-panel-title>
+              <mat-panel-description>
+                Creada: {{getDate(reclamationReceived.creationDate)}} | Actualizada: {{getDate(reclamationReceived.updateDate)}}
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <mat-divider></mat-divider><br>
+            <div>
+              <div class="container">
+                <div class="row">
+                  <div class="col-sm-12">
+                    <h6><b>Descripción:</b></h6>
+                    <p>{{reclamationReceived.reclamation}}</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <mat-divider></mat-divider>
+                    <br>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <h6><b>Imágenes:</b></h6>
+                    <ngb-carousel *ngIf="reclamationReceived.images">
+                      <ng-template ngbSlide *ngFor="let image of reclamationReceived.images">
+                        <img class="w-100" src="data:image/PNG;base64,{{image.image}}">
+                      </ng-template>
+                    </ngb-carousel>
+                  </div>
+                  <div class="col-sm-6">
+                    <h6><b>Vídeos:</b></h6>
+                    <ngb-carousel *ngIf="reclamationReceived.videos">
+                      <ng-template ngbSlide *ngFor="let video of reclamationReceived.videos">
+                        <video controls>
+                          <source class="w-100" src="data:video/mp4;base64,{{video.video}}" type='video/mp4'>
+                        </video>
+                      </ng-template>
+                    </ngb-carousel>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </ng-template>
+    </mat-expansion-panel>
+  </div>
+</div>

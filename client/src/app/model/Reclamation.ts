@@ -8,7 +8,7 @@ export class Reclamation {
   reclamation: string;
   creationDate: number;
   updateDate: number;
-  state: 'OPEN' | 'CLOSED' | 'ACCEPTED';
+  state: 'OPEN' | 'CLOSED' | 'ACCEPTED' | 'CANCELLED';
   images: Array<Image>;
   videos: Array<Video>;
 }

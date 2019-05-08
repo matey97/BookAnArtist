@@ -13,4 +13,8 @@ export class ReclamationService {
   postReclamation(reclamation: Reclamation): Observable<any> {
     return this.http.post('api/reclamation/', reclamation);
   }
+
+  getReclamationByUser(username: string): Observable<any> {
+    return this.http.get('api/reclamation/user/' + username);
+  }
 }
