@@ -22,7 +22,7 @@ export const SCHEDULES = ['Mañana', 'Tarde', 'Noche'];
 @Component({
   selector: 'app-artist-profile',
   templateUrl: './artist-profile.component.html',
-  styleUrls: ['./artist-profile.component.css']
+  styleUrls: ['./artist-profile.component.scss']
 })
 export class ArtistProfileComponent implements OnInit {
 

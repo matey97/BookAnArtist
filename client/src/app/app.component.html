@@ -39,13 +39,13 @@
     <div class="userMenu">
     <ul *ngIf="loguedUser != null" class="nav navbar-nav navbar-right">
       <li class="dropdown">
-        <a class="dropdown-toggle profile-image" data-toggle="dropdown">
-          <img src="data:image/PNG;base64,{{loguedUser.image}}" class="img-circle"> {{loguedUser.username}} <b class="caret"></b></a>
         <ul class="dropdown-menu">
           <li><a routerLink="/user/{{loguedUser.username}}"><i class="textNavDrop"></i> Account</a></li>
           <li class="divider"></li>
           <li><a [routerLink]="['/login']" (click) ="logout()">Logout</a></li>
         </ul>
+        <a class="dropdown-toggle profile-image" data-toggle="dropdown">
+          <img src="data:image/PNG;base64,{{loguedUser.image}}" class="img-circle"> {{loguedUser.username}} <b class="caret"></b></a>
       </li>
     </ul>
     </div>

@@ -111,7 +111,12 @@ nav .navbar-nav li a:active{
 }
 .userMenu{
   position:relative;
-  right: 8vw;
+  right: 6vw;
+}
+
+.dropdown-menu show {
+  max-width: 10px !important;
+  min-width: 5px !important;
 }
 
 .dropdown-menu{
@@ -120,4 +125,15 @@ nav .navbar-nav li a:active{
  // height: 10px;
 }
 
-
+@media (max-width: 767px) {
+  .navbar-top .navbar-nav .open .dropdown-menu > li > a {
+    color: #ffffff;
+  }
+  .navbar-top .navbar-nav .open .dropdown-menu > li > a:hover, .navbar-top .navbar-nav .open .dropdown-menu > li > a:focus {
+    color: #ecf0f1;
+  }
+  .navbar-top .navbar-nav .open .dropdown-menu > .active > a, .navbar-top .navbar-nav .open .dropdown-menu > .active > a:hover, .navbar-top .navbar-nav .open .dropdown-menu > .active > a:focus {
+    color: #ecf0f1;
+    background-color: #3174b0;
+  }
+}
