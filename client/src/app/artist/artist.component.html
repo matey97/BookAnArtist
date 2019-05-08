@@ -7,7 +7,7 @@
             <img class="card-img-top" src="data:image/PNG;base64,{{profileImage}}">
           </div>
           <div class="card-body">
-            <h4 class="card-title" >{{artist.artisticName}}</h4>
+            <h1 class="card-title" >{{artist.artisticName}}</h1>
           </div>
           <div class="card-footer">
             <ngb-rating [rate]="usernameData.puntuation"  [readonly]=true >
@@ -26,8 +26,10 @@
         </div>
       </div>
       <div class="col-sm-9">
-          <h3>{{artist.artisticName}}</h3>
+        <h1>{{artist.artisticName}}</h1>
+        <hr>
         <p>{{artist.description}}</p>
+        <hr>
           <div class="row">
             <div class="col-sm-6">
               <h4>Habilidades</h4>
@@ -55,15 +57,35 @@
           </div>
         </div>
           <hr>
-         <div class="row">
-            <div class="col-sm-9">
-              <h3>Videos de las actuaciones</h3>
-              <div *ngFor="let rawVideo of artist.videos">
-                <video controls>
-                  <source src="data:video/mp4;base64,{{rawVideo.video}}" type='video/mp4'>
-                  <source src="data:video/webm;base64,{{rawVideo.video}}" type='video/webm'>
-                </video>
+        <div class="row">
+          <div class="col-sm-6">
+            <h3>Fotos de las actuaciones</h3>
+            <ngb-carousel>
+              <div *ngFor="let rawImage of artist.images">
+                <ng-template ngbSlide>
+                <img class="w-100" src="data:image/PNG;base64,{{rawImage.image}}">
+                <div class="carousel-caption">
+                </div>
+              </ng-template>
               </div>
+            </ngb-carousel>
+          </div>
+        </div>
+        <hr>
+         <div class="row">
+            <div class="col-sm-12">
+              <h3>Videos de las actuaciones</h3>
+              <ngb-carousel>
+                <div *ngFor="let rawVideo of artist.videos">
+                  <ng-template ngbSlide>
+                    <video class="w-100" controls>
+                      <source src="data:video/mp4;base64,{{rawVideo.video}}" type='video/mp4'>
+                    </video>
+                    <div class="carousel-caption">
+                    </div>
+                  </ng-template>
+                </div>
+              </ngb-carousel>
             </div>
           </div>
       </div>

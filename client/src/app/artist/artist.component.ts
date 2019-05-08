@@ -12,6 +12,9 @@ import {Valoracion} from '../model/Valoracion';
 import { Router } from '@angular/router';
 import {Contract} from '../model/Contract';
 import {MatSnackBar} from '@angular/material';
+import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
+
+
 
 @Component({
   selector: 'app-artist',
@@ -43,6 +46,7 @@ export class ArtistComponent implements OnInit {
                private route: ActivatedRoute,
                private router: Router,
                private snackBar: MatSnackBar,
+               private ngbCarrousel: NgbCarouselConfig,
                private modalService: NgbModal) { }
 
   ngOnInit() {
@@ -56,6 +60,7 @@ export class ArtistComponent implements OnInit {
     this.pageSize = 5;
 
 
+    this.ngbCarrousel.interval = 0;
   }
 
   private getArtistProfile() {
@@ -191,4 +196,6 @@ export class ArtistComponent implements OnInit {
 
 
   }
+
 }
+

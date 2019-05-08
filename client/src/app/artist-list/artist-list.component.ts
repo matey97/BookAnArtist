@@ -91,15 +91,12 @@ export class ArtistListComponent implements OnInit {
     this.artistsFiltrate = this.artistsFiltrate.filter(artist => artist.artisticName.toLocaleLowerCase().indexOf(f.value.first.toString().toLocaleLowerCase()) > -1);
     this.artistsFiltrate = this.artistsFiltrate.filter(artist => artist.description.toLocaleLowerCase().indexOf(f.value.last.toString().toLocaleLowerCase()) > -1);
 
-    // Para que lapuntuacion del artista sea coherente con la de su usuario
-    // Chapuza para no cambiar el modelo entero
-    // this.artistsFiltrate.forEach(artist => {
-    //   this.userService.getUserByUsername(artist.username).subscribe( user => {
-    //     artist.puntuation = user.puntuation;
-    //   });
-    // })
+    if (f.value.puntuacionElegida > 1) {
 
-    this.artistsFiltrate = this.artistsFiltrate.filter(artist => artist.puntuation >= f.value.puntuacionElegida);
+      this.artistsFiltrate = this.artistsFiltrate.filter(artist => artist.puntuation >= f.value.puntuacionElegida);
+
+    }
+
 
     this.artistsFiltrate = this.artistsFiltrate.filter(artist => artist.price > f.value.dineroMin);
     if (f.value.dineroMax === 1 || f.value.dineroMax === null) {
