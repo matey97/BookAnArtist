@@ -2,6 +2,7 @@
 
 *{padding: 0; margin: 0; box-sizing: border-box;}
 body{height: 900px;}
+
 header {
   text-align: center;
   width: 100%;
@@ -12,6 +13,8 @@ header {
   overflow: hidden;
   border-radius: 0 0 85% 85% / 30%;
   background-image: linear-gradient(1650deg,transparentize($purple,0.3),transparentize($blue,0.3), transparentize($blue,0.3));
+  padding: 5vw;
+  color: #ecf0f1;
 }
 
 button {
@@ -38,9 +41,4 @@ button:hover{
   position: relative;
   left: 75vw;
   top:10vh;
-}
-.userHeader{
-  text-align: center;
-  padding: 5vw;
-  color: #ecf0f1;
 }
