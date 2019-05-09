@@ -33,4 +33,8 @@ export class ReclamationService {
   acceptReclamation(id: number): Observable<any> {
     return this.http.put('api/reclamation/' + id + '/accept', null);
   }
+
+  updateReclamation(reclamation: Reclamation): Observable<any> {
+    return this.http.put('api/reclamation/' + reclamation.id + '/update', reclamation);
+  }
 }

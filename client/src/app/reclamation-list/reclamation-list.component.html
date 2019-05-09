@@ -40,7 +40,10 @@
                 <div class="row">
                   <div class="col-sm-12">
                     <h6><b>Descripción:</b></h6>
-                    <p>{{reclamationDone.reclamation}}</p>
+                    <p *ngIf="!editingMode">{{reclamationDone.reclamation}}</p>
+                    <mat-form-field *ngIf="editingMode">
+                      <textarea matInput type="text" placeholder="Describe el objeto de tu reclamación" [(ngModel)]="reclamationDone.reclamation" name="reclamation" rows="5" required></textarea>
+                    </mat-form-field>
                   </div>
                 </div>
                 <div class="row">
@@ -52,21 +55,60 @@
                 <div class="row">
                   <div class="col-sm-6">
                     <h6><b>Imágenes:</b></h6>
-                    <ngb-carousel *ngIf="reclamationDone.images">
+                    <ngb-carousel *ngIf="reclamationDone.images && !editingMode">
                       <ng-template ngbSlide *ngFor="let image of reclamationDone.images">
                         <img class="w-100" src="data:image/PNG;base64,{{image.image}}">
                       </ng-template>
                     </ngb-carousel>
+                    <div *ngIf="editingMode">
+                      <div class="col-sm-12">
+                        <div class="custom-file">
+                          <input type="file" class="custom-file-input" id="images" name="images" value="images" accept="image/*" (change)="imageChange(reclamationDone, $event)">
+                          <label class="custom-file-label" for="images">Selecciona imágenes</label>
+                        </div>
+                        <mat-list>
+                          <mat-list-item *ngFor="let image of reclamationDone.images">
+                            <p mat-line>{{image.name}}</p>
+                            <button type="button" mat-icon-button (click)="removeImage(reclamationDone, image)">
+                              <mat-icon mat-list-icon>delete_forever</mat-icon>
+                            </button>
+                          </mat-list-item>
+                        </mat-list>
+                      </div>
+                    </div>
                   </div>
                   <div class="col-sm-6">
                     <h6><b>Vídeos:</b></h6>
-                    <ngb-carousel *ngIf="reclamationDone.videos">
+                    <ngb-carousel *ngIf="reclamationDone.videos  && !editingMode">
                       <ng-template ngbSlide *ngFor="let video of reclamationDone.videos">
                         <video controls>
                           <source class="w-100" src="data:video/mp4;base64,{{video.video}}" type='video/mp4'>
                         </video>
                       </ng-template>
                     </ngb-carousel>
+                    <div *ngIf="editingMode">
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="videos" name="videos" value="videos" accept="video/mp4" (change)="videoChange(reclamationDone, $event)">
+                            <label class="custom-file-label" for="videos">Selecciona videos</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <mat-list>
+                            <mat-list-item *ngFor="let video of reclamationDone.videos">
+                              <p mat-line>{{video.name}}</p>
+                              <button type="button" mat-icon-button (click)="removeVideo(reclamationDone, video)">
+                                <mat-icon mat-list-icon>delete_forever</mat-icon>
+                              </button>
+                            </mat-list-item>
+                          </mat-list>
+                        </div>
+                      </div>
+                    </div>
+
                   </div>
                 </div>
                 <div class="row">
@@ -79,8 +121,9 @@
                 <div *ngIf="reclamationDone.state == 'OPEN'" class="row">
                   <div class="col-sm-12">
                     <div class="button-row float-right">
-                      <button mat-raised-button color="warn" type="button" value="Cancelar" (click)="cancelReclamation(reclamationDone)">Cancelar</button>
-                      <button mat-raised-button color="primary" type="button" value="Editar">Editar</button>
+                      <button *ngIf="!editingMode" mat-raised-button color="warn" type="button" value="Cancelar" (click)="cancelReclamation(reclamationDone)">Cancelar</button>
+                      <button *ngIf="!editingMode" mat-raised-button color="primary" type="button" value="Editar" (click)="editingMode = true">Editar</button>
+                      <button *ngIf="editingMode" mat-raised-button color="primary" type="button" value="Guardar" (click)="updateReclamation(reclamationDone)">Guardar</button>
                     </div>
                   </div>
                 </div>

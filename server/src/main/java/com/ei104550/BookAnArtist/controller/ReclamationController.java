@@ -109,4 +109,22 @@ public class ReclamationController {
         this.emailService.sendPayBackEmail(reclamation);
         return true;
     }
+
+    @PutMapping("reclamation/{id}/update")
+    public boolean updateReclamation(@RequestBody Reclamation reclamation){
+        reclamation.getImages().forEach(image -> {
+            if (image.getId() == -1){
+                image.setId(null);
+                this.imageRepository.save(image);
+            }
+        });
+        reclamation.getVideos().forEach(video -> {
+            if (video.getId() == -1){
+                video.setId(null);
+                this.videoRepository.save(video);
+            }
+        });
+        this.reclamationRepository.save(reclamation);
+        return true;
+    }
 }

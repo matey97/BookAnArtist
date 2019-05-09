@@ -23,6 +23,8 @@ export class ReclamationListComponent implements OnInit {
   openReclamations: Array<Reclamation>;
   closedReclamations: Array<Reclamation>;
 
+  editingMode = false;
+
   newerSorter = (r1, r2) => {
     return r2.creationDate - r1.creationDate;
   }
@@ -70,8 +72,16 @@ export class ReclamationListComponent implements OnInit {
   }
 
   public cancelReclamation(reclamation: Reclamation) {
-    reclamation.state = 'CANCELLED';
-    this.reclamationService.cancelReclamation(reclamation.id).subscribe(successSubscriber, errorSubscriber);
+    this.reclamationService.cancelReclamation(reclamation.id).subscribe((success) => {
+      if (success) {
+        reclamation.state = 'CANCELLED';
+        this.snackBar.open('Cambios gueardados correctamente.', 'Cerrar', {duration: 3000});
+      } else {
+        this.snackBar.open('No se ha podido tratar tu petición.', 'Cerrar', {duration: 3000});
+      }
+    }, (error) => {
+      this.snackBar.open('Ha ocurrido un error', 'Cerrar', {duration: 3000});
+    });
   }
 
   public archiveReclamation(reclamation: Reclamation) {
@@ -100,5 +110,62 @@ export class ReclamationListComponent implements OnInit {
         this.snackBar.open('No se ha podido tratar tu petición.', 'Cerrar', {duration: 3000});
       }
     }, errorSubscriber);
+  }
+
+  public videoChange(reclamation: Reclamation, fileInput: any) {
+    let name;
+    const videosReader = new FileReader();
+    videosReader.onload = ((e) => {
+      reclamation.videos.push({
+        id: -1,
+        name,
+        video: e.target['result'].split(',')[1]});
+    });
+    if (fileInput.target.files) {
+      for (const video of fileInput.target.files) {
+        name = video.name;
+        videosReader.readAsDataURL(video);
+      }
+    }
+  }
+
+  public imageChange(reclamation: Reclamation, fileInput: any) {
+    let name;
+    const imagesReader = new FileReader();
+    imagesReader.onload = ((e) => {
+      reclamation.images.push({
+        id: -1,
+        name,
+        image: e.target['result'].split(',')[1]
+      });
+    });
+    if (fileInput.target.files) {
+      for (const image of fileInput.target.files) {
+        name = image.name;
+        imagesReader.readAsDataURL(image);
+      }
+    }
+  }
+
+  public removeVideo(reclamation: Reclamation, video) {
+    reclamation.videos = reclamation.videos.filter(item => item !== video);
+  }
+
+  public removeImage(reclamation: Reclamation, image) {
+    reclamation.images = reclamation.images.filter(item => item !== image);
+  }
+
+  public updateReclamation(reclamation: Reclamation) {
+    reclamation.updateDate = new Date().getTime();
+    this.reclamationService.updateReclamation(reclamation).subscribe((success) => {
+      if (success) {
+        this.snackBar.open('Cambios gueardados correctamente.', 'Cerrar', {duration: 3000});
+      } else {
+        this.snackBar.open('No se ha podido tratar tu petición.', 'Cerrar', {duration: 3000});
+      }
+    }, (error) => {
+      this.snackBar.open('Ha ocurrido un error', 'Cerrar', {duration: 3000});
+    });
+    this.editingMode = false;
   }
 }
