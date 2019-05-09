@@ -17,4 +17,20 @@ export class ReclamationService {
   getReclamationByUser(username: string): Observable<any> {
     return this.http.get('api/reclamation/user/' + username);
   }
+
+  getAllReclamations(): Observable<any> {
+    return this.http.get('api/reclamation/all');
+  }
+
+  archiveReclamation(id: number): Observable<any> {
+    return this.http.put('api/reclamation/' + id + '/archive', null);
+  }
+
+  cancelReclamation(id: number): Observable<any> {
+    return this.http.put('api/reclamation/' + id + '/cancel', null);
+  }
+
+  acceptReclamation(id: number): Observable<any> {
+    return this.http.put('api/reclamation/' + id + '/accept', null);
+  }
 }

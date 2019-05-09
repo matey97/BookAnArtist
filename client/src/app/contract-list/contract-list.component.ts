@@ -12,6 +12,18 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {NgForm} from '@angular/forms';
 import {Valoracion} from '../model/Valoracion';
 
+export const successSubscriber = (item) => {
+  if (item) {
+    this.snackBar.open('Cambios gueardados correctamente.', 'Cerrar', {duration: 3000});
+  } else {
+    this.snackBar.open('No se ha podido tratar tu petición.', 'Cerrar', {duration: 3000});
+  }
+};
+
+export const errorSubscriber = (error) => {
+  this.snackBar.open('Ha ocurrido un error', 'Cerrar', {duration: 3000});
+};
+
 @Component({
   selector: 'app-contract-list',
   templateUrl: './contract-list.component.html',
@@ -42,20 +54,6 @@ export class ContractListComponent implements OnInit {
   listValoraciones: Array<any>;
 
   contractOnReclamation: Contract;
-
-
-
-  successSubscriber = (item) => {
-    if (item) {
-      this.snackBar.open('Cambios gueardados correctamente.', 'Cerrar', {duration: 3000});
-    } else {
-      this.snackBar.open('No se ha podido tratar tu petición.', 'Cerrar', {duration: 3000});
-    }
-  }
-
-  errorSubscriber = (error) => {
-    this.snackBar.open('Ha ocurrido un error', 'Cerrar', {duration: 3000});
-  }
 
 
   constructor(private contractService: ContractService,
@@ -125,17 +123,17 @@ export class ContractListComponent implements OnInit {
 
   public acceptContract(contract: Contract) {
     contract.state = 'ACCEPTED';
-    this.contractService.acceptContract(contract.id).subscribe(this.successSubscriber, this.errorSubscriber);
+    this.contractService.acceptContract(contract.id).subscribe(successSubscriber, errorSubscriber);
   }
 
   public declineContract(contract) {
     contract.state = 'REJECTED';
-    this.contractService.declineContract(contract.id).subscribe(this.successSubscriber, this.errorSubscriber);
+    this.contractService.declineContract(contract.id).subscribe(successSubscriber, errorSubscriber);
   }
 
   public cancelContract(contract) {
     contract.state = 'CANCELLED';
-    this.contractService.cancelContract(contract.id).subscribe(this.successSubscriber, this.errorSubscriber);
+    this.contractService.cancelContract(contract.id).subscribe(successSubscriber, errorSubscriber);
   }
 
   public openValorationModal(modal, usernameOrganizer) {
@@ -183,6 +181,6 @@ export class ContractListComponent implements OnInit {
 
   public completeContract(contract) {
     contract.state = 'DONE';
-    this.contractService.completeContract(contract.id).subscribe(this.successSubscriber, this.errorSubscriber);
+    this.contractService.completeContract(contract.id).subscribe(successSubscriber, errorSubscriber);
   }
 }

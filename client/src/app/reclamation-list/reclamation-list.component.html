@@ -1,11 +1,16 @@
 <div *ngIf="loguedUser != null">
-  <div class="jumbotron" style="text-align: center">
+  <div *ngIf="loguedUser.usertype != 'ADMIN'; else adminIntro" class="jumbotron" style="text-align: center">
     <h2>Reclamaciones</h2>
     <p>Hola {{loguedUser.username}}, aquí puedes ver las reclamaciones que has realizado y que te han interpuesto.</p>
     <p>Sobre las reclamaciones puedes ver su estado y las contestaciones del usuario afectado</p>
   </div>
+  <ng-template #adminIntro>
+    <div class="jumbotron" style="text-align: center">
+      <h2>Reclamaciones</h2>
+    </div>
+  </ng-template>
 
-  <div style="width: 90%; margin: 0 auto">
+  <div *ngIf="loguedUser.usertype != 'ADMIN'; else adminGUI" style="width: 90%; margin: 0 auto">
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         <mat-panel-title>
@@ -26,15 +31,17 @@
                 <b>ID Reclamacion: {{reclamationDone.id}} | ID Contrato: {{reclamationDone.contractId}}</b>
               </mat-panel-title>
               <mat-panel-description>
-                Creada: {{getDate(reclamationDone.creationDate)}} | Actualizada: {{getDate(reclamationDone.updateDate)}}
+                Creada: {{getDate(reclamationDone.creationDate)}} | Actualizada: {{getDate(reclamationDone.updateDate)}} | Estado: {{stateTransformation.get(reclamationDone.state)}}
               </mat-panel-description>
             </mat-expansion-panel-header>
             <mat-divider></mat-divider><br>
             <div>
               <div class="container">
                 <div class="row">
-                  <h6><b>Descripción:</b></h6>
-                  <p>{{reclamationDone.reclamation}}</p>
+                  <div class="col-sm-12">
+                    <h6><b>Descripción:</b></h6>
+                    <p>{{reclamationDone.reclamation}}</p>
+                  </div>
                 </div>
                 <div class="row">
                   <div class="col-sm-12">
@@ -60,6 +67,21 @@
                         </video>
                       </ng-template>
                     </ngb-carousel>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <br>
+                    <mat-divider></mat-divider>
+                    <br>
+                  </div>
+                </div>
+                <div *ngIf="reclamationDone.state == 'OPEN'" class="row">
+                  <div class="col-sm-12">
+                    <div class="button-row float-right">
+                      <button mat-raised-button color="warn" type="button" value="Cancelar" (click)="cancelReclamation(reclamationDone)">Cancelar</button>
+                      <button mat-raised-button color="primary" type="button" value="Editar">Editar</button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -89,7 +111,7 @@
                 <b>ID Reclamacion: {{reclamationReceived.id}} | ID Contrato: {{reclamationReceived.contractId}}</b>
               </mat-panel-title>
               <mat-panel-description>
-                Creada: {{getDate(reclamationReceived.creationDate)}} | Actualizada: {{getDate(reclamationReceived.updateDate)}}
+                Creada: {{getDate(reclamationReceived.creationDate)}} | Actualizada: {{getDate(reclamationReceived.updateDate)}} | Estado: {{stateTransformation.get(reclamationReceived.state)}}
               </mat-panel-description>
             </mat-expansion-panel-header>
             <mat-divider></mat-divider><br>
@@ -127,6 +149,20 @@
                     </ngb-carousel>
                   </div>
                 </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <br>
+                    <mat-divider></mat-divider>
+                    <br>
+                  </div>
+                </div>
+                <div *ngIf="reclamationReceived.state == 'OPEN'" class="row">
+                  <div class="col-sm-12">
+                    <div class="button-row float-right">
+                      <button mat-raised-button color="primary" type="button" value="Responder">Responder</button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </mat-expansion-panel>
@@ -134,4 +170,153 @@
       </ng-template>
     </mat-expansion-panel>
   </div>
+
+  <ng-template #adminGUI style="width: 90%; margin: 0 auto">
+    <div style="width: 90%; margin: 0 auto">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <b>Reclamaciones abiertas</b>
+        </mat-panel-title>
+        <mat-panel-description>
+          Visualiza el estado de las reclamaciones abiertas
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div *ngIf="openReclamations.length == 0; else hayAbierta">
+        <p>No hay ninguna reclamación abierta</p>
+      </div>
+      <ng-template #hayAbierta>
+        <mat-accordion>
+          <mat-expansion-panel *ngFor="let openReclamation of openReclamations">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <b>ID Reclamacion: {{openReclamation.id}} | ID Contrato: {{openReclamation.contractId}}</b>
+              </mat-panel-title>
+              <mat-panel-description>
+                Creada: {{getDate(openReclamation.creationDate)}} | Actualizada: {{getDate(openReclamation.updateDate)}} | Estado: {{stateTransformation.get(openReclamation.state)}}
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <mat-divider></mat-divider><br>
+            <div>
+              <div class="container">
+                <div class="row">
+                  <div class="col-sm-12">
+                    <h6><b>Descripción:</b></h6>
+                    <p>{{openReclamation.reclamation}}</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <mat-divider></mat-divider>
+                    <br>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <h6><b>Imágenes:</b></h6>
+                    <ngb-carousel *ngIf="openReclamation.images">
+                      <ng-template ngbSlide *ngFor="let image of openReclamation.images">
+                        <img class="w-100" src="data:image/PNG;base64,{{image.image}}">
+                      </ng-template>
+                    </ngb-carousel>
+                  </div>
+                  <div class="col-sm-6">
+                    <h6><b>Vídeos:</b></h6>
+                    <ngb-carousel *ngIf="openReclamation.videos">
+                      <ng-template ngbSlide *ngFor="let video of openReclamation.videos">
+                        <video controls>
+                          <source class="w-100" src="data:video/mp4;base64,{{video.video}}" type='video/mp4'>
+                        </video>
+                      </ng-template>
+                    </ngb-carousel>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <br>
+                    <mat-divider></mat-divider>
+                    <br>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="button-row float-right">
+                      <button mat-raised-button color="warn" type="button" value="Archivar" (click)="archiveReclamation(openReclamation)">Archivar</button>
+                      <button mat-raised-button color="accent" type="button" value="Aceptar" (click)="acceptReclamation(openReclamation)">Aceptar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </ng-template>
+
+    </mat-expansion-panel>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <b>Reclamaciones (Histórico)</b>
+        </mat-panel-title>
+        <mat-panel-description>
+          Visualiza el historico de las reclamaciones.
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div *ngIf="closedReclamations.length == 0; else historico">
+        <p>No hay reclamaciones cerradas</p>
+      </div>
+      <ng-template #historico>
+        <mat-accordion>
+          <mat-expansion-panel *ngFor="let closedReclamation of closedReclamations">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <b>ID Reclamacion: {{closedReclamation.id}} | ID Contrato: {{closedReclamation.contractId}}</b>
+              </mat-panel-title>
+              <mat-panel-description>
+                Creada: {{getDate(closedReclamation.creationDate)}} | Actualizada: {{getDate(closedReclamation.updateDate)}} | Estado: {{stateTransformation.get(closedReclamation.state)}}
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <mat-divider></mat-divider><br>
+            <div>
+              <div class="container">
+                <div class="row">
+                  <div class="col-sm-12">
+                    <h6><b>Descripción:</b></h6>
+                    <p>{{closedReclamation.reclamation}}</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <mat-divider></mat-divider>
+                    <br>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <h6><b>Imágenes:</b></h6>
+                    <ngb-carousel *ngIf="closedReclamation.images">
+                      <ng-template ngbSlide *ngFor="let image of closedReclamation.images">
+                        <img class="w-100" src="data:image/PNG;base64,{{image.image}}">
+                      </ng-template>
+                    </ngb-carousel>
+                  </div>
+                  <div class="col-sm-6">
+                    <h6><b>Vídeos:</b></h6>
+                    <ngb-carousel *ngIf="closedReclamation.videos">
+                      <ng-template ngbSlide *ngFor="let video of closedReclamation.videos">
+                        <video controls>
+                          <source class="w-100" src="data:video/mp4;base64,{{video.video}}" type='video/mp4'>
+                        </video>
+                      </ng-template>
+                    </ngb-carousel>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </ng-template>
+    </mat-expansion-panel>
+    </div>
+  </ng-template>
 </div>

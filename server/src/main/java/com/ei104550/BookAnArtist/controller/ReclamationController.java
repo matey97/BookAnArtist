@@ -9,9 +9,11 @@ import com.ei104550.BookAnArtist.model.User;
 import com.ei104550.BookAnArtist.repositories.*;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/")
@@ -66,5 +68,45 @@ public class ReclamationController {
         map.put("done", user.getReclamationsDone());
         map.put("received", user.getReclamationsReceived());
         return map;
+    }
+
+    @GetMapping("reclamation/all")
+    public Map<String, List<Reclamation>> getAllReclamations(){
+        List<Reclamation> reclamations = this.reclamationRepository.findAll();
+        Map<String, List<Reclamation>> map = new HashMap<>();
+        map.put("open", reclamations.stream().filter(reclamation -> reclamation.getState() == ReclamationState.OPEN).collect(Collectors.toList()));
+        map.put("closed", reclamations.stream().filter(reclamation -> reclamation.getState() != ReclamationState.OPEN).collect(Collectors.toList()));
+        return map;
+    }
+
+    @PutMapping("reclamation/{id}/cancel")
+    public boolean cancelReclamation(@PathVariable("id") String id){
+        Reclamation reclamation = this.reclamationRepository.findById(Long.parseLong(id)).get();
+        reclamation.setState(ReclamationState.CANCELLED);
+        reclamation.setUpdateDate(new Date().getTime());
+        this.reclamationRepository.save(reclamation);
+        this.emailService.sendUpdateReclamationEmail(reclamation);
+        return true;
+    }
+
+    @PutMapping("reclamation/{id}/archive")
+    public boolean archiveReclamation(@PathVariable("id") String id){
+        Reclamation reclamation = this.reclamationRepository.findById(Long.parseLong(id)).get();
+        reclamation.setState(ReclamationState.CLOSED);
+        reclamation.setUpdateDate(new Date().getTime());
+        this.reclamationRepository.save(reclamation);
+        this.emailService.sendUpdateReclamationEmail(reclamation);
+        return true;
+    }
+
+    @PutMapping("reclamation/{id}/accept")
+    public boolean acceptReclamation(@PathVariable("id") String id){
+        Reclamation reclamation = this.reclamationRepository.findById(Long.parseLong(id)).get();
+        reclamation.setState(ReclamationState.ACCEPTED);
+        reclamation.setUpdateDate(new Date().getTime());
+        this.reclamationRepository.save(reclamation);
+        this.emailService.sendUpdateReclamationEmail(reclamation);
+        this.emailService.sendPayBackEmail(reclamation);
+        return true;
     }
 }
