@@ -1,8 +1,8 @@
 <div *ngIf="loguedUser != null">
-  <div class="jumbotron" style="text-align: center">
+  <header>
     <h2>Contrataciones</h2>
     <p>Hola {{loguedUser.username}}, aqui puedes ver los contratos en los que estas involucrado.</p>
-  </div>
+  </header>
   <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
     <ng-container *ngIf="!isArtist" matColumnDef="artisticUsername">
       <th mat-header-cell *matHeaderCellDef> Artista </th>

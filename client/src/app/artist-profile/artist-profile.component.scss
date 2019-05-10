@@ -21,7 +21,7 @@ header {
   padding: 5vw;
   color: #ecf0f1;
 }
-button {
+a {
   border: none;
   outline: none;
   padding: 10px 20px;
@@ -29,6 +29,6 @@ button {
   background: linear-gradient(1650deg,transparentize($purple,0.1),transparentize($blue,0.1), transparentize($blue,0.1));
   box-shadow: 0 3px 10px 0 $blue;
 }
-button:hover{
+a:hover{
   cursor: pointer;
 }
