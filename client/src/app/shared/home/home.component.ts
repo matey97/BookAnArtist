@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Observable, throwError } from 'rxjs';
 import { catchError, map, tap} from 'rxjs/operators';
 import {LoginService} from '../loginService/login.service';
+import {User} from '../../model/User';
+import {UserService} from '../user/user.service';
 @Component({
     selector: 'home',
     templateUrl: './home.component.html',
@@ -12,9 +14,11 @@ import {LoginService} from '../loginService/login.service';
 export class HomeComponent implements OnInit {
 
     username: string;
+    loggedUser: User;
 
     constructor(private http: HttpClient,
-                private loginService: LoginService) { }
+                private loginService: LoginService
+               ) { }
 
     ngOnInit() {
         const url = 'http://localhost:8080/user';
@@ -28,9 +32,12 @@ export class HomeComponent implements OnInit {
             subscribe(principal => {
               console.log(principal);
                 this.username = principal['name'];
+                this.loginService.getLoguedUser(this).subscribe(user => {
+                  this.loggedUser = user;
+                });
             },
             error => {
-                if(error.status == 401) {
+                if (error.status == 401) {
                     alert('Unauthorized');
                 }
             }

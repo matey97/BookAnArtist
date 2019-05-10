@@ -30,7 +30,7 @@ export class RegisterComponent implements OnInit {
       }).subscribe(user => {
           if (user !== null) {
             sessionStorage.setItem('token', btoa(this.model.username + ':' + this.model.password));
-            this.router.navigate(['user']);
+            this.router.navigate(['user/' + this.model.username]);
           } else {
               alert('Authentication failed.');
           }
