@@ -27,6 +27,8 @@ public class Reclamation {
     @ElementCollection()
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<ArtistVideo> videos;
+    @OneToOne
+    private ReclamationResponse reclamationResponse;
 
     public Reclamation() {
         this.images = new LinkedList<>();
@@ -111,5 +113,13 @@ public class Reclamation {
 
     public void setVideos(List<ArtistVideo> videos) {
         this.videos = videos;
+    }
+
+    public ReclamationResponse getReclamationResponse() {
+        return reclamationResponse;
+    }
+
+    public void setReclamationResponse(ReclamationResponse reclamationResponse) {
+        this.reclamationResponse = reclamationResponse;
     }
 }

@@ -24,6 +24,7 @@ export class ReclamationListComponent implements OnInit {
   closedReclamations: Array<Reclamation>;
 
   editingMode = false;
+  responseMode = false;
 
   newerSorter = (r1, r2) => {
     return r2.creationDate - r1.creationDate;

@@ -3,9 +3,7 @@ package com.ei104550.BookAnArtist.controller;
 import com.ei104550.BookAnArtist.Services.EmailService;
 import com.ei104550.BookAnArtist.enums.ContractState;
 import com.ei104550.BookAnArtist.enums.ReclamationState;
-import com.ei104550.BookAnArtist.model.Contract;
-import com.ei104550.BookAnArtist.model.Reclamation;
-import com.ei104550.BookAnArtist.model.User;
+import com.ei104550.BookAnArtist.model.*;
 import com.ei104550.BookAnArtist.repositories.*;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,14 +22,16 @@ public class ReclamationController {
     private ArtistImageRepository imageRepository;
     private ArtistVideoRepository videoRepository;
     private ContractRepository contractRepository;
+    private ReclamationResponseRepository reclamationResponseRepository;
     private EmailService emailService;
 
-    public ReclamationController(ReclamationRepository reclamationRepository, UserRepository userRepository, ArtistImageRepository imageRepository, ArtistVideoRepository videoRepository, ContractRepository contractRepository, EmailService emailService) {
+    public ReclamationController(ReclamationRepository reclamationRepository, UserRepository userRepository, ArtistImageRepository imageRepository, ArtistVideoRepository videoRepository, ContractRepository contractRepository, ReclamationResponseRepository reclamationResponseRepository, EmailService emailService) {
         this.reclamationRepository = reclamationRepository;
         this.userRepository = userRepository;
         this.imageRepository = imageRepository;
         this.videoRepository = videoRepository;
         this.contractRepository = contractRepository;
+        this.reclamationResponseRepository = reclamationResponseRepository;
         this.emailService = emailService;
     }
 
@@ -112,19 +112,37 @@ public class ReclamationController {
 
     @PutMapping("reclamation/{id}/update")
     public boolean updateReclamation(@RequestBody Reclamation reclamation){
-        reclamation.getImages().forEach(image -> {
+        checkImages(reclamation.getImages());
+        checkVideos(reclamation.getVideos());
+        if (reclamation.getReclamationResponse() != null){
+            ReclamationResponse reclamationResponse = reclamation.getReclamationResponse();
+            if (reclamationResponse.getId() == -1){
+                reclamationResponse.setId(null);
+            }
+            checkImages(reclamationResponse.getImages());
+            checkVideos(reclamationResponse.getVideos());
+            this.reclamationResponseRepository.save(reclamationResponse);
+        }
+
+        this.reclamationRepository.save(reclamation);
+        return true;
+    }
+
+    private void checkImages(List<ArtistImage> images){
+        images.forEach(image -> {
             if (image.getId() == -1){
                 image.setId(null);
                 this.imageRepository.save(image);
             }
         });
-        reclamation.getVideos().forEach(video -> {
+    }
+
+    private void checkVideos(List<ArtistVideo> videos){
+        videos.forEach(video -> {
             if (video.getId() == -1){
                 video.setId(null);
                 this.videoRepository.save(video);
             }
         });
-        this.reclamationRepository.save(reclamation);
-        return true;
     }
 }

@@ -11,4 +11,12 @@ export class Reclamation {
   state: 'OPEN' | 'CLOSED' | 'ACCEPTED' | 'CANCELLED';
   images: Array<Image>;
   videos: Array<Video>;
+  reclamationResponse: ReclamationResponse;
+}
+
+export class ReclamationResponse {
+  id: number;
+  response: string;
+  images: Array<Image>;
+  videos: Array<Video>;
 }

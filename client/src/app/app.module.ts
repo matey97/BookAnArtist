@@ -37,6 +37,7 @@ import { NotificationsComponent } from './notifications/notifications.component'
 import {StorageServiceModule} from 'angular-webstorage-service';
 import { ReclamationComponent } from './contract-list/reclamation/reclamation.component';
 import { ReclamationListComponent } from './reclamation-list/reclamation-list.component';
+import { ReclamationResponseComponent } from './reclamation-list/reclamation-response/reclamation-response.component';
 
 
 @NgModule({
@@ -54,6 +55,7 @@ import { ReclamationListComponent } from './reclamation-list/reclamation-list.co
     NotificationsComponent,
     ReclamationComponent,
     ReclamationListComponent,
+    ReclamationResponseComponent,
   ],
   imports: [
     BrowserModule,

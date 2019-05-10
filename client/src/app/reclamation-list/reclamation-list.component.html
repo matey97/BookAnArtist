@@ -127,6 +127,16 @@
                     </div>
                   </div>
                 </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <br>
+                    <mat-divider></mat-divider>
+                    <br>
+                  </div>
+                </div>
+                <div *ngIf="reclamationDone.reclamationResponse != null">
+                  <app-reclamation-response [readonly]="true" [reclamation]="reclamationDone"></app-reclamation-response>
+                </div>
               </div>
             </div>
           </mat-expansion-panel>
@@ -199,12 +209,15 @@
                     <br>
                   </div>
                 </div>
-                <div *ngIf="reclamationReceived.state == 'OPEN'" class="row">
+                <div *ngIf="reclamationReceived.reclamationResponse == null && !responseMode && reclamationReceived.state == 'OPEN'" class="row">
                   <div class="col-sm-12">
-                    <div class="button-row float-right">
-                      <button mat-raised-button color="primary" type="button" value="Responder">Responder</button>
+                    <div  class="button-row float-right">
+                      <button mat-raised-button color="primary" type="button" value="Responder" (click)="responseMode = true">Responder</button>
                     </div>
                   </div>
+                </div>
+                <div *ngIf="reclamationReceived.reclamationResponse != null || responseMode">
+                  <app-reclamation-response [readonly]="false" [reclamation]="reclamationReceived" (updated)="updateReclamation($event)"></app-reclamation-response>
                 </div>
               </div>
             </div>
@@ -273,6 +286,16 @@
                       </ng-template>
                     </ngb-carousel>
                   </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <br>
+                    <mat-divider></mat-divider>
+                    <br>
+                  </div>
+                </div>
+                <div *ngIf="openReclamation.reclamationResponse != null">
+                  <app-reclamation-response [readonly]="true" [reclamation]="openReclamation"></app-reclamation-response>
                 </div>
                 <div class="row">
                   <div class="col-sm-12">
@@ -353,6 +376,16 @@
                       </ng-template>
                     </ngb-carousel>
                   </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <br>
+                    <mat-divider></mat-divider>
+                    <br>
+                  </div>
+                </div>
+                <div *ngIf="closedReclamation.reclamationResponse != null">
+                  <app-reclamation-response [readonly]="true" [reclamation]="closedReclamation"></app-reclamation-response>
                 </div>
               </div>
             </div>
