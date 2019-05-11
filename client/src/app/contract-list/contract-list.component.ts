@@ -46,6 +46,7 @@ export class ContractListComponent implements OnInit {
   dataSource;
   displayedColumns;
 
+  valorationEditar: Valoracion;
   currentDate: Date;
   isArtist: boolean;
   valoracionNueva: Valoracion;
@@ -79,10 +80,11 @@ export class ContractListComponent implements OnInit {
                 contrat.haSidoValorado = true;
               }
             });
+            this.displayedColumns = this.artistDisplayedColumns;
+            this.configureDataSource(this.contracts);
+            this.configureTablePaginatorAndSorting();
           });
-          this.displayedColumns = this.artistDisplayedColumns;
-          this.configureDataSource(this.contracts);
-          this.configureTablePaginatorAndSorting();
+
         });
       });
     } else {
@@ -96,11 +98,12 @@ export class ContractListComponent implements OnInit {
               if (valoracion.valorador === this.loguedUser.username) {
                 contrat.haSidoValorado = true;
               }
-            });
 
+            });
             this.displayedColumns = this.organizerDisplayedColumns;
             this.configureDataSource(this.contracts);
             this.configureTablePaginatorAndSorting();
+
           });
         });
 
@@ -184,4 +187,39 @@ export class ContractListComponent implements OnInit {
     contract.state = 'DONE';
     this.contractService.completeContract(contract.id).subscribe(successSubscriber, errorSubscriber);
   }
+
+  public openEditValorationModal(modalPuntuacionArtista: any, valoracion: Valoracion) {
+
+    if (this.loguedUser != null) {
+      this.valorationStarts = valoracion.puntuacion;
+      this.valorationEditar = valoracion;
+      // this.modalService.open(modalPuntuacionArtista, {
+      //   centered: true,
+      //   backdropClass: 'modal-backdrop-chachiguay',
+      //   size: 'lg'
+      // });
+      this.modalService.open(modalPuntuacionArtista,  { windowClass : 'myCustomModalClass'});
+    }
+  }
+
+  onSubmitEdit(f: NgForm) {
+
+    this.valoracionNueva = this.valorationEditar;
+    this.valoracionNueva.id = this.valorationEditar.id;
+    this.valoracionNueva.puntuacion = this.valorationStarts;
+    this.valoracionNueva.comentario = f.value.comentario;
+    this.valoracionNueva.valorado = this.valorationEditar.valorado;
+    this.valoracionNueva.valorador = this.loguedUser.username;
+
+
+    this.userService.postEditValoracion(this.valoracionNueva).subscribe(res => {
+        this.ngOnInit();
+        this.modalService.dismissAll();
+        this.snackBar.open('Comentario editado con éxito', 'Cerrar', {duration: 3000});
+      }
+    );
+
+  }
+
+
 }

@@ -5,10 +5,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "USER")
@@ -82,6 +79,8 @@ public class User {
         this.image = user.getImage();
         this.usertype= user.getUsertype();
         this.notifications = user.getNotifications();
+        this.puntuation = 0.0;
+        this.valoraciones = new ArrayList<>();
     }
 
     public Set<Role> getRoles() {
@@ -170,15 +169,37 @@ public class User {
 
         for(int i = 0; i < this.valoraciones.size() ; i++){
 
-            System.out.println(id + "asdaaaaaaaaaaaaaaaPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP");
-
             Valoracion valoracion = this.valoraciones.get(i);
 
             if (valoracion.getId().toString().compareTo(id) == 0){
                 return this.valoraciones.contains(this.valoraciones.remove(i));
             }
         }
+
+        int puntuacionTotal = 0;
+        for(Valoracion val : valoraciones){
+            puntuacionTotal += val.puntuacion;
+        }
+
+        this.puntuation = puntuacionTotal/(valoraciones.size() * 1.0);
+
         return false;
+    }
+
+    public double updatePuntuacion(){
+
+        int puntuacionTotal = 0;
+
+        if(valoraciones.size() == 0){
+            this.puntuation = 0.0;
+            return this.puntuation;
+        }
+        else{
+            for(Valoracion val : valoraciones){
+                puntuacionTotal += val.puntuacion;
+            }
+            return this.puntuation = puntuacionTotal/(valoraciones.size() * 1.0);
+        }
     }
 
     public List<Reclamation> getReclamationsDone() {
