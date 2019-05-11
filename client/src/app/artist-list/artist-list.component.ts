@@ -6,7 +6,7 @@ import {NgForm} from '@angular/forms';
 
 import {Payment} from '../model/Payment';
 import {ContractService} from '../shared/contract/contract.service';
-import {HABILITIES, SCHEDULES, ZONES} from '../artist-profile/artist-profile.component';
+import {HABILITIES, SCHEDULES, ZONES} from "../artist-profile/artist-profile.component";
 
 
 
@@ -51,17 +51,7 @@ export class ArtistListComponent implements OnInit {
       this.setArtistasFiltado = new Set();
       this.zona = null;
       this.prueba2 = 'Prueba';
-      this.artists.forEach( artistData => {
-        this.userService.getUserByUsername(artistData.username).subscribe( userData => {
-          artistData.puntuation = userData.puntuation;
-
-        });
-      });
     });
-
-
-
-
     // Inicializa la paginacion
 
     this.page = 1;
@@ -91,12 +81,7 @@ export class ArtistListComponent implements OnInit {
     this.artistsFiltrate = this.artistsFiltrate.filter(artist => artist.artisticName.toLocaleLowerCase().indexOf(f.value.first.toString().toLocaleLowerCase()) > -1);
     this.artistsFiltrate = this.artistsFiltrate.filter(artist => artist.description.toLocaleLowerCase().indexOf(f.value.last.toString().toLocaleLowerCase()) > -1);
 
-    if (f.value.puntuacionElegida > 1) {
-
-      this.artistsFiltrate = this.artistsFiltrate.filter(artist => artist.puntuation >= f.value.puntuacionElegida);
-
-    }
-
+    this.artistsFiltrate = this.artistsFiltrate.filter(artist => artist.puntuation >= f.value.puntuacionElegida);
 
     this.artistsFiltrate = this.artistsFiltrate.filter(artist => artist.price > f.value.dineroMin);
     if (f.value.dineroMax === 1 || f.value.dineroMax === null) {
