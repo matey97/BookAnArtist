@@ -5,6 +5,7 @@ import { catchError, map, tap} from 'rxjs/operators';
 import {LoginService} from '../loginService/login.service';
 import {User} from '../../model/User';
 import {UserService} from '../user/user.service';
+import {AppComponent} from '../../app.component';
 @Component({
     selector: 'home',
     templateUrl: './home.component.html',
@@ -19,7 +20,8 @@ export class HomeComponent implements OnInit {
     image: any;
 
     constructor(private http: HttpClient,
-                private loginService: LoginService
+                private loginService: LoginService,
+                private appComponent: AppComponent
                ) { }
 
     ngOnInit() {
@@ -71,9 +73,8 @@ export class HomeComponent implements OnInit {
      uploadData.append('myFile' , this.selectedFile, this.selectedFile.name);
      this.http.post('api/' + this.username + '/uploadusrimg', uploadData)
       .subscribe(image => {
-        // debugger;
-        console.log(image);
-        this.loggedUser.image = image;
+        this.loggedUser.image = image.raw;
+        this.appComponent.onLoguedUserChanged(this.loggedUser);
       });
   }
 }

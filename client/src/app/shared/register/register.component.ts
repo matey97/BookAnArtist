@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import {User} from '../../model/User';
+import {LoginService} from '../loginService/login.service';
+import {AppComponent} from '../../app.component';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -9,11 +12,14 @@ import { Observable } from 'rxjs';
 })
 export class RegisterComponent implements OnInit {
   model: any = {};
+  loggedUser: User;
 
   constructor(
       private route: ActivatedRoute,
       private router: Router,
-      private http: HttpClient
+      private http: HttpClient,
+      private loginService: LoginService,
+      private appComponent: AppComponent
   ) { }
 
   ngOnInit() {
@@ -31,6 +37,10 @@ export class RegisterComponent implements OnInit {
           if (user !== null) {
             sessionStorage.setItem('token', btoa(this.model.username + ':' + this.model.password));
             this.router.navigate(['user/' + this.model.username]);
+            this.loginService.getLoguedUser(this).subscribe(userddbb => {
+              this.loggedUser = userddbb;
+              this.appComponent.onLoguedUserChanged(userddbb);
+            });
           } else {
               alert('Authentication failed.');
           }
