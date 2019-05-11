@@ -5,14 +5,9 @@
 </div>
 <div *ngIf="artists != null">
 <mat-card >
-  <h1 align="center">Lista de artistas</h1>
-  <mat-divider></mat-divider>
-  <br>
-  <ngb-pagination class="d-flex justify-content-center" *ngIf="artists != null" [collectionSize]="artistsFiltrate.length" [pageSize]="pageSize" [(page)]="page" [boundaryLinks]="true"></ngb-pagination>
-    <div class="row">
+  <div class="row">
     <div class="col-sm-2">
-      <mat-card>
-        <mat-card-title><h3>Buscar artista</h3></mat-card-title>
+      <h3>Buscar artista</h3>
       <form #f="ngForm" (ngSubmit)="onSubmit(f)" class="form-filter">
         <mat-form-field>
           <input matInput name="first" ngModel placeholder="Nombre artístico">
@@ -39,7 +34,6 @@
             <mat-option *ngFor="let schedule of schedules" value="{{schedule}}">{{schedule}}</mat-option>
           </mat-select>
         </mat-form-field>
-        <br>
         <h5>Puntuación</h5>
         <mat-slider
           thumbLabel
@@ -48,6 +42,7 @@
           tickInterval="1"
           min="1"
           max="10"></mat-slider>
+
         <h5>Coste mínimo</h5>
           <mat-slider
             thumbLabel
@@ -65,15 +60,16 @@
           min="1"
           max="8000"></mat-slider>
         <br>
-        <mat-card-actions><button mat-raised-button>Filtrar</button></mat-card-actions>
+        <button mat-raised-button>Filtrar</button>
       </form>
       <div class="row-fluid">
         <div class="col-xs-3">
         </div>
       </div>
-      </mat-card>
     </div>
     <div class="col-sm-10">
+      <h3>Lista de artistas</h3>
+      <ngb-pagination class="d-flex justify-content-center" *ngIf="artists != null" [collectionSize]="artistsFiltrate.length" [pageSize]="pageSize" [(page)]="page" [boundaryLinks]="true"></ngb-pagination>
       <mat-card-content>
         <mat-list>
           <div  class="container">
@@ -105,10 +101,9 @@
       </mat-card-content>
     </div>
   </div>
-  <ngb-pagination class="d-flex justify-content-center" *ngIf="artists != null" [collectionSize]="artistsFiltrate.length" [pageSize]="pageSize" [(page)]="page" [boundaryLinks]="true"></ngb-pagination>
-  <mat-divider></mat-divider>
 </mat-card>
 </div>
+<ngb-pagination class="d-flex justify-content-center" *ngIf="artists != null" [collectionSize]="artistsFiltrate.length" [pageSize]="pageSize" [(page)]="page" [boundaryLinks]="true"></ngb-pagination>
 
 
 

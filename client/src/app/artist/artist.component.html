@@ -7,10 +7,10 @@
             <img class="card-img-top" src="data:image/PNG;base64,{{profileImage}}">
           </div>
           <div class="card-body">
-            <h1 class="card-title" >{{artist.artisticName}}</h1>
+            <h4 class="card-title" >{{artist.artisticName}}</h4>
           </div>
           <div class="card-footer">
-            <ngb-rating [rate]="usernameData.puntuation"  [readonly]=true >
+            <ngb-rating [rate]="artist.puntuation"  [readonly]=true >
               <ng-template let-fill="fill" >
                 <span class="star" [class.filled]="fill === 100" >&#9733;</span>
               </ng-template>
@@ -26,10 +26,8 @@
         </div>
       </div>
       <div class="col-sm-9">
-        <h1>{{artist.artisticName}}</h1>
-        <hr>
+          <h3>{{artist.artisticName}}</h3>
         <p>{{artist.description}}</p>
-        <hr>
           <div class="row">
             <div class="col-sm-6">
               <h4>Habilidades</h4>
@@ -57,35 +55,15 @@
           </div>
         </div>
           <hr>
-        <div class="row">
-          <div class="col-sm-6">
-            <h3>Fotos de las actuaciones</h3>
-            <ngb-carousel>
-              <div *ngFor="let rawImage of artist.images">
-                <ng-template ngbSlide>
-                <img class="w-100" src="data:image/PNG;base64,{{rawImage.image}}">
-                <div class="carousel-caption">
-                </div>
-              </ng-template>
-              </div>
-            </ngb-carousel>
-          </div>
-        </div>
-        <hr>
          <div class="row">
-            <div class="col-sm-12">
+            <div class="col-sm-9">
               <h3>Videos de las actuaciones</h3>
-              <ngb-carousel>
-                <div *ngFor="let rawVideo of artist.videos">
-                  <ng-template ngbSlide>
-                    <video class="w-100" controls>
-                      <source src="data:video/mp4;base64,{{rawVideo.video}}" type='video/mp4'>
-                    </video>
-                    <div class="carousel-caption">
-                    </div>
-                  </ng-template>
-                </div>
-              </ngb-carousel>
+              <div *ngFor="let rawVideo of artist.videos">
+                <video controls>
+                  <source src="data:video/mp4;base64,{{rawVideo.video}}" type='video/mp4'>
+                  <source src="data:video/webm;base64,{{rawVideo.video}}" type='video/webm'>
+                </video>
+              </div>
             </div>
           </div>
       </div>
@@ -123,15 +101,8 @@
             <mat-card-actions>
               <div *ngIf="loguedUser">
                 <div *ngIf="valoracion.valorador == loguedUser.username">
-                  <div class="row">
-                    <div class="col-sm-2">
-                      <button mat-raised-button color="error" style="font-size: larger; "type="button" (click)="borrarValoracion(valoracion)" >Borrar comentario</button>
-                    </div>
-                    <div class="col-sm-6">
-                      <button mat-raised-button color="accent" style="font-size: larger; "type="button" (click)="openValorationModalEditar(modalEditValoration, valoracion)" value="contratar">Editar</button>
-                    </div>
+                    <button mat-raised-button color="error" style="font-size: larger; width: 30%" type="button" (click)="borrarValoracion(valoracion)" value="contratar">Borrar comentario</button>
                   </div>
-                </div>
               </div>
             </mat-card-actions>
           </mat-card>
@@ -155,13 +126,13 @@
 <ng-template #modalValoration let-modRefVal>
   <div class="modal-header d-block">
     <div class="d-flex">
-      <h3><b>Realiza una valoracion</b></h3>
+      <h3>Realiza una valoracion</h3>
     </div>
   </div>
     <form #f="ngForm" (ngSubmit)="onSubmit(f)" class="form-valorar">
       <div class="modal-body">
       <div class="row">
-        <div class="col-sm-4">
+        <div class="col-sm-2">
           <h4>Puntuación:</h4>
         </div>
         <div class="col-sm-6">
@@ -172,7 +143,6 @@
           </ngb-rating>
         </div>
         </div>
-        <hr>
         <mat-form-field style="width: 400px;" >
           <textarea matInput ngModel name="comentario" placeholder="Comentario" rows="10"></textarea>
         </mat-form-field>
@@ -184,43 +154,6 @@
       </div>
     </form>
 </ng-template>
-
-
-<ng-template #modalEditValoration let-modRefValEdit>
-  <div class="modal-header d-block">
-    <div class="d-flex">
-      <h3><b>Edita la valoración</b></h3>
-    </div>
-  </div>
-  <form #f="ngForm" (ngSubmit)="onSubmitEdit(f)" class="form-valorar">
-    <div class="modal-body">
-      <div class="row">
-        <div class="col-sm-4">
-          <h4><b>Puntuación: </b></h4>
-        </div>
-        <div class="col-sm-6">
-          <ngb-rating [(rate)]="valorationStarts"  [readonly]=false >
-            <ng-template let-fill="fill" >
-              <span class="star" [class.filled]="fill === 100" >&#9733;</span>
-            </ng-template>
-          </ngb-rating>
-        </div>
-      </div>
-      <hr>
-      <mat-form-field style="width: 400px;" >
-        <textarea matInput [ngModel]="valorationEditar.comentario" name="comentario" placeholder="Comentario" rows="10"></textarea>
-      </mat-form-field>
-    </div>
-
-    <div class="modal-footer">
-      <button type="button" mat-raised-button color="warn"  (click)="modRefValEdit.close()" >Cancelar</button>
-      <button mat-raised-button color="accent"  type="submit">Editar</button>
-    </div>
-  </form>
-</ng-template>
-
-
-
 
 <ng-template #modal let-modRef>
   <app-contratation [artist]="artist" [loguedUser]="loguedUser" [modal]="modRef"></app-contratation>

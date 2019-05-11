@@ -1,8 +1,6 @@
 package com.ei104550.BookAnArtist.controller;
-import com.ei104550.BookAnArtist.Services.PaymentService;
 import com.ei104550.BookAnArtist.enums.PaymentCause;
 import com.ei104550.BookAnArtist.model.Payment;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -11,28 +9,31 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/")
 public class SPSController {
 
-    @Autowired
-    PaymentService paymentService;
-
 
     @PostMapping("payment/pay")
     public boolean realizarPago(@RequestBody Payment payment){
 
-        return (paymentService.realizarPago(payment));
+        // Simular el trabajo del sps
+
+        return (payment.getCause() == PaymentCause.PAYMENT && payment.getQty()> 0);
 
     }
 
     @PostMapping("payment/receipt")
     public boolean realizarCobro(@RequestBody Payment payment){
 
-        return (paymentService.realizarCobro(payment));
+        // Simular el trabajo del sps
+
+        return (payment.getCause() == PaymentCause.RECEIPT && payment.getQty()> 0);
 
     }
 
     @PostMapping("payment/devolution")
     public boolean realizarDevolucion(@RequestBody Payment payment){
 
-        return (paymentService.realizarDevolucion(payment));
+        // Simular el trabajo del sps
+
+        return (payment.getCause() == PaymentCause.DEVOLUTION && payment.getQty()> 0);
 
     }
 
