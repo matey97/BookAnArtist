@@ -18,10 +18,13 @@ export class HomeComponent implements OnInit {
     username: string;
     loggedUser: User;
     image: any;
+    email: string;
+    password: string;
 
     constructor(private http: HttpClient,
                 private loginService: LoginService,
-                private appComponent: AppComponent
+                private appComponent: AppComponent,
+                private userService: UserService
                ) { }
 
     ngOnInit() {
@@ -75,6 +78,19 @@ export class HomeComponent implements OnInit {
       .subscribe(image => {
         this.loggedUser.image = image['raw'];
         this.appComponent.onLoguedUserChanged(this.loggedUser);
+      });
+  }
+  onEdit() {
+      if (this.loggedUser.email != null && this.loggedUser.email !== this.email) {
+        this.loggedUser.email = this.email;
+      }
+
+      if (this.loggedUser.password != null && this.loggedUser.password !== this.password) {
+      this.loggedUser.password = this.password;
+      }
+
+      this.userService.editUserData(this.loggedUser).subscribe(user => {
+        this.loggedUser = user;
       });
   }
 }

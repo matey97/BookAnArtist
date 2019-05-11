@@ -1,10 +1,12 @@
 package com.ei104550.BookAnArtist.controller;
 
+import com.ei104550.BookAnArtist.Services.UserService;
 import com.ei104550.BookAnArtist.model.User;
 import com.ei104550.BookAnArtist.model.Valoracion;
 import com.ei104550.BookAnArtist.repositories.ArtistValorationRepository;
 import com.ei104550.BookAnArtist.repositories.UserRepository;
 import org.apache.tomcat.util.codec.binary.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 ;
@@ -21,6 +23,8 @@ public class UserController {
 
     private UserRepository userRepository;
     private ArtistValorationRepository valorationRepository;
+    @Autowired
+    private UserService userService;
 
 
     public UserController(UserRepository userRepository,
@@ -57,6 +61,19 @@ public class UserController {
         Map<String, String> jsonMap = new HashMap<>();
         jsonMap.put("raw", Base64.getEncoder().encodeToString(user.getImage()));
         return jsonMap;
+
+    }
+
+    @PostMapping("{username}/updatedata")
+    public User uploadUserImage(@PathVariable("username") String username,User user) throws IOException {
+        User userOld = userRepository.findById(username).orElse(null);
+
+        if (userOld != null){
+            userOld.setEmail(user.getEmail());
+            userOld.setPassword(userService.EncodeUserPassword(user.getPassword()));
+        }
+        userRepository.save(userOld);
+        return userOld;
 
     }
 

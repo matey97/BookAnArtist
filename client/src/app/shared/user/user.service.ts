@@ -26,7 +26,6 @@ export class UserService {
   }
 
   getUserByUsername(username: string): Observable<any> {
-    console.log('Jajajajjajaj xdd');
     return this.http.get<any>('api/user/' + username);
   }
 
@@ -59,6 +58,10 @@ export class UserService {
     return this.http.delete('api/user/valoration/' + valoracion.id );
   }
 
+  editUserData(user: User): Observable<any> {
+
+    return this.http.post('api/user/' + user.username + '/updatedata', user);
+  }
 
   postEditValoracion(valoracion: Valoracion): Observable<any> {
     return this.http.post('api/user/valoration/' + valoracion.id , valoracion);
