@@ -45,24 +45,30 @@ export class ReclamationListComponent implements OnInit {
     this.reclamationReceivedList = new Array<Reclamation>();
     this.openReclamations = new Array<Reclamation>();
     this.closedReclamations = new Array<Reclamation>();
-    this.loguedUser = this.loginService.getLoguedUser();
-    if (this.loguedUser.usertype === 'ADMIN') {
-      this.reclamationService.getAllReclamations().subscribe(reclamations => {
-        this.openReclamations = reclamations.open;
-        this.closedReclamations = reclamations.closed;
+    this.loginService.getLoguedUser(this).subscribe(user => {
+      this.loguedUser = user;
+      if (this.loguedUser.usertype === 'ADMIN') {
+        this.reclamationService.getAllReclamations().subscribe(reclamations => {
+          this.openReclamations = reclamations.open;
+          this.closedReclamations = reclamations.closed;
 
-        this.openReclamations.sort(this.olderSorter);
-        this.closedReclamations.sort(this.newerSorter);
-      });
-    } else {
-      this.reclamationService.getReclamationByUser(this.loguedUser.username).subscribe(reclamations => {
-        this.reclamationDoneList = reclamations.done;
-        this.reclamationReceivedList = reclamations.received;
+          this.openReclamations.sort(this.olderSorter);
+          this.closedReclamations.sort(this.newerSorter);
+        });
+      } else {
+        this.reclamationService.getReclamationByUser(this.loguedUser.username).subscribe(reclamations => {
+          this.reclamationDoneList = reclamations.done;
+          this.reclamationReceivedList = reclamations.received;
 
-        this.reclamationDoneList.sort(this.newerSorter);
-        this.reclamationReceivedList.sort(this.newerSorter);
-      });
-    }
+          this.reclamationDoneList.sort(this.newerSorter);
+          this.reclamationReceivedList.sort(this.newerSorter);
+        });
+      }
+    });
+  }
+
+  onLoguedUserChanged(user: User) {
+    this.loguedUser = user;
   }
 
   public getDate(time: number): string {

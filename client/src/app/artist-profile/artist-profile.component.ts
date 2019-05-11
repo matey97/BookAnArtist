@@ -43,7 +43,7 @@ export class ArtistProfileComponent implements OnInit {
               private loginService: LoginService) { }
 
   ngOnInit() {
-    const user = this.loginService.getLoguedUser(this).subscribe(user => {
+    this.loginService.getLoguedUser(this).subscribe(user => {
       if (user !== null) {
         this.user = user;
         this.artistService.getArtistByUsername(this.user.username).subscribe(artist => {
@@ -57,6 +57,10 @@ export class ArtistProfileComponent implements OnInit {
         });
       }
     });
+  }
+
+  onLoguedUserChanged(user: User) {
+    this.user = user;
   }
 
   public changeEditMode(mode: boolean) {
