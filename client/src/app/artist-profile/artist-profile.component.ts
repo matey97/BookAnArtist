@@ -43,7 +43,7 @@ export class ArtistProfileComponent implements OnInit {
               private loginService: LoginService) { }
 
   ngOnInit() {
-    this.loginService.getLoguedUser(this).subscribe(user => {
+    const user = this.loginService.getLoguedUser(this).subscribe(user => {
       if (user !== null) {
         this.user = user;
         this.artistService.getArtistByUsername(this.user.username).subscribe(artist => {

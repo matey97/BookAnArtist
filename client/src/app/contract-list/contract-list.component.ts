@@ -66,8 +66,7 @@ export class ContractListComponent implements OnInit {
 
   ngOnInit() {
     this.currentDate = new Date();
-    this.loginService.getLoguedUser(this).subscribe(user => {
-      this.loguedUser = user;
+    this.loguedUser = this.loginService.getLoguedUser(this).subscribe(user => {
       if (this.loguedUser.usertype === 'ARTIST') {
       this.isArtist = true;
       this.contractService.getArtistContracts(this.loguedUser.username).subscribe(contracts => {

@@ -1,4 +1,4 @@
-﻿import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {User} from '../model/User';
 import {LoginService} from '../shared/loginService/login.service';
 import {ReclamationService} from '../shared/reclamation/reclamation.service';
@@ -45,30 +45,24 @@ export class ReclamationListComponent implements OnInit {
     this.reclamationReceivedList = new Array<Reclamation>();
     this.openReclamations = new Array<Reclamation>();
     this.closedReclamations = new Array<Reclamation>();
-    this.loginService.getLoguedUser(this).subscribe(user =>{
-      this.loguedUser = user;
-      if (this.loguedUser.usertype === 'ADMIN') {
-        this.reclamationService.getAllReclamations().subscribe(reclamations => {
-          this.openReclamations = reclamations.open;
-          this.closedReclamations = reclamations.closed;
+    this.loguedUser = this.loginService.getLoguedUser(null);
+    if (this.loguedUser.usertype === 'ADMIN') {
+      this.reclamationService.getAllReclamations().subscribe(reclamations => {
+        this.openReclamations = reclamations.open;
+        this.closedReclamations = reclamations.closed;
 
-          this.openReclamations.sort(this.olderSorter);
-          this.closedReclamations.sort(this.newerSorter);
-        });
-      } else {
-        this.reclamationService.getReclamationByUser(this.loguedUser.username).subscribe(reclamations => {
-          this.reclamationDoneList = reclamations.done;
-          this.reclamationReceivedList = reclamations.received;
+        this.openReclamations.sort(this.olderSorter);
+        this.closedReclamations.sort(this.newerSorter);
+      });
+    } else {
+      this.reclamationService.getReclamationByUser(this.loguedUser.username).subscribe(reclamations => {
+        this.reclamationDoneList = reclamations.done;
+        this.reclamationReceivedList = reclamations.received;
 
-          this.reclamationDoneList.sort(this.newerSorter);
-          this.reclamationReceivedList.sort(this.newerSorter);
-        });
-      }
-    });
-  }
-
-  public onLoguedUserChanged(user: User) {
-    this.loguedUser = user;
+        this.reclamationDoneList.sort(this.newerSorter);
+        this.reclamationReceivedList.sort(this.newerSorter);
+      });
+    }
   }
 
   public getDate(time: number): string {
