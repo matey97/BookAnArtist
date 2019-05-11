@@ -1,0 +1,112 @@
+<div class="modal-header d-block">
+  <div class="d-flex">
+    <h3 class="modal-title"><b>Formulario de reclamaciones</b></h3>
+    <button type="button" class="close" aria-label="Close" (click)="modal.close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <h5 class="modal-title"><b>Contrato:</b> {{contract.id}}</h5>
+  <h5 *ngIf="!isArtist; else nOrganizer" class="modal-title"><b>Artista:</b> {{contract.artisticUsername}}</h5>
+  <ng-template #nOrganizer>
+    <h5 class="modal-title"><b>Organizador:</b> {{contract.organizerUsername}}</h5>
+  </ng-template>
+</div>
+<div class="modal-body">
+  <div class="container">
+    <form>
+      <div class="row">
+        <mat-form-field>
+          <textarea matInput type="text" placeholder="Describe el objeto de tu reclamación" [(ngModel)]="reclamation.reclamation" name="reclamation" rows="5" required></textarea>
+        </mat-form-field>
+      </div>
+      <mat-divider></mat-divider>
+      <br>
+      <div class="row">
+        <div style="text-align: center; width: 100%">
+          <h6>Aporta imagenes o videos que apoyen tu reclamación (testigos, día de la actuación...)</h6>
+        </div>
+        <br>
+        <div class="col-sm-6">
+          <div class="custom-file">
+            <input type="file" class="custom-file-input" id="videos" name="videos" value="videos" accept="video/mp4" (change)="videoChange($event)">
+            <label class="custom-file-label" for="videos">Selecciona un vídeo</label>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group">
+            <input type="file" class="custom-file-input" id="images" name="images" value="images" accept="image/*" (change)="imageChange($event)">
+            <label class="custom-file-label" for="images">Selecciona una imagen</label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <mat-list>
+            <mat-list-item *ngFor="let video of reclamation.videos">
+              <p mat-line>{{video.name}}</p>
+              <button type="button" mat-icon-button (click)="removeVideo(video)">
+                <mat-icon mat-list-icon>delete_forever</mat-icon>
+              </button>
+            </mat-list-item>
+          </mat-list>
+        </div>
+        <div class="col-sm-6">
+          <mat-list>
+            <mat-list-item *ngFor="let image of reclamation.images">
+              <p mat-line>{{image.name}}</p>
+              <button type="button" mat-icon-button (click)="removeImage(image)">
+                <mat-icon mat-list-icon>delete_forever</mat-icon>
+              </button>
+            </mat-list-item>
+          </mat-list>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="modal-footer">
+  <div class="button-row">
+    <button type="button" mat-raised-button color="warn" (click)="modal.close()">Cancelar</button>
+    <button type="button" mat-raised-button color="primary" (click)="askConfirmation(confModal)">Finalizar</button>
+  </div>
+</div>
+
+<ng-template #confModal let-modalRef>
+  <div class="modal-header">
+    <h3 class="modal-title"><b>Confirmación de reclamación</b></h3>
+    <button type="button" class="close" aria-label="Close" (click)="modalRef.close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>¿Estas seguro que quieres realizar esta reclamación? Revisa que los datos son correctos, el resultado de la reclamación dependerá de ellos:</p>
+    <div class="container col-sm-12">
+      <mat-list role="list">
+        <h5><b>Descripción:</b></h5>
+        <mat-list-item>
+          <p>{{reclamation.reclamation}}</p>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <div *ngIf="reclamation.images.length !== 0">
+          <br>
+          <h5><b>Imágenes:</b></h5>
+          <mat-list-item *ngFor="let image of reclamation.images">
+            <p>{{image.name}}</p>
+          </mat-list-item>
+        </div>
+        <mat-divider></mat-divider>
+        <div *ngIf="reclamation.videos.length !== 0">
+          <br>
+          <h5><b>Vídeos:</b></h5>
+          <mat-list-item *ngFor="let video of reclamation.videos">
+            <p>{{video.name}}</p>
+          </mat-list-item>
+        </div>
+      </mat-list>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" mat-raised-button color="warn" (click)="modalRef.close()">No</button>
+    <button type="button" mat-raised-button color="primary" (click)="saveReclamation(modalRef)">Sí</button>
+  </div>
+</ng-template>

@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {ContractService} from '../shared/contract/contract.service';
 import {ActivatedRoute} from '@angular/router';
 import {UserService} from '../shared/user/user.service';
@@ -12,10 +12,23 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {NgForm} from '@angular/forms';
 import {Valoracion} from '../model/Valoracion';
 
+export const successSubscriber = (item) => {
+  if (item) {
+    this.snackBar.open('Cambios gueardados correctamente.', 'Cerrar', {duration: 3000});
+  } else {
+    this.snackBar.open('No se ha podido tratar tu petición.', 'Cerrar', {duration: 3000});
+  }
+};
+
+export const errorSubscriber = (error) => {
+  this.snackBar.open('Ha ocurrido un error', 'Cerrar', {duration: 3000});
+};
+
 @Component({
   selector: 'app-contract-list',
   templateUrl: './contract-list.component.html',
-  styleUrls: ['./contract-list.component.scss']
+  styleUrls: ['./contract-list.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ContractListComponent implements OnInit {
 
@@ -25,7 +38,7 @@ export class ContractListComponent implements OnInit {
   artistDisplayedColumns = ['organizerUsername', 'comments', 'location', 'zone', 'date', 'state', 'operations'];
   organizerDisplayedColumns = ['artisticUsername', 'comments', 'location', 'zone', 'date', 'state', 'operations'];
 
-  stateTransformation = new Map([['ACCEPTANCE_PENDING', 'Pendiente de aceptación'], ['ACCEPTED', 'Aceptado'], ['DONE', 'Realizado'], ['REJECTED', 'Rechazado'], ['CANCELLED', 'Cancelado']]);
+  stateTransformation = new Map([['ACCEPTANCE_PENDING', 'Pendiente de aceptación'], ['ACCEPTED', 'Aceptado'], ['DONE', 'Realizado'], ['REJECTED', 'Rechazado'], ['CANCELLED', 'Cancelado'], ['RECLAMATION', 'En reclamación']]);
 
   loguedUser;
   contracts: Contract[];
@@ -40,19 +53,7 @@ export class ContractListComponent implements OnInit {
   usernameOrganizer: string;
   listValoraciones: Array<any>;
 
-
-
-  successSubscriber = (item) => {
-    if (item) {
-      this.snackBar.open('Cambios gueardados correctamente.', 'Cerrar', {duration: 3000});
-    } else {
-      this.snackBar.open('No se ha podido tratar tu petición.', 'Cerrar', {duration: 3000});
-    }
-  }
-
-  errorSubscriber = (error) => {
-    this.snackBar.open('Ha ocurrido un error', 'Cerrar', {duration: 3000});
-  }
+  contractOnReclamation: Contract;
 
 
   constructor(private contractService: ContractService,
@@ -75,9 +76,7 @@ export class ContractListComponent implements OnInit {
           this.userService.getUserByUsername(contrat.organizerUsername).subscribe(data => {
             data.valoraciones.forEach(valoracion => {
               if (valoracion.valorador === this.loguedUser.username) {
-                console.log(contrat.haSidoValorado);
                 contrat.haSidoValorado = true;
-                console.log(contrat.haSidoValorado);
               }
             });
           });
@@ -95,10 +94,7 @@ export class ContractListComponent implements OnInit {
           this.userService.getUserByUsername(contrat.artisticUsername).subscribe(data => {
             data.valoraciones.forEach( valoracion => {
               if (valoracion.valorador === this.loguedUser.username) {
-                console.log(contrat.haSidoValorado);
                 contrat.haSidoValorado = true;
-                console.log(contrat.haSidoValorado);
-
               }
             });
 
@@ -128,17 +124,17 @@ export class ContractListComponent implements OnInit {
 
   public acceptContract(contract: Contract) {
     contract.state = 'ACCEPTED';
-    this.contractService.acceptContract(contract.id).subscribe(this.successSubscriber, this.errorSubscriber);
+    this.contractService.acceptContract(contract.id).subscribe(successSubscriber, errorSubscriber);
   }
 
   public declineContract(contract) {
     contract.state = 'REJECTED';
-    this.contractService.declineContract(contract.id).subscribe(this.successSubscriber, this.errorSubscriber);
+    this.contractService.declineContract(contract.id).subscribe(successSubscriber, errorSubscriber);
   }
 
   public cancelContract(contract) {
     contract.state = 'CANCELLED';
-    this.contractService.cancelContract(contract.id).subscribe(this.successSubscriber, this.errorSubscriber);
+    this.contractService.cancelContract(contract.id).subscribe(successSubscriber, errorSubscriber);
   }
 
   public openValorationModal(modal, usernameOrganizer) {
@@ -179,8 +175,13 @@ export class ContractListComponent implements OnInit {
     });
   }
 
+  openReclamationContract(modalReclamation, contract: Contract) {
+    this.contractOnReclamation = contract;
+    this.modalService.open(modalReclamation, {centered: true, backdropClass: 'modal-backdrop-chachiguay', size: 'lg'});
+  }
+
   public completeContract(contract) {
     contract.state = 'DONE';
-    this.contractService.completeContract(contract.id).subscribe(this.successSubscriber, this.errorSubscriber);
+    this.contractService.completeContract(contract.id).subscribe(successSubscriber, errorSubscriber);
   }
 }
