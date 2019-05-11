@@ -73,7 +73,7 @@ export class HomeComponent implements OnInit {
      uploadData.append('myFile' , this.selectedFile, this.selectedFile.name);
      this.http.post('api/' + this.username + '/uploadusrimg', uploadData)
       .subscribe(image => {
-        this.loggedUser.image = image.raw;
+        this.loggedUser.image = image['raw'];
         this.appComponent.onLoguedUserChanged(this.loggedUser);
       });
   }

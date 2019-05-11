@@ -45,7 +45,9 @@ export class ReclamationListComponent implements OnInit {
     this.reclamationReceivedList = new Array<Reclamation>();
     this.openReclamations = new Array<Reclamation>();
     this.closedReclamations = new Array<Reclamation>();
-    this.loguedUser = this.loginService.getLoguedUser();
+    this.loginService.getLoguedUser(this).subscribe( user => {
+      this.loguedUser = user;
+    });
     if (this.loguedUser.usertype === 'ADMIN') {
       this.reclamationService.getAllReclamations().subscribe(reclamations => {
         this.openReclamations = reclamations.open;
