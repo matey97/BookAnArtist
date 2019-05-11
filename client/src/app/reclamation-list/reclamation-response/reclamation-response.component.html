@@ -1,0 +1,113 @@
+<div *ngIf="!firstTime && !editingMode">
+  <div class="row">
+    <div class="col-sm-12">
+      <h6><b>Respuesta del afectado:</b></h6>
+      <p>{{reclamation.reclamationResponse.response}}</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <mat-divider></mat-divider>
+      <br>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6">
+      <h6><b>Imágenes:</b></h6>
+      <ngb-carousel *ngIf="reclamation.reclamationResponse.images">
+        <ng-template ngbSlide *ngFor="let image of reclamation.reclamationResponse.images">
+          <img class="w-100" src="data:image/PNG;base64,{{image.image}}">
+        </ng-template>
+      </ngb-carousel>
+    </div>
+    <div class="col-sm-6">
+      <h6><b>Vídeos:</b></h6>
+      <ngb-carousel *ngIf="reclamation.reclamationResponse.videos">
+        <ng-template ngbSlide *ngFor="let video of reclamation.reclamationResponse.videos">
+          <video controls>
+            <source class="w-100" src="data:video/mp4;base64,{{video.video}}" type='video/mp4'>
+          </video>
+        </ng-template>
+      </ngb-carousel>
+    </div>
+  </div>
+  <div *ngIf="!readonly && reclamation.state == 'OPEN'">
+    <div class="row">
+      <div class="col-sm-12">
+        <br>
+        <mat-divider></mat-divider>
+        <br>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 ">
+        <div class="button-row float-right">
+          <button mat-raised-button color="primary" type="button" value="Editar" (click)="editingMode = true">Editar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="firstTime || editingMode && !readonly">
+  <div class="row">
+    <div class="col-sm-12">
+      <h6><b>Respuesta del afectado:</b></h6>
+      <mat-form-field>
+        <textarea matInput type="text" placeholder="Describe el objeto de tu reclamación" [(ngModel)]="reclamation.reclamationResponse.response" name="response" rows="5" required></textarea>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <mat-divider></mat-divider>
+      <br>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6">
+      <h6><b>Imágenes:</b></h6>
+      <div class="custom-file">
+        <input type="file" class="custom-file-input" id="images" name="images" value="images" accept="image/*" (change)="imageChange($event)">
+        <label class="custom-file-label" for="images">Selecciona imágenes</label>
+      </div>
+      <mat-list>
+        <mat-list-item *ngFor="let image of reclamation.reclamationResponse.images">
+          <p mat-line>{{image.name}}</p>
+          <button type="button" mat-icon-button (click)="removeImage(image)">
+            <mat-icon mat-list-icon>delete_forever</mat-icon>
+          </button>
+        </mat-list-item>
+      </mat-list>
+    </div>
+    <div class="col-sm-6">
+      <h6><b>Vídeos:</b></h6>
+        <div class="custom-file">
+          <input type="file" class="custom-file-input" id="videos" name="videos" value="videos" accept="video/mp4" (change)="videoChange($event)">
+          <label class="custom-file-label" for="videos">Selecciona videos</label>
+        </div>
+        <mat-list>
+          <mat-list-item *ngFor="let video of reclamation.reclamationResponse.videos">
+            <p mat-line>{{video.name}}</p>
+            <button type="button" mat-icon-button (click)="removeVideo(video)">
+              <mat-icon mat-list-icon>delete_forever</mat-icon>
+            </button>
+          </mat-list-item>
+        </mat-list>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <br>
+      <mat-divider></mat-divider>
+      <br>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class=" button-row float-right">
+        <button mat-raised-button color="primary" type="button" value="Finalizar" (click)="updateResponse()">Finalizar</button>
+      </div>
+    </div>
+  </div>
+</div>

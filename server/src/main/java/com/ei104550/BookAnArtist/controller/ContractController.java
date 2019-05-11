@@ -108,5 +108,4 @@ public class ContractController {
         emailService.sendIncomeEmail(c.getArtisticUsername(), c);
         return true;
     }
-
 }

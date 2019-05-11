@@ -1,7 +1,9 @@
 package com.ei104550.BookAnArtist.Services;
 
+import com.ei104550.BookAnArtist.enums.ReclamationState;
 import com.ei104550.BookAnArtist.model.Contract;
 import com.ei104550.BookAnArtist.model.Notification;
+import com.ei104550.BookAnArtist.model.Reclamation;
 import com.ei104550.BookAnArtist.model.User;
 import com.ei104550.BookAnArtist.repositories.NotificationRepository;
 import com.ei104550.BookAnArtist.repositories.UserRepository;
@@ -79,11 +81,52 @@ public class EmailService {
         saveNotification(notification);
     }
 
-    /*
-    @Async("asyncExecutor")
-    public void sendReclamationEmail(User user,){
 
-    }*/
+    @Async("asyncExecutor")
+    public void sendReclamationEmail(Reclamation reclamation){
+        Notification notification = buildBaseNotificationAndDestinationUser(reclamation.getReclamedUser());
+        notification.setSubject("Reclamación en oferta ID: " + reclamation.getContractId());
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("Hola " + reclamation.getReclamedUser() + ",\n\n");
+        sb.append("Se ha interpuesto una reclamación sobre la oferta con ID: " + reclamation.getContractId());
+        sb.append(" . Puede acceder a la plataforma para obtener más información sobre la reclamación así como realizar posibles réplicas. \n\n");
+        sb.append(buildReclamationDetails(reclamation));
+        sb.append(buildGreetings());
+        notification.setMessage(sb.toString());
+
+        sendEmail(notification);
+        saveNotification(notification);
+    }
+
+    @Async("asyncExecutor")
+    public void sendUpdateReclamationEmail(Reclamation reclamation){
+        boolean twoNotifications = false;
+        if (reclamation.getState() != ReclamationState.CANCELLED){
+            twoNotifications = true;
+        }
+        String subject = "Actualización reclamacion ID: " + reclamation.getId();
+        Notification notification = buildBaseNotificationAndDestinationUser(reclamation.getReclamingUser());
+        notification.setSubject(subject);
+        StringBuilder sb = new StringBuilder();
+        sb.append("Hola " + reclamation.getReclamingUser() + ",\n\n");
+        sb.append("La reclamación con ID: " + reclamation.getId() + " ha sido actualizada. Puede acceder a la plataforma para obtener más información. \n\n");
+        sb.append(buildReclamationDetails(reclamation));
+        sb.append(buildGreetings());
+        notification.setMessage(sb.toString());
+        sendEmail(notification);
+        saveNotification(notification);
+
+        if (twoNotifications){
+            notification = buildBaseNotificationAndDestinationUser(reclamation.getReclamedUser());
+            notification.setSubject(subject);
+            notification.setMessage(sb.toString().replace(reclamation.getReclamingUser(), reclamation.getReclamedUser()));
+            sendEmail(notification);
+            saveNotification(notification);
+        }
+    }
+
+
 
     @Async("asyncExecutor")
     public void sendPayEmail(String user, Contract contract){
@@ -119,15 +162,14 @@ public class EmailService {
     }
 
     @Async("asyncExecutor")
-    public void sendPayBackEmail(String user, Contract contract){ //Seria por reclamaciones
-        Notification notification = buildBaseNotificationAndDestinationUser(user);
-        notification.setSubject("Reintegro de oferta ID: " + contract.getId());
+    public void sendPayBackEmail(Reclamation reclamation){
+        Notification notification = buildBaseNotificationAndDestinationUser(reclamation.getReclamingUser());
+        notification.setSubject("Reintegro de oferta ID: " + reclamation.getContractId());
 
         StringBuilder sb = new StringBuilder();
-        sb.append("Hola " + user + ",\n\n");
-        sb.append("Debido a que la actuación con ID: " + contract.getId());
-        sb.append(" no se ha realizado, le informamos que se ha realizado el reintegro del importe de la misma.\n\n");
-        sb.append(buildContractDetails(contract));
+        sb.append("Hola " + reclamation.getReclamingUser() + ",\n\n");
+        sb.append("Debido a que la actuación con ID: " + reclamation.getContractId());
+        sb.append(" no se ha realizado, le informamos que se ha realizado el reintegro del importe de la misma en su cuenta.\n\n");
         sb.append(buildGreetings());
         notification.setMessage(sb.toString());
 
@@ -159,6 +201,15 @@ public class EmailService {
         sb.append("\t-Descripción: " + contract.getComments() + "\n");
         sb.append("\t-Lugar: " + contract.getLocation() + ", " + contract.getZone() + "\n");
         sb.append("\t-Fecha: " + new Date(contract.getDate()).toString() + "\n\n");
+        return sb.toString();
+    }
+
+    private String buildReclamationDetails(Reclamation reclamation) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Detalles de la reclamación:\n");
+        sb.append("\t-ID: " + reclamation.getId() + "\n");
+        sb.append("\t-ID Contrato: " + reclamation.getContractId() + "\n");
+        sb.append("\t-Descripción: " + reclamation.getReclamation() + "\n\n");
         return sb.toString();
     }
 

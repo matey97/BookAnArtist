@@ -7,8 +7,10 @@ import { LoginComponent } from './shared/login/login.component';
 import { HomeComponent } from './shared/home/home.component';
 import { RegisterComponent} from './shared/register/register.component';
 import {ContractListComponent} from './contract-list/contract-list.component';
+import {ReclamationListComponent} from './reclamation-list/reclamation-list.component';
 
 const routes: Routes = [
+  { path: 'reclamations', component: ReclamationListComponent },
   { path: 'artistList', component: ArtistListComponent },
   { path: '', component: ArtistListComponent },
   { path: 'user/:username', component: HomeComponent },

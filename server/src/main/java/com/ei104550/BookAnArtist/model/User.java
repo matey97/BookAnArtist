@@ -36,6 +36,14 @@ public class User {
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Notification> notifications;
 
+    @ElementCollection()
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Reclamation> reclamationsDone;
+
+    @ElementCollection()
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Reclamation> reclamationsReceived;
+
 
     public Double getPuntuation() {
         return puntuation;
@@ -62,6 +70,8 @@ public class User {
     public User(){
         this.contracts = new LinkedList<>();
         this.notifications = new LinkedList<>();
+        this.reclamationsDone = new LinkedList<>();
+        this.reclamationsReceived = new LinkedList<>();
     }
 
     public User(User user) {
@@ -171,6 +181,29 @@ public class User {
         return false;
     }
 
+    public List<Reclamation> getReclamationsDone() {
+        return reclamationsDone;
+    }
+
+    public void setReclamationsDone(List<Reclamation> reclamationsDone) {
+        this.reclamationsDone = reclamationsDone;
+    }
+
+    public void addReclamationDone(Reclamation reclamation){
+        this.reclamationsDone.add(reclamation);
+    }
+
+    public List<Reclamation> getReclamationsReceived() {
+        return reclamationsReceived;
+    }
+
+    public void setReclamationsReceived(List<Reclamation> reclamationsReceived) {
+        this.reclamationsReceived = reclamationsReceived;
+    }
+
+    public void addReclamationReceived(Reclamation reclamation) {
+        this.reclamationsReceived.add(reclamation);
+    }
 
     @Override
     public String toString() {

@@ -20,7 +20,7 @@ import {
   MatOptionModule,
   MatToolbarModule, MatMenuModule, MatBadgeModule, MatExpansionModule
 } from '@angular/material';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {NgbCarouselConfig, NgbCarouselModule, NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {VgCoreModule} from 'videogular2/core';
 import {VgControlsModule} from 'videogular2/controls';
 import {VgOverlayPlayModule} from 'videogular2/overlay-play';
@@ -35,6 +35,9 @@ import { ContratationComponent } from './artist/contratation/contratation.compon
 import { ContractListComponent } from './contract-list/contract-list.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import {StorageServiceModule} from 'angular-webstorage-service';
+import { ReclamationComponent } from './contract-list/reclamation/reclamation.component';
+import { ReclamationListComponent } from './reclamation-list/reclamation-list.component';
+import { ReclamationResponseComponent } from './reclamation-list/reclamation-response/reclamation-response.component';
 
 
 @NgModule({
@@ -50,6 +53,9 @@ import {StorageServiceModule} from 'angular-webstorage-service';
     ContratationComponent,
     ContractListComponent,
     NotificationsComponent,
+    ReclamationComponent,
+    ReclamationListComponent,
+    ReclamationResponseComponent,
   ],
   imports: [
     BrowserModule,
@@ -88,7 +94,8 @@ import {StorageServiceModule} from 'angular-webstorage-service';
     VgBufferingModule,
     FormsModule,
     BrowserModule,
-    StorageServiceModule
+    StorageServiceModule,
+    NgbCarouselModule
   ],
   providers: [{provide: MAT_DATE_LOCALE, useValue: 'es-ES'}],
   bootstrap: [AppComponent]
