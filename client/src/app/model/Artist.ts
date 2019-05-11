@@ -7,7 +7,7 @@ export class Artist {
   description: string;
   price: number;
   puntuation: number;
-  valoraciones: Array<Valoracion>
+  valoraciones: Array<Valoracion>;
   habilities: Array<string>;
   images: Array<Image>;
   videos: Array<Video>;
