@@ -7,11 +7,11 @@ export class User {
   password: string;
   email: string;
   usertype: 'ARTIST' | 'ADMIN' | 'ORGANIZER';
-  image: string;
+  image: Array<any>;
   contracts: Array<Contract>;
   notifications: Array<Notification>;
   puntuation: number;
-  valoraciones: Array<Valoracion>
+  valoraciones: Array<Valoracion>;
 
   constructor(object: any) {
     this.username = object.username;

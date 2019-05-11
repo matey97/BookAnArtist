@@ -107,6 +107,8 @@ public class ContractController {
         this.contractRepository.save(c);
         emailService.sendIncomeEmail(c.getArtisticUsername(), c);
         return true;
+
+
     }
 
 }

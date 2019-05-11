@@ -34,6 +34,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { ContratationComponent } from './artist/contratation/contratation.component';
 import { ContractListComponent } from './contract-list/contract-list.component';
 import { NotificationsComponent } from './notifications/notifications.component';
+import {StorageServiceModule} from 'angular-webstorage-service';
 
 
 @NgModule({
@@ -85,7 +86,9 @@ import { NotificationsComponent } from './notifications/notifications.component'
     VgBufferingModule,
     ReactiveFormsModule,
     VgBufferingModule,
-    FormsModule
+    FormsModule,
+    BrowserModule,
+    StorageServiceModule
   ],
   providers: [{provide: MAT_DATE_LOCALE, useValue: 'es-ES'}],
   bootstrap: [AppComponent]

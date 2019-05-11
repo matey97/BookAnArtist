@@ -1,5 +1,6 @@
-import { Injectable } from '@angular/core';
+import {Inject, Injectable} from '@angular/core';
 import {User} from '../../model/User';
+import {LOCAL_STORAGE, WebStorageService} from 'angular-webstorage-service';
 
 import {HttpClient} from '@angular/common/http';
 import { Location} from '@angular/common';
@@ -12,10 +13,12 @@ export class LoginService {
   model: any = {};
   loguedUserName: string;
   user: User = null;
+  data: any = [];
 
   constructor(private http: HttpClient,
-              private location: Location
-              ) { }
+              private location: Location,
+              @Inject(LOCAL_STORAGE) private storage: WebStorageService) {
+}
 
   login(username, password) {
     const url = 'http://localhost:8080/login';
