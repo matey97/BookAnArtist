@@ -13,7 +13,7 @@
       <h4 class="textPos">Foto de perfíl</h4>
       <img src="data:image/PNG;base64,{{loggedUser.image}}">
     </div>
-    
+
   </div>
   <!-- Grid row -->
   <div class="form-row">
@@ -34,7 +34,7 @@
       <!-- Material input -->
       <div class="md-form form-group">
         <label for="inputEmail4MD">Email</label>
-        <input type="email" class="form-control" id="inputEmail4MD" placeholder="Email">
+        <input type="email" class="form-control" id="inputEmail4MD" placeholder="{{loggedUser.email}}">
       </div>
     </div>
 
@@ -42,8 +42,10 @@
       <!-- Material input -->
       <div class="md-form form-group">
         <label for="inputPassword4MD">Password</label>
-        <input type="password" class="form-control" id="inputPassword4MD" placeholder="Password">
+        <input type="password" class="form-control" type="password" name="password"  id="inputPassword4MD" placeholder="New password">
       </div>
+
+
     </div>
   </div>
   <!-- Grid row -->
