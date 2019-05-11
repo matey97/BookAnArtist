@@ -1,16 +1,19 @@
 package com.ei104550.BookAnArtist.controller;
 
-import com.ei104550.BookAnArtist.model.Artist;
 import com.ei104550.BookAnArtist.model.User;
 import com.ei104550.BookAnArtist.model.Valoracion;
 import com.ei104550.BookAnArtist.repositories.ArtistValorationRepository;
 import com.ei104550.BookAnArtist.repositories.UserRepository;
-import org.springframework.security.web.server.transport.HttpsRedirectWebFilter;
+import org.apache.tomcat.util.codec.binary.StringUtils;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.multipart.MultipartFile;
+;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import static java.util.Base64.*;
 
 @RestController
 @RequestMapping("api/")
@@ -42,10 +45,20 @@ public class UserController {
     public Map<String, String> userImage(@PathVariable String username){
         User user = userRepository.findById(username).orElse(null);
         Map<String, String> jsonMap = new HashMap<>();
-        jsonMap.put("raw", Base64.getEncoder().encodeToString(user.getImage()));
+        jsonMap.put("raw", getEncoder().encodeToString(user.getImage()));
         return jsonMap;
     }
 
+    @PostMapping("{username}/uploadusrimg")
+    public Map<String, String> uploadUserImage(@PathVariable("username") String username, @RequestParam("myFile") MultipartFile image) throws IOException {
+        User user = userRepository.findById(username).orElse(null);
+        user.setImage(image.getBytes());
+        userRepository.save(user);
+        Map<String, String> jsonMap = new HashMap<>();
+        jsonMap.put("raw", Base64.getEncoder().encodeToString(user.getImage()));
+        return jsonMap;
+
+    }
 
 
     @PostMapping("user/{username}/valoration")

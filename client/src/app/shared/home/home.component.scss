@@ -20,6 +20,26 @@ img {
   width: 20vw;
 }
 
+.btnPosMod{
+  position: relative;
+  left: -2vw;
+  padding: 2vw;
+}
+
+.btnPosUp{
+  position: relative;
+  left: 10vw;
+  top: -9.2vw;
+}
+
+.pad{
+  padding: 1vw;
+}
+.textPos{
+  position: relative;
+  left: 2vw;
+  padding: 2vw;
+}
 button {
   border: none;
   outline: none;
@@ -44,4 +64,13 @@ button:hover{
   position: relative;
   left: 75vw;
   top:10vh;
+}
+
+#modSt {
+  border: none;
+  outline: none;
+  padding: 10px 20px;
+  border-radius: 50px;
+  background: linear-gradient(1650deg,transparentize($purple,0.1),transparentize($blue,0.1), transparentize($blue,0.1));
+  box-shadow: 0 3px 10px 0 $blue;
 }

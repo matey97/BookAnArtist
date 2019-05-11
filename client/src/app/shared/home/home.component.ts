@@ -13,8 +13,10 @@ import {UserService} from '../user/user.service';
 
 export class HomeComponent implements OnInit {
 
+    selectedFile = null;
     username: string;
     loggedUser: User;
+    image: any;
 
     constructor(private http: HttpClient,
                 private loginService: LoginService
@@ -58,5 +60,20 @@ export class HomeComponent implements OnInit {
         }
         return throwError(
           'Something bad happened; please try again later.');
-      }
+    }
+
+  onFileChanged(event) {
+    this.selectedFile = event.target.files[0];
+  }
+
+  onUpload() {
+     const uploadData = new FormData();
+     uploadData.append('myFile' , this.selectedFile, this.selectedFile.name);
+     this.http.post('api/' + this.username + '/uploadusrimg', uploadData)
+      .subscribe(image => {
+        // debugger;
+        console.log(image);
+        this.loggedUser.image = image;
+      });
+  }
 }

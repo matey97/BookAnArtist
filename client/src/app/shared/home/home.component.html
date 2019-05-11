@@ -7,10 +7,29 @@
 <!-- Extended material form grid -->
 <form class="formUser">
   <!-- Grid row -->
-  <div class="card-header">
-    <img class="card-img-top profilePic" src="data:image/PNG;base64,{{loggedUser.image}}">
+  <div >
+    <h4 class="textPos">Foto de perfíl</h4>
+    <img  src="data:image/PNG;base64,{{loggedUser.image}}">
   </div>
+
+<div class="btnPosMod">
+  <input
+    class="modSt"
+    id="modSt"
+    style="display: none"
+    type="file" (change)="onFileChanged($event)"
+    #fileInput>
+  <div class="pad">
+    <button (click)="fileInput.click()">Modifíca</button>
+    <a>&nbsp; &nbsp;</a>
+    <button  (click)="onUpload()">Subela!</button>
+  </div>
+</div>
+
+
   <div class="form-row">
+
+
     <!-- Grid column -->
     <div class="col-md-6">
       <!-- Material input -->
