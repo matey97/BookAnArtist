@@ -23,7 +23,6 @@ public class PaymentService {
     }
 
     public boolean realizarDevolucion(Payment payment){
-
         // Simular el trabajo del sps
         return (payment.getCause() == PaymentCause.DEVOLUTION && payment.getQty()> 0);
 
