@@ -5,6 +5,7 @@ import { LoginComponent } from '../login/login.component';
 import { AppComponent } from 'src/app/app.component';
 import {User} from "../../model/User";
 import {Valoracion} from "../../model/Valoracion";
+import {Form} from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +27,6 @@ export class UserService {
   }
 
   getUserByUsername(username: string): Observable<any> {
-    console.log('Jajajajjajaj xdd');
     return this.http.get<any>('api/user/' + username);
   }
 
@@ -60,5 +60,9 @@ export class UserService {
     return this.http.delete('api/user/valoration/' + valoracion.id );
   }
 
+  editUserData(user: User): Observable<any> {
+
+    return this.http.post('api/user/' + user.username + '/updatedata', user);
+  }
 
 }
