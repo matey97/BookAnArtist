@@ -28,6 +28,7 @@ public class Valoracion {
     }
 
     public void setValorador(String valorador) {
+
         this.valorador = valorador;
     }
 

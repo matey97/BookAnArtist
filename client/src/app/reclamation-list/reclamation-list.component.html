@@ -1,16 +1,17 @@
 <div *ngIf="loguedUser != null">
-  <div *ngIf="loguedUser.usertype != 'ADMIN'; else adminIntro" class="jumbotron" style="text-align: center">
+  <header *ngIf="loguedUser.usertype != 'ADMIN'; else adminIntro">
     <h2>Reclamaciones</h2>
     <p>Hola {{loguedUser.username}}, aquí puedes ver las reclamaciones que has realizado y que te han interpuesto.</p>
     <p>Sobre las reclamaciones puedes ver su estado y las contestaciones del usuario afectado</p>
-  </div>
+  </header>
   <ng-template #adminIntro>
-    <div class="jumbotron" style="text-align: center">
+    <header>
       <h2>Reclamaciones</h2>
-    </div>
+    </header>
   </ng-template>
 
   <div *ngIf="loguedUser.usertype != 'ADMIN'; else adminGUI" style="width: 90%; margin: 0 auto">
+    <br>
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         <mat-panel-title>

@@ -1,9 +1,9 @@
-<div *ngIf="artist != null && user != null" class="container">
-  <header>
-    <h2>Perfil artísitco</h2>
-    <p>Hola {{user.username}}, bienvenido a tu perfil artístico. Aquí debes introducir todos tus datos de interés a nivel artístico, como tu nombre artísitco
+<header>
+  <h2>Perfil artísitco</h2>
+  <p>Hola {{user.username}}, bienvenido a tu perfil artístico. Aquí debes introducir todos tus datos de interés a nivel artístico, como tu nombre artísitco
     una pequeña descripción, tus habilidades, videos, etc.</p>
-  </header>
+</header>
+<div *ngIf="artist != null && user != null" class="container">
   <div class="row">
     <div class="col-sm-3">
       <div class="card" style="text-align: center">

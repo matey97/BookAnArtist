@@ -12,6 +12,9 @@ import {Valoracion} from '../model/Valoracion';
 import { Router } from '@angular/router';
 import {Contract} from '../model/Contract';
 import {MatSnackBar} from '@angular/material';
+import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
+
+
 
 @Component({
   selector: 'app-artist',
@@ -27,12 +30,14 @@ export class ArtistComponent implements OnInit {
   listValoraciones: Array<any>;
   valorationStarts: number;
   loguedUser;
+  usernameData: User;
   valoracionNueva: Valoracion;
   userProfileImageValoracion: Array<any>;
   noHaValorado: boolean;
   HaContratado: boolean;
   page: any;
   pageSize: number;
+  private valorationEditar: Valoracion;
 
 
   constructor( private artistService: ArtistService,
@@ -41,16 +46,21 @@ export class ArtistComponent implements OnInit {
                private route: ActivatedRoute,
                private router: Router,
                private snackBar: MatSnackBar,
+               private ngbCarrousel: NgbCarouselConfig,
                private modalService: NgbModal) { }
 
   ngOnInit() {
     this.username = this.route.snapshot.paramMap.get('username');
-    this.getArtistProfile();
+    this.userService.getUserByUsername(this.username).subscribe( data => {
+      this.usernameData = data;
+      this.getArtistProfile();
+    });
 
     this.page = 1;
     this.pageSize = 5;
 
 
+    this.ngbCarrousel.interval = 0;
   }
 
   onLoguedUserChanged(user: User) {
@@ -61,6 +71,10 @@ export class ArtistComponent implements OnInit {
     this.artistService.getArtistByUsername(this.username).subscribe(data => {
       this.artist = data;
       this.listValoraciones = this.artist.valoraciones;
+      this.userService.getProfileImage(this.artist.username).subscribe(image => {
+        this.profileImage = image.raw;
+        console.log(this.profileImage);
+      });
       this.loginService.getLoguedUser(this).subscribe(usr => {
         this.loguedUser = usr;
         this.noHaValorado = true;
@@ -76,7 +90,6 @@ export class ArtistComponent implements OnInit {
 
         this.userService.getUserByUsername(this.artist.username).subscribe( user => {
           this.listValoraciones = user.valoraciones;
-          console.log(this.listValoraciones.length + ' La lista');
 
           this.listValoraciones.forEach( valoracion => {
 
@@ -88,13 +101,7 @@ export class ArtistComponent implements OnInit {
               valoracion.imgProfileValorador = img.raw;
             });
           });
-          console.log(this.HaContratado + 'Ha contratado');
-          console.log(this.noHaValorado + 'No ha valorado');
-          console.log(this.listValoraciones.length + ' La lista');
 
-        });
-        this.userService.getProfileImage(this.artist.username).subscribe(image => {
-          this.profileImage = image.raw;
         });
       });
     });
@@ -111,10 +118,19 @@ export class ArtistComponent implements OnInit {
   public openValorationModal(modal) {
     if (this.loguedUser != null) {
      this.valorationStarts = 5;
-     this.modalService.open(modal, {centered: true, backdropClass: 'modal-backdrop-chachiguay',  size: 'lg'});
+     this.modalService.open(modal,  { windowClass : 'myCustomModalClass'});
+
     }
+  }
 
+  public openValorationModalEditar(modal, valoration) {
+    if (this.loguedUser != null) {
+      this.valorationStarts = valoration.puntuacion;
+      this.valorationEditar = valoration;
+      // this.modalService.open(modal, {centered: true, backdropClass: 'modal-backdrop-chachiguay',  size: 'lg'});
+      this.modalService.open(modal,  { windowClass : 'myCustomModalClass'});
 
+    }
   }
 
   public onSubmit(f: NgForm) {
@@ -124,12 +140,6 @@ export class ArtistComponent implements OnInit {
     this.valoracionNueva.comentario = f.value.comentario;
     this.valoracionNueva.valorado = this.artist.username;
     this.valoracionNueva.valorador = this.loguedUser.username;
-
-  //  this.artistService.postAddValoration(this.valoracionNueva).subscribe(res => {
-  //    this.ngOnInit();
-  //    }
-  //  );
-
     this.userService.postAddValoration(this.valoracionNueva).subscribe(res => {
         this.ngOnInit();
       }
@@ -155,7 +165,23 @@ export class ArtistComponent implements OnInit {
       this.snackBar.open('Se ha eliminado tu comentario', 'Cerrar', {duration: 3000});
       this.ngOnInit();
     });
+  }
+
+  onSubmitEdit(f: NgForm) {
+
+    this.valoracionNueva = this.valorationEditar;
+    this.valoracionNueva.id = this.valorationEditar.id;
+    this.valoracionNueva.puntuacion = this.valorationStarts;
+    this.valoracionNueva.comentario = f.value.comentario;
+    this.valoracionNueva.valorado = this.artist.username;
+    this.valoracionNueva.valorador = this.loguedUser.username;
 
 
+    this.userService.postEditValoracion(this.valoracionNueva).subscribe(res => {
+        this.ngOnInit();
+        this.modalService.dismissAll();
+        this.snackBar.open('Comentario editado con éxito', 'Cerrar', {duration: 3000});
+      }
+    );
   }
 }

@@ -91,7 +91,6 @@ export class HomeComponent implements OnInit {
       }
       this.loggedUser.recibeNotificaciones = this.recibeNotificaciones;
       this.userService.editUserData(this.loggedUser).subscribe(user => {
-
         this.loggedUser = user;
       });
   }

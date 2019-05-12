@@ -5,10 +5,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "USER")
@@ -74,6 +71,7 @@ public class User {
         this.notifications = new LinkedList<>();
         this.reclamationsDone = new LinkedList<>();
         this.reclamationsReceived = new LinkedList<>();
+        this.valoraciones = new ArrayList<>();
     }
 
     public User(User user) {
@@ -85,6 +83,8 @@ public class User {
         this.usertype= user.getUsertype();
         this.notifications = user.getNotifications();
         this.recibeNotificaciones = user.getRecibeNotificaciones();
+        this.puntuation = 0.0;
+        this.valoraciones = new ArrayList<>();
     }
 
     public Set<Role> getRoles() {
@@ -126,7 +126,6 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
-
 
     public byte[] getImage() {
         return image;
@@ -178,6 +177,14 @@ public class User {
                 return this.valoraciones.contains(this.valoraciones.remove(i));
             }
         }
+
+        int puntuacionTotal = 0;
+        for(Valoracion val : valoraciones){
+            puntuacionTotal += val.puntuacion;
+        }
+
+        this.puntuation = puntuacionTotal/(valoraciones.size() * 1.0);
+
         return false;
     }
 
@@ -204,6 +211,23 @@ public class User {
     public void addReclamationReceived(Reclamation reclamation) {
         this.reclamationsReceived.add(reclamation);
     }
+
+    public double updatePuntuacion(){
+
+        int puntuacionTotal = 0;
+
+        if(valoraciones.size() == 0){
+            this.puntuation = 0.0;
+            return this.puntuation;
+        }
+        else{
+            for(Valoracion val : valoraciones){
+                puntuacionTotal += val.puntuacion;
+            }
+            return this.puntuation = puntuacionTotal/(valoraciones.size() * 1.0);
+        }
+    }
+
 
     public boolean isRecibeNotificaciones() {
         return recibeNotificaciones;

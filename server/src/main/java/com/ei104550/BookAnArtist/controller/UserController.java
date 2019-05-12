@@ -65,7 +65,7 @@ public class UserController {
     }
 
     @PostMapping("user/{username}/updatedata")
-    public User uploadUserImage(@PathVariable("username") String username, @RequestBody User user) throws IOException {
+    public User modifyUserData(@PathVariable("username") String username, @RequestBody User user) throws IOException {
         User userOld = userRepository.findById(username).orElse(null);
 
         if (userOld != null){
@@ -101,18 +101,39 @@ public class UserController {
 
     @DeleteMapping("user/valoration/{id}")
     public void deleteArtistValoration(@PathVariable String id){
-        System.out.println("JAJAJAAAJAJAJAJAAJJJAJAAJAJJJAJAJJAAJAJAJAJAJAJAJAJAAJAJAJ");
 
         if(valorationRepository.findById(Long.parseLong(id)).isPresent()){
-            System.out.println(id + "POLALALAALALALLALALAALALLAALALALALALLAALLAALALLALLALLALAALAL");
 
             Valoracion valoracion = valorationRepository.findById(Long.parseLong(id)).get();
             User user = userRepository.findById(valoracion.getValorado()).get();
             user.deleteValoracion(id);
+            user.updatePuntuacion();
             userRepository.save(user);
             valorationRepository.deleteById(Long.parseLong(id));
 
+        }
+    }
 
+    @PostMapping("user/valoration/{id}")
+    public void updateArtistValoration(@PathVariable String id,
+                                       @RequestBody Valoracion valorationNew){
+        //Borramos
+        if(valorationRepository.findById(Long.parseLong(id)).isPresent()){
+
+
+
+            Valoracion valoracion = valorationRepository.findById(Long.parseLong(id)).get();
+            valoracion.setComentario(valorationNew.getComentario());
+            valoracion.setPuntuacion(valorationNew.getPuntuacion());
+
+
+            valorationRepository.save(valoracion);
+
+
+            //Para que se actualice la puntuacion del uuario al actualizar la puntuacion de la valoracion
+            User user = userRepository.findById(valoracion.getValorado()).get();
+            user.updatePuntuacion();
+            userRepository.save(user);
         }
     }
 }

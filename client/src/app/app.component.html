@@ -22,13 +22,16 @@
         <a class="nav-link" [routerLink]="['/reclamations']">Reclamaciones</a>
       </li>
     </ul>
-    <app-notifications *ngIf="loguedUser != null"></app-notifications>
-    <a *ngIf="loguedUser == null" class="navbar-brand nav-link " routerLink="/login">
-      <div class="LoginButton" alt="shortLogo">login</div>
-    </a>
-    <a *ngIf="loguedUser == null" class="navbar-brand nav-link " routerLink="/register">
-      <div class="LoginButton" alt="shortLogo">Sign up</div>
-    </a>
+    <app-notifications class="order-1" *ngIf="loguedUser != null"></app-notifications>
+    <div class="order-1">
+      <a *ngIf="loguedUser == null" class="navbar-brand nav-link " routerLink="/login">
+        <div class="LoginButton" alt="shortLogo">login</div>
+      </a>
+      <a *ngIf="loguedUser == null" class="navbar-brand nav-link " routerLink="/register">
+        <div class="LoginButton" alt="shortLogo">Sign up</div>
+      </a>
+    </div>
+
     <div class="img-wrapper" *ngIf="userImages != null">
       <img src="loguedUser.img">
     </div>
