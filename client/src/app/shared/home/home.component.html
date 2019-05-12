@@ -34,7 +34,7 @@
       <!-- Material input -->
       <div class="md-form form-group">
         <label for="inputEmail4MD">Email</label>
-        <input type="email" class="form-control" id="inputEmail4MD" [(ngModel)]="email" placeholder="{{loggedUser.email}}" name="inputEmail4MD">
+        <input type="email" class="form-control" id="inputEmail4MD" [(ngModel)]="email"  name="inputEmail4MD">
       </div>
     </div>
 
@@ -48,7 +48,7 @@
 
     </div>
   </div>
-  <mat-slide-toggle id="slide123" class="form-control" name="notificaciopnes" [(ngModel)]="notificaciones">Recibir notificaciones</mat-slide-toggle>
+  <mat-slide-toggle id="slide123" class="form-control" name="notificaciopnes" [(ngModel)]="recibeNotificaciones">Recibir notificaciones</mat-slide-toggle>
   <!-- Grid row -->
   <button type="submit" (click)="onEdit()" class="btn btn-primary btn-md modifyBtn">Modificar</button>
 </form>

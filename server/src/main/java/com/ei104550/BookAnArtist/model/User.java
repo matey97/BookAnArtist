@@ -21,6 +21,8 @@ public class User {
     private String password;
     @Column(name = "EMAIL")
     private String email;
+    @Column(name = "RECIBIR_NOTIFICACIONES")
+    private Boolean recibeNotificaciones;
 
     @OneToMany(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn
@@ -82,6 +84,7 @@ public class User {
         this.image = user.getImage();
         this.usertype= user.getUsertype();
         this.notifications = user.getNotifications();
+        this.recibeNotificaciones = user.getRecibeNotificaciones();
     }
 
     public Set<Role> getRoles() {
@@ -169,9 +172,6 @@ public class User {
     public boolean deleteValoracion(String id){
 
         for(int i = 0; i < this.valoraciones.size() ; i++){
-
-            System.out.println(id + "asdaaaaaaaaaaaaaaaPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP");
-
             Valoracion valoracion = this.valoraciones.get(i);
 
             if (valoracion.getId().toString().compareTo(id) == 0){
@@ -199,10 +199,23 @@ public class User {
 
     public void setReclamationsReceived(List<Reclamation> reclamationsReceived) {
         this.reclamationsReceived = reclamationsReceived;
-    }
+}
 
     public void addReclamationReceived(Reclamation reclamation) {
         this.reclamationsReceived.add(reclamation);
+    }
+
+    public boolean isRecibeNotificaciones() {
+        return recibeNotificaciones;
+    }
+
+    public Boolean getRecibeNotificaciones() {
+       return (this.recibeNotificaciones != null) ? this.recibeNotificaciones : false;
+    }
+
+
+    public void setRecibeNotificaciones(Boolean recibeNotificaciones) {
+        this.recibeNotificaciones = recibeNotificaciones;
     }
 
     @Override
@@ -214,6 +227,7 @@ public class User {
                 ", role=" + roles +
                 ", image=" + Arrays.toString(image) +
                 ", usertype=" + usertype +
+                ", recibeNotificaciones=" + recibeNotificaciones +
                 '}';
     }
 }

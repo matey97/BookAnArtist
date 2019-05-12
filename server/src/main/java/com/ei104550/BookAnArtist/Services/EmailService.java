@@ -56,7 +56,8 @@ public class EmailService {
         sb.append(buildGreetings());
         notification.setMessage(sb.toString());
 
-        sendEmail(notification);
+        if(this.user.getRecibeNotificaciones())
+            sendEmail(notification);
         saveNotification(notification);
     }
 
@@ -77,7 +78,8 @@ public class EmailService {
         sb.append(buildGreetings());
         notification.setMessage(sb.toString());
 
-        sendEmail(notification);
+        if(this.user.getRecibeNotificaciones())
+            sendEmail(notification);
         saveNotification(notification);
     }
 
@@ -95,7 +97,8 @@ public class EmailService {
         sb.append(buildGreetings());
         notification.setMessage(sb.toString());
 
-        sendEmail(notification);
+        if(this.user.getRecibeNotificaciones())
+            sendEmail(notification);
         saveNotification(notification);
     }
 
@@ -114,14 +117,16 @@ public class EmailService {
         sb.append(buildReclamationDetails(reclamation));
         sb.append(buildGreetings());
         notification.setMessage(sb.toString());
-        sendEmail(notification);
+        if(this.user.getRecibeNotificaciones())
+            sendEmail(notification);
         saveNotification(notification);
 
         if (twoNotifications){
             notification = buildBaseNotificationAndDestinationUser(reclamation.getReclamedUser());
             notification.setSubject(subject);
             notification.setMessage(sb.toString().replace(reclamation.getReclamingUser(), reclamation.getReclamedUser()));
-            sendEmail(notification);
+            if(this.user.getRecibeNotificaciones())
+                sendEmail(notification);
             saveNotification(notification);
         }
     }
@@ -141,7 +146,8 @@ public class EmailService {
         sb.append(buildGreetings());
         notification.setMessage(sb.toString());
 
-        sendEmail(notification);
+        if(this.user.getRecibeNotificaciones())
+            sendEmail(notification);
         saveNotification(notification);
     }
 
@@ -156,8 +162,8 @@ public class EmailService {
         sb.append(buildContractDetails(contract));
         sb.append(buildGreetings());
         notification.setMessage(sb.toString());
-
-        sendEmail(notification);
+        if(this.user.getRecibeNotificaciones())
+            sendEmail(notification);
         saveNotification(notification);
     }
 
@@ -173,7 +179,8 @@ public class EmailService {
         sb.append(buildGreetings());
         notification.setMessage(sb.toString());
 
-        sendEmail(notification);
+        if(this.user.getRecibeNotificaciones())
+            sendEmail(notification);
         saveNotification(notification);
     }
 

@@ -20,7 +20,7 @@ export class HomeComponent implements OnInit {
     image: any;
     email: string;
     password: string;
-    notificaciones: boolean;
+    recibeNotificaciones: boolean;
 
     constructor(private http: HttpClient,
                 private loginService: LoginService,
@@ -82,18 +82,16 @@ export class HomeComponent implements OnInit {
       });
   }
   onEdit() {
-      if (this.loggedUser.email != null && this.loggedUser.email !== this.email) {
+      if (this.email != null && this.loggedUser.email !== this.email) {
         this.loggedUser.email = this.email;
       }
 
-      if (this.loggedUser.password != null && this.loggedUser.password !== this.password) {
+      if (this.password != null && this.loggedUser.password !== this.password) {
       this.loggedUser.password = this.password;
       }
-
+      this.loggedUser.recibeNotificaciones = this.recibeNotificaciones;
       this.userService.editUserData(this.loggedUser).subscribe(user => {
-        console.log('this logged user');
-        console.log(this.loggedUser);
-        console.log(user);
+
         this.loggedUser = user;
       });
   }

@@ -65,7 +65,7 @@ public class UserController {
     }
 
     @PostMapping("user/{username}/updatedata")
-    public User uploadUserImage(@PathVariable("username") String username, User user) throws IOException {
+    public User uploadUserImage(@PathVariable("username") String username, @RequestBody User user) throws IOException {
         User userOld = userRepository.findById(username).orElse(null);
 
         if (userOld != null){
@@ -73,9 +73,11 @@ public class UserController {
                 userOld.setEmail(user.getEmail());
             }
             if (user.getPassword() != null){
-                userOld.setEmail(user.getEmail());
+                userOld.setPassword(userService.EncodeUserPassword(user.getPassword()));
             }
-            userOld.setPassword(userService.EncodeUserPassword(user.getPassword()));
+            if(user.getRecibeNotificaciones() != null){
+                userOld.setRecibeNotificaciones(user.getRecibeNotificaciones());
+            }
         }
         userRepository.save(userOld);
         return userOld;
