@@ -51,7 +51,7 @@
           <button *ngIf="!isArtist" mat-raised-button color="primary" type="button" value="accept" (click)="completeContract(element)">Actuación completa</button>
           <button *ngIf="element.state != 'RECLAMATION'" mat-raised-button color="warn" type="button" value="reclamation" (click)="openReclamationContract(reclamationModal, element)">Reclamación</button>
         </div>
-        <div *ngIf="element.state != 'ACCEPTANCE_PENDING'" class="row">
+        <div *ngIf="element.state == 'DONE'" class="row">
           <div *ngIf="!element.haSidoValorado && loguedUser.usertype == 'ORGANIZER'">
             <a [routerLink]="['/artist', element.artisticUsername]" class="btn btn-info">Valora al artista!</a>
           </div>

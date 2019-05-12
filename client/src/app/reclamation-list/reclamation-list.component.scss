@@ -1,7 +1,23 @@
+@import "../../assets/mixins.scss";
+
 mat-form-field{
   width: 100%;
 }
 
 .button-row button{
   margin-right: 8px;
+}
+
+header {
+  text-align: center;
+  width: 100%;
+  height: auto;
+  background-size: cover;
+  background-attachment: fixed;
+  position: relative;
+  overflow: hidden;
+  border-radius: 0 0 85% 85% / 30%;
+  background-image: linear-gradient(1650deg,transparentize($purple,0.3),transparentize($blue,0.3), transparentize($blue,0.3));
+  padding: 5vw;
+  color: #ecf0f1;
 }

@@ -53,8 +53,8 @@ export class ArtistComponent implements OnInit {
     this.username = this.route.snapshot.paramMap.get('username');
     this.userService.getUserByUsername(this.username).subscribe( data => {
       this.usernameData = data;
+      this.getArtistProfile();
     });
-    this.getArtistProfile();
 
     this.page = 1;
     this.pageSize = 5;
@@ -71,6 +71,10 @@ export class ArtistComponent implements OnInit {
     this.artistService.getArtistByUsername(this.username).subscribe(data => {
       this.artist = data;
       this.listValoraciones = this.artist.valoraciones;
+      this.userService.getProfileImage(this.artist.username).subscribe(image => {
+        this.profileImage = image.raw;
+        console.log(this.profileImage);
+      });
       this.loginService.getLoguedUser(this).subscribe(usr => {
         this.loguedUser = usr;
         this.noHaValorado = true;
@@ -98,9 +102,6 @@ export class ArtistComponent implements OnInit {
             });
           });
 
-        });
-        this.userService.getProfileImage(this.artist.username).subscribe(image => {
-          this.profileImage = image.raw;
         });
       });
     });
