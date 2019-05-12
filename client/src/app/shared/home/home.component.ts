@@ -20,6 +20,7 @@ export class HomeComponent implements OnInit {
     image: any;
     email: string;
     password: string;
+    notificaciones: boolean;
 
     constructor(private http: HttpClient,
                 private loginService: LoginService,
@@ -44,7 +45,7 @@ export class HomeComponent implements OnInit {
                 });
             },
             error => {
-                if (error.status == 401) {
+                if (error.status === 401) {
                     alert('Unauthorized');
                 }
             }
@@ -90,6 +91,9 @@ export class HomeComponent implements OnInit {
       }
 
       this.userService.editUserData(this.loggedUser).subscribe(user => {
+        console.log('this logged user');
+        console.log(this.loggedUser);
+        console.log(user);
         this.loggedUser = user;
       });
   }

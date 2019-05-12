@@ -18,7 +18,7 @@ import {
   MatPaginator, MatPaginatorModule, MatSelectModule, MatSnackBarModule, MatSortModule, MatTableModule,
   MatProgressSpinnerModule,
   MatOptionModule,
-  MatToolbarModule, MatMenuModule, MatBadgeModule, MatExpansionModule
+  MatToolbarModule, MatMenuModule, MatBadgeModule, MatExpansionModule, MatSlideToggleModule
 } from '@angular/material';
 import {NgbCarouselConfig, NgbCarouselModule, NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {VgCoreModule} from 'videogular2/core';
@@ -95,7 +95,8 @@ import { ReclamationResponseComponent } from './reclamation-list/reclamation-res
     FormsModule,
     BrowserModule,
     StorageServiceModule,
-    NgbCarouselModule
+    NgbCarouselModule,
+    MatSlideToggleModule
   ],
   providers: [{provide: MAT_DATE_LOCALE, useValue: 'es-ES'}],
   bootstrap: [AppComponent]

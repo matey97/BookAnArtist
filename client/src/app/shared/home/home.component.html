@@ -34,7 +34,7 @@
       <!-- Material input -->
       <div class="md-form form-group">
         <label for="inputEmail4MD">Email</label>
-        <input type="email" class="form-control" id="inputEmail4MD" placeholder="{{loggedUser.email}}">
+        <input type="email" class="form-control" id="inputEmail4MD" [(ngModel)]="email" placeholder="{{loggedUser.email}}" name="inputEmail4MD">
       </div>
     </div>
 
@@ -42,13 +42,14 @@
       <!-- Material input -->
       <div class="md-form form-group">
         <label for="inputPassword4MD">Password</label>
-        <input type="password" class="form-control" type="password" name="password"  id="inputPassword4MD" placeholder="New password">
+        <input type="password" class="form-control" name="password"  id="inputPassword4MD" [(ngModel)]="password" placeholder="New password">
       </div>
 
 
     </div>
   </div>
+  <mat-slide-toggle id="slide123" class="form-control" name="notificaciopnes" [(ngModel)]="notificaciones">Recibir notificaciones</mat-slide-toggle>
   <!-- Grid row -->
-  <button type="submit" class="btn btn-primary btn-md modifyBtn">Modificar</button>
+  <button type="submit" (click)="onEdit()" class="btn btn-primary btn-md modifyBtn">Modificar</button>
 </form>
 <!-- Extended material form grid -->

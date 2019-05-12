@@ -15,6 +15,7 @@ export class User {
   valoraciones: Array<Valoracion>;
   reclamationsDone: Array<Reclamation>;
   reclamationsReceived: Array<Reclamation>;
+  notificaciones: boolean;
 
 
   constructor(object: any) {
@@ -29,5 +30,6 @@ export class User {
     this.valoraciones = object.valoraciones;
     this.reclamationsDone = object.reclamationsDone;
     this.reclamationsReceived = object.reclamationsReceived;
+    this.notificaciones = object.notificaciones;
   }
 }
