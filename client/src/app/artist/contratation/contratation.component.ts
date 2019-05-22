@@ -55,6 +55,11 @@ export class ContratationComponent implements OnInit {
     };
   }
 
+  print(event) {
+    console.log(this.limitDate);
+    console.log(event);
+  }
+
   private filter(value): string[] {
     const filterValue = value.toLowerCase();
     return ZONES.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
@@ -63,6 +68,14 @@ export class ContratationComponent implements OnInit {
   private askConfirmation(confModal) {
     this.date.setHours(this.time.hour, this.time.minute);
     this.modalService.open(confModal, {centered: true, backdropClass: 'modal-backdrop-chachiguay'});
+  }
+
+  public  validData(): boolean {
+    const contract: Contract = this.contract;
+    if (contract.zone.length === 0 || contract.location.length === 0 || this.date === undefined || this.time === undefined || this.limitDate === undefined) {
+      return false;
+    }
+    return true;
   }
 
   private saveContract(modalRef) {

@@ -2,8 +2,8 @@ export class Contract {
   id: number;
   artisticUsername: string;
   organizerUsername: string;
-  zone: string;
-  location: string;
+  zone = '';
+  location = '';
   comments: string;
   date: number;
   limitDate: number;

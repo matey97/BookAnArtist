@@ -4,6 +4,7 @@
     una pequeña descripción, tus habilidades, videos, etc.</p>
 </header>
 <div *ngIf="artist != null && user != null" class="container">
+  <br>
   <div class="row">
     <div class="col-sm-3">
       <div class="card" style="text-align: center">
@@ -21,6 +22,7 @@
     </div>
     <div class="col-sm-9">
       <form #myForm="ngForm" (ngSubmit)="saveArtisticProfileChanges(myForm)" class="form form-register">
+
         <mat-form-field>
           <input matInput type="text" placeholder="Nombre artístico" [(ngModel)]="artist.artisticName" name="artisticName" [disabled]="!firstTime && !editMode" required>
         </mat-form-field>
@@ -30,14 +32,14 @@
         <div class="row">
           <div class="col-sm-6">
             <mat-form-field>
-              <mat-select placeholder="Habilidades" [(ngModel)]="artist.habilities" name="habilities" [disabled]="!firstTime && !editMode" multiple>
+              <mat-select placeholder="Habilidades" [(ngModel)]="artist.habilities" name="habilities" [disabled]="!firstTime && !editMode" multiple required>
                 <mat-option *ngFor="let hability of habilities" value="{{hability}}">{{hability}}</mat-option>
               </mat-select>
             </mat-form-field>
           </div>
           <div class="col-sm-6">
             <mat-form-field>
-              <input matInput placeholder="Precio por actuación" [(ngModel)]="artist.price" [disabled]="!firstTime && !editMode" name="price">
+              <input matInput placeholder="Precio por actuación" type="number" [(ngModel)]="artist.price" [disabled]="!firstTime && !editMode" name="price" required>
             </mat-form-field>
           </div>
         </div>
@@ -45,7 +47,7 @@
           <div class="col-sm-6">
             <mat-form-field>
               <input [disabled]="!firstTime && !editMode" [formControl]="myControl" [matAutocomplete]="auto" matInput
-                     name="zones" placeholder="Zonas de actuación" type="text">
+                     name="zones" placeholder="Zonas de actuación" type="text" required>
               <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="zoneChange($event)">
                 <mat-option *ngFor="let zone of filteredZones | async" value="{{zone}}">
                   {{zone}}
@@ -55,7 +57,7 @@
           </div>
           <div class="col-sm-6">
             <mat-form-field>
-              <mat-select placeholder="Horarios" [(ngModel)]="artist.schedules" name="schedule" [disabled]="!firstTime && !editMode" multiple>
+              <mat-select placeholder="Horarios" [(ngModel)]="artist.schedules" name="schedule" [disabled]="!firstTime && !editMode" multiple required>
                 <mat-option *ngFor="let schedule of schedules" value="{{schedule}}">{{schedule}}</mat-option>
               </mat-select>
             </mat-form-field>
@@ -115,7 +117,7 @@
         <div class="button-row float-right" *ngIf="editMode || firstTime; else editButton">
           <br>
           <button mat-raised-button color="warn" type="reset" value="Limpiar datos" (click)="resetVideosAndImages()">Limpiar datos</button>
-          <button mat-raised-button color="primary" type="submit" value="Guardar datos">Guardar datos</button>
+          <button mat-raised-button color="primary" type="submit" value="Guardar datos" [disabled]="!validData()">Guardar datos</button>
         </div>
         <ng-template #editButton>
           <br>

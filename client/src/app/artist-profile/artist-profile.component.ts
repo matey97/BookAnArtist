@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {UserService} from '../shared/user/user.service';
 import {ArtistService} from '../shared/artist/artist.service';
 import {Observable} from 'rxjs';
-import {FormControl} from '@angular/forms';
+import {Form, FormControl, FormGroup, Validators} from '@angular/forms';
 import {map, startWith} from 'rxjs/operators';
 import {MatSnackBar} from '@angular/material';
 import {User} from '../model/User';
@@ -52,6 +52,12 @@ export class ArtistProfileComponent implements OnInit {
             artist.username = user.username;
           }
           this.artist = artist;
+          this.artist.artisticName = '';
+          this.artist.description = '';
+          this.artist.habilities = [];
+          this.artist.price = null;
+          this.artist.zones = [];
+          this.artist.schedules = [];
           this.myControl = new FormControl({value: '', disabled: !this.firstTime});
           this.applyFilter();
         });
@@ -72,19 +78,30 @@ export class ArtistProfileComponent implements OnInit {
     );
   }
 
+  public validData(): boolean {
+    const artist: Artist = this.artist;
+
+    if (artist.artisticName.length === 0 || artist.description.length === 0 || artist.price === null || artist.price < 0
+      || artist.schedules.length === 0 || artist.habilities.length === 0 || artist.zones.length === 0
+      || artist.videos.length === 0 || artist.images.length === 0) {
+      return false;
+    }
+    return true;
+  }
+
   public saveArtisticProfileChanges(myForm) {
     console.log(this.artist);
     this.changeEditMode(false);
     this.firstTime = false;
 
     this.artistService.postArtistProfile(this.artist).subscribe(() => {
-      console.log('Exito');
-      this.snackBar.open('Datos actualizados correctamente', 'Cerrar', {duration: 3000});
-    },
+        console.log('Exito');
+        this.snackBar.open('Datos actualizados correctamente', 'Cerrar', {duration: 3000});
+      },
       error1 => {
-      console.log('Error');
-      this.snackBar.open('Ha ocurrido un error', 'Cerrar', {duration: 3000});
-    });
+        console.log('Error');
+        this.snackBar.open('Ha ocurrido un error', 'Cerrar', {duration: 3000});
+      });
   }
 
   public videoChange(fileInput: any) {
