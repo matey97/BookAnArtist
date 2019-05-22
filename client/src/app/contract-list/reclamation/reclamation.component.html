@@ -67,7 +67,7 @@
 <div class="modal-footer">
   <div class="button-row">
     <button type="button" mat-raised-button color="warn" (click)="modal.close()">Cancelar</button>
-    <button type="button" mat-raised-button color="primary" (click)="askConfirmation(confModal)">Finalizar</button>
+    <button type="button" mat-raised-button color="primary" (click)="askConfirmation(confModal)" [disabled]="!validData()">Finalizar</button>
   </div>
 </div>
 

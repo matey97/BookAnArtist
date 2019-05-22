@@ -158,6 +158,13 @@ export class ReclamationListComponent implements OnInit {
     reclamation.images = reclamation.images.filter(item => item !== image);
   }
 
+  private validData(reclamation): boolean{
+    if (reclamation.reclamation.length === 0 || (reclamation.images.length === 0 && reclamation.videos.length === 0)) {
+      return false;
+    }
+    return true;
+  }
+
   public updateReclamation(reclamation: Reclamation) {
     reclamation.updateDate = new Date().getTime();
     this.reclamationService.updateReclamation(reclamation).subscribe((success) => {

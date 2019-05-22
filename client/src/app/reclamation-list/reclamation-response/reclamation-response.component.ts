@@ -27,6 +27,7 @@ export class ReclamationResponseComponent implements OnInit {
       this.firstTime = true;
       this.reclamation.reclamationResponse = new ReclamationResponse();
       this.reclamation.reclamationResponse.id = -1;
+      this.reclamation.reclamationResponse.response = '';
       this.reclamation.reclamationResponse.videos = new Array<Video>();
       this.reclamation.reclamationResponse.images = new Array<Image>();
     }
@@ -73,6 +74,14 @@ export class ReclamationResponseComponent implements OnInit {
 
   public removeImage(image) {
     this.reclamation.reclamationResponse.images = this.reclamation.reclamationResponse.images.filter(item => item !== image);
+  }
+
+  private validData(): boolean {
+    const response: ReclamationResponse = this.reclamation.reclamationResponse;
+    if (response.response.length === 0 || (response.images.length === 0 && response.videos.length === 0)) {
+      return false;
+    }
+    return true;
   }
 
   public updateResponse() {

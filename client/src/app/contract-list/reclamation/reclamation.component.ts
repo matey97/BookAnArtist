@@ -30,8 +30,17 @@ export class ReclamationComponent implements OnInit {
 
   ngOnInit() {
     this.reclamation = new Reclamation();
+    this.reclamation.reclamation = '';
     this.reclamation.images = new Array<Image>();
     this.reclamation.videos = new Array<Video>();
+  }
+
+  private validData(): boolean {
+    const reclamation: Reclamation = this.reclamation;
+    if (reclamation.reclamation.length === 0 || (reclamation.images.length === 0 && reclamation.videos.length === 0)){
+      return false;
+    }
+    return true;
   }
 
   askConfirmation(confModal) {

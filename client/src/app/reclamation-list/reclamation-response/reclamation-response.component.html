@@ -106,7 +106,7 @@
   <div class="row">
     <div class="col-sm-12">
       <div class=" button-row float-right">
-        <button mat-raised-button color="primary" type="button" value="Finalizar" (click)="updateResponse()">Finalizar</button>
+        <button mat-raised-button color="primary" type="button" value="Finalizar" (click)="updateResponse()" [disabled]="!validData()">Finalizar</button>
       </div>
     </div>
   </div>
