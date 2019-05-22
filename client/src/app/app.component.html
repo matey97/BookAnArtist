@@ -25,27 +25,18 @@
     <app-notifications class="order-1" *ngIf="loguedUser != null"></app-notifications>
     <div class="order-1">
       <a *ngIf="loguedUser == null" class="navbar-brand nav-link " routerLink="/login">
-        <div class="LoginButton" alt="shortLogo">login</div>
+        <div class="LoginButton" alt="shortLogo">Inicia sesión</div>
       </a>
       <a *ngIf="loguedUser == null" class="navbar-brand nav-link " routerLink="/register">
-        <div class="LoginButton" alt="shortLogo">Sign up</div>
+        <div class="LoginButton" alt="shortLogo">Registrate</div>
       </a>
     </div>
 
-    <div class="img-wrapper" *ngIf="userImages != null">
-      <img src="loguedUser.img">
-    </div>
-
-    <div class="collapse navbar-collapse navbar-ex1-collapse" id="top-nav">
-      <!--a *ngIf="loguedUser != null" class="navbar-brand nav-link " routerLink="/user/{{loguedUser.username}}">
-        <div class="UserPage" alt="shortLogo">Usuario</div>
-      </a>-->
-  </div>
-
-    <div class="userMenu">
+    <div class="order-2">
     <ul *ngIf="loguedUser != null" class="nav navbar-nav navbar-right">
+
       <li class="dropdown">
-        <ul class="dropdown-menu">
+        <ul class="dropdown-menu dropdown-menu-right">
           <li><a routerLink="/user/{{loguedUser.username}}"><i class="textNavDrop"></i> Account</a></li>
           <li class="divider"></li>
           <li><a [routerLink]="['/login']" (click) ="logout()">Logout</a></li>
@@ -55,6 +46,8 @@
       </li>
     </ul>
     </div>
+
+    <div class="order-3"></div>
   </div>
 
 </nav>
