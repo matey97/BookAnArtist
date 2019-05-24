@@ -34,14 +34,14 @@
             Selecciona tipo de usuario
             <ul>
               <li>
-                <input class="form-control" #usertype="ngModel" [(ngModel)]="model.usertype" value="ARTIST" type="radio" name="1">
+                <input class="form-control" #usertype="ngModel" [(ngModel)]="model.usertype" value="ARTIST" type="radio" ng-click name="1" required>
                 <div class="RadioLabelTextContainer">
                   <label class="radioText">Artista</label>
                 </div>
                 <div class="bullet"></div>
               </li>
               <li>
-                <input class="form-control" #usertype="ngModel" [(ngModel)]="model.usertype"  value="ORGANIZER" type="radio" name="1">
+                <input class="form-control" #usertype="ngModel" [(ngModel)]="model.usertype"  value="ORGANIZER" type="radio"  ng-click name="1">
                 <div class="RadioLabelTextContainer">
                   <label class="radioText">Organizador</label>
                 </div>
