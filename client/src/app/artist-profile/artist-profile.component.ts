@@ -90,16 +90,14 @@ export class ArtistProfileComponent implements OnInit {
   }
 
   public saveArtisticProfileChanges(myForm) {
-    console.log(this.artist);
+    // console.log(this.artist);
     this.changeEditMode(false);
     this.firstTime = false;
 
     this.artistService.postArtistProfile(this.artist).subscribe(() => {
-        console.log('Exito');
         this.snackBar.open('Datos actualizados correctamente', 'Cerrar', {duration: 3000});
       },
       error1 => {
-        console.log('Error');
         this.snackBar.open('Ha ocurrido un error', 'Cerrar', {duration: 3000});
       });
   }
@@ -149,12 +147,12 @@ export class ArtistProfileComponent implements OnInit {
     this.artist.images = [];
     this.artist.videos = [];
     this.artist.zones = [];
-    console.log(this.artist);
+    // console.log(this.artist);
   }
 
   public removeImage(image: Image) {
     this.artist.images = this.artist.images.filter(item => item !== image);
-    console.log(this.artist.images);
+    // console.log(this.artist.images);
   }
 
   public removeVideo(video: Video) {

@@ -67,6 +67,10 @@ export class ReclamationListComponent implements OnInit {
     });
   }
 
+  public onLoguedUserChanged(user: User) {
+    this.loguedUser = user;
+  }
+
   public getDate(time: number): string {
     if (time === null) {
       return '---';

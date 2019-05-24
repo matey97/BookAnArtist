@@ -31,10 +31,15 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.loginService.getLoguedUser(this).subscribe(user => {
       this.loguedUser = user;
-      console.log(this.loguedUser);
+      // console.log(this.loguedUser);
     });
   }
-  onLoguedUserChanged(user: User) {
+  public onLoguedUserChanged(user: User) {
     this.loguedUser = user;
+  }
+
+  logout() {
+    sessionStorage.setItem('token', '');
+    this.loginService.setLoguedUser(null);
   }
 }

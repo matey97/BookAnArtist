@@ -32,19 +32,21 @@ export class NotificationsComponent implements OnInit {
               private snackBar: MatSnackBar) { }
 
   ngOnInit() {
+    this.newNotifications = new Array<Notification>();
+    this.seenNotifications = new Array<Notification>();
+    this.recentySeen = new Array<Notification>();
     this.loginService.getLoguedUser(this).subscribe(user => {
       this.user = user;
-      this.recentySeen = new Array<Notification>();
       this.seenNotifications = this.user.notifications.filter(notification => notification.seen);
       this.newNotifications = this.user.notifications.filter(notification => !notification.seen);
 
       this.seenNotifications.sort(this.notificationSorter);
       this.newNotifications.sort(this.notificationSorter);
-      console.log(this.user);
+      // console.log(this.user);
     });
   }
 
-  onLoguedUserChanged(user: User) {
+  public onLoguedUserChanged(user: User) {
     this.user = user;
   }
 
@@ -62,9 +64,9 @@ export class NotificationsComponent implements OnInit {
 
   public notificationBoxClosed() {
     this.showSeenNotifications = false;
-    console.log(this.recentySeen);
+    // console.log(this.recentySeen);
     if (this.recentySeen.length !== 0) {
-       console.log(this.recentySeen.length);
+       // console.log(this.recentySeen.length);
        this.notificationService.seenNotificationBatch(this.recentySeen).subscribe(() => {
          this.recentySeen = new Array<Notification>();
        });

@@ -1,4 +1,4 @@
-package com.ei104550.BookAnArtist.Services;
+package com.ei104550.BookAnArtist.services;
 
 import com.ei104550.BookAnArtist.enums.ReclamationState;
 import com.ei104550.BookAnArtist.model.Contract;

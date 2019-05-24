@@ -221,7 +221,8 @@ export class ContractListComponent implements OnInit {
     );
 
   }
-  onLoguedUserChanged(user: User) {
+
+  public onLoguedUserChanged(user: User) {
     this.loguedUser = user;
   }
 }

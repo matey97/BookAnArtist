@@ -34,15 +34,15 @@ export class HomeComponent implements OnInit {
         const headers: HttpHeaders = new HttpHeaders({
             Authorization: 'Basic ' + sessionStorage.getItem('token')
         });
-        console.log(sessionStorage.getItem('token'));
+        // console.log(sessionStorage.getItem('token'));
         const options = { headers };
         this.http.post<Observable<object>>(url, {}, options).
             subscribe(principal => {
-              console.log(principal);
-                this.username = principal['name'];
-                this.loginService.getLoguedUser(this).subscribe(user => {
-                  this.loggedUser = user;
-                });
+              // console.log(principal);
+              this.username = principal['name'];
+              this.loginService.getLoguedUser(this).subscribe(user => {
+                this.loggedUser = user;
+              });
             },
             error => {
                 if (error.status === 401) {
@@ -52,10 +52,6 @@ export class HomeComponent implements OnInit {
         );
     }
 
-    logout() {
-        sessionStorage.setItem('token', '');
-        this.loginService.setLoguedUser(null);
-    }
     private handleError(error: HttpErrorResponse) {
         if (error.error instanceof ErrorEvent) {
           console.error('An error occurred:', error.error.message);

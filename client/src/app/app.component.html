@@ -39,7 +39,7 @@
         <ul class="dropdown-menu dropdown-menu-right">
           <li><a routerLink="/user/{{loguedUser.username}}"><i class="textNavDrop"></i> Account</a></li>
           <li class="divider"></li>
-          <li><a [routerLink]="['/login']" (click) ="logout()">Logout</a></li>
+          <li><a routerLink="/login" (click)="logout()">Logout</a></li>
         </ul>
         <a class="dropdown-toggle profile-image" data-toggle="dropdown">
           <img src="data:image/PNG;base64,{{loguedUser.image}}" class="img-circle"> {{loguedUser.username}} <b class="caret profilePic"></b></a>

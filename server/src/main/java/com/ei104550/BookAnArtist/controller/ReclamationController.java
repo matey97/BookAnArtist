@@ -1,10 +1,12 @@
 package com.ei104550.BookAnArtist.controller;
 
-import com.ei104550.BookAnArtist.Services.EmailService;
+import com.ei104550.BookAnArtist.enums.PaymentCause;
+import com.ei104550.BookAnArtist.services.EmailService;
 import com.ei104550.BookAnArtist.enums.ContractState;
 import com.ei104550.BookAnArtist.enums.ReclamationState;
 import com.ei104550.BookAnArtist.model.*;
 import com.ei104550.BookAnArtist.repositories.*;
+import com.ei104550.BookAnArtist.services.PaymentService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -24,8 +26,9 @@ public class ReclamationController {
     private ContractRepository contractRepository;
     private ReclamationResponseRepository reclamationResponseRepository;
     private EmailService emailService;
+    private PaymentService paymentService;
 
-    public ReclamationController(ReclamationRepository reclamationRepository, UserRepository userRepository, ArtistImageRepository imageRepository, ArtistVideoRepository videoRepository, ContractRepository contractRepository, ReclamationResponseRepository reclamationResponseRepository, EmailService emailService) {
+    public ReclamationController(ReclamationRepository reclamationRepository, UserRepository userRepository, ArtistImageRepository imageRepository, ArtistVideoRepository videoRepository, ContractRepository contractRepository, ReclamationResponseRepository reclamationResponseRepository, EmailService emailService, PaymentService paymentService) {
         this.reclamationRepository = reclamationRepository;
         this.userRepository = userRepository;
         this.imageRepository = imageRepository;
@@ -33,6 +36,7 @@ public class ReclamationController {
         this.contractRepository = contractRepository;
         this.reclamationResponseRepository = reclamationResponseRepository;
         this.emailService = emailService;
+        this.paymentService = paymentService;
     }
 
     @PostMapping("reclamation")
@@ -106,6 +110,12 @@ public class ReclamationController {
         reclamation.setUpdateDate(new Date().getTime());
         this.reclamationRepository.save(reclamation);
         this.emailService.sendUpdateReclamationEmail(reclamation);
+
+        //Tan solo simula el SPS
+        Payment payment = new Payment();
+        payment.setCause(PaymentCause.DEVOLUTION);
+        payment.setUsuario(reclamation.getReclamingUser());
+        paymentService.realizarDevolucion(payment);
         this.emailService.sendPayBackEmail(reclamation);
         return true;
     }

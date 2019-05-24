@@ -1,38 +1,16 @@
 package com.ei104550.BookAnArtist;
 
-import com.ei104550.BookAnArtist.Services.EmailService;
-import com.ei104550.BookAnArtist.enums.UserType;
-import com.ei104550.BookAnArtist.model.*;
+import com.ei104550.BookAnArtist.services.EmailService;
 import com.ei104550.BookAnArtist.repositories.*;
-import org.hibernate.Hibernate;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.engine.spi.SessionDelegatorBaseImpl;
-import org.hibernate.internal.SessionImpl;
-import org.hibernate.type.BlobType;
-import org.hibernate.type.ClobType;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
-import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.nio.file.Files;
-import java.sql.Blob;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import java.util.concurrent.Executor;
-import java.util.stream.Stream;
 
 @SpringBootApplication
 @EnableAsync

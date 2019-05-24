@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {ArtistService} from '../shared/artist/artist.service';
-import {PaymentService} from '../shared/payment/payment.service';
 import {UserService} from '../shared/user/user.service';
 import {NgForm} from '@angular/forms';
 
@@ -40,7 +39,6 @@ export class ArtistListComponent implements OnInit {
   searchValue: string;
 
   constructor(private artistService: ArtistService,
-              private paymentService: PaymentService,
               private userService: UserService) { }
 
   ngOnInit() {

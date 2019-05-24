@@ -1,11 +1,10 @@
 package com.ei104550.BookAnArtist.controller;
 
-import com.ei104550.BookAnArtist.Services.UserService;
+import com.ei104550.BookAnArtist.services.UserService;
 import com.ei104550.BookAnArtist.model.User;
 import com.ei104550.BookAnArtist.model.Valoracion;
 import com.ei104550.BookAnArtist.repositories.ArtistValorationRepository;
 import com.ei104550.BookAnArtist.repositories.UserRepository;
-import org.apache.tomcat.util.codec.binary.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;

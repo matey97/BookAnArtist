@@ -73,7 +73,7 @@ export class ArtistComponent implements OnInit {
       this.listValoraciones = this.artist.valoraciones;
       this.userService.getProfileImage(this.artist.username).subscribe(image => {
         this.profileImage = image.raw;
-        console.log(this.profileImage);
+        // console.log(this.profileImage);
       });
       this.loginService.getLoguedUser(this).subscribe(usr => {
         this.loguedUser = usr;

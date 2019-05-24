@@ -12,34 +12,13 @@ import {Form} from '@angular/forms';
 export class UserService {
 
   loguedUserName: string;
-  logincomponent: LoginComponent;
   user: User;
 
   constructor(private http: HttpClient) { }
 
-  getAll(): Observable<any> {
-    return this.http.get('api/users');
-  }
-
-  getLoguedUser(): Observable<any> {
-    return this.http.get<any>('api/user/' + this.loguedUserName);
-  }
-
   getUserByUsername(username: string): Observable<any> {
     return this.http.get<any>('api/user/' + username);
   }
-
-  public setUser(user: User) {
-    this.user = user;
-  }
-  public getUser(): User {
-    return this.user;
-  }
-
-// getLoguedUser(): User {
-  //
-  //   return this.logincomponent.getLoguedUser();
-  // }
 
   getProfileImage(userName: string): Observable<any> {
     return this.http.get('api/user-image/' + userName);

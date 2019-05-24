@@ -1,6 +1,8 @@
 package com.ei104550.BookAnArtist.controller;
 
-import com.ei104550.BookAnArtist.Services.EmailService;
+import com.ei104550.BookAnArtist.enums.PaymentCause;
+import com.ei104550.BookAnArtist.model.Payment;
+import com.ei104550.BookAnArtist.services.EmailService;
 import com.ei104550.BookAnArtist.enums.ContractState;
 import com.ei104550.BookAnArtist.model.Artist;
 import com.ei104550.BookAnArtist.model.Contract;
@@ -8,6 +10,7 @@ import com.ei104550.BookAnArtist.model.User;
 import com.ei104550.BookAnArtist.repositories.ArtistRepository;
 import com.ei104550.BookAnArtist.repositories.ContractRepository;
 import com.ei104550.BookAnArtist.repositories.UserRepository;
+import com.ei104550.BookAnArtist.services.PaymentService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -22,12 +25,14 @@ public class ContractController {
     private UserRepository userRepository;
     private ArtistRepository artistRepository;
     private EmailService emailService;
+    private PaymentService paymentService;
 
-    public ContractController(ContractRepository contractRepository, UserRepository userRepository, ArtistRepository artistRepository, EmailService emailService) {
+    public ContractController(ContractRepository contractRepository, UserRepository userRepository, ArtistRepository artistRepository, EmailService emailService, PaymentService paymentService) {
         this.contractRepository = contractRepository;
         this.userRepository = userRepository;
         this.artistRepository = artistRepository;
         this.emailService = emailService;
+        this.paymentService = paymentService;
     }
 
     @PostMapping("contract/{artistUsername}_{organizatorUsername}")
@@ -79,6 +84,13 @@ public class ContractController {
         c.setState(ContractState.ACCEPTED);
         this.contractRepository.save(c);
         emailService.sendAcceptRejectContractEmail(c.getOrganizerUsername(), c, true);
+
+        //Tan solo simula el SPS
+        Payment payment = new Payment();
+        payment.setCause(PaymentCause.PAYMENT);
+        payment.setUsuario(c.getOrganizerUsername());
+        payment.setQty(this.artistRepository.findById(c.getArtisticUsername()).get().getPrice());
+        paymentService.realizarPago(payment);
         emailService.sendPayEmail(c.getOrganizerUsername(), c);
         return true;
     }
@@ -105,9 +117,14 @@ public class ContractController {
         Contract c = this.contractRepository.findById(Long.parseLong(id)).get();
         c.setState(ContractState.DONE);
         this.contractRepository.save(c);
+
+        //Tan solo simula el SPS
+        Payment payment = new Payment();
+        payment.setCause(PaymentCause.RECEIPT);
+        payment.setUsuario(c.getArtisticUsername());
+        payment.setQty(this.artistRepository.findById(c.getArtisticUsername()).get().getPrice());
+        paymentService.realizarCobro(payment);
         emailService.sendIncomeEmail(c.getArtisticUsername(), c);
         return true;
-
-
     }
 }

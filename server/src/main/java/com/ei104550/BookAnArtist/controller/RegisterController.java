@@ -1,10 +1,9 @@
 package com.ei104550.BookAnArtist.controller;
 
 import com.ei104550.BookAnArtist.Exceptions.RegistrationForbiddenException;
-import com.ei104550.BookAnArtist.Services.UserService;
+import com.ei104550.BookAnArtist.services.UserService;
 import com.ei104550.BookAnArtist.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.File;

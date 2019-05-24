@@ -5,7 +5,7 @@ import com.ei104550.BookAnArtist.enums.PaymentCause;
 public class Payment {
 
     String usuario;
-    float qty;
+    double qty;
     PaymentCause cause;
 
     public String getUsuario() {
@@ -16,11 +16,11 @@ public class Payment {
         this.usuario = usuario;
     }
 
-    public float getQty() {
+    public double getQty() {
         return qty;
     }
 
-    public void setQty(float cantidad) {
+    public void setQty(double cantidad) {
         this.qty = cantidad;
     }
 

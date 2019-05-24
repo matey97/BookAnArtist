@@ -37,7 +37,6 @@ export class LoginService {
           this.user = new User(user);
           // this.userService.setUserName(this.user.username);
           this.client.forEach(client => {
-            console.log(client);
             client.onLoguedUserChanged(this.user);
           });
           this.location.back(); // Permite volver a la página anterior
@@ -51,13 +50,14 @@ export class LoginService {
   }
 
   public getLoguedUser(client: any): Observable<any> {
-    if (!this.client.includes(client)) {
-      this.client = this.client.concat(client); // TODO: comprobar si ya esta en la lista
+    const presentClient = this.client.filter(c => c.constructor.name === client.constructor.name);
+    if (presentClient.length === 0) {
+      this.client = this.client.concat(client);
     }
-    console.log(this.client);
+    // console.log(this.client);
     const userDetails = atob(window.sessionStorage.getItem('token')).split(':', 2);
     if (this.user === null) {
-      if (userDetails !== null) {
+      if (userDetails !== null && userDetails[0].length > 0) {
         return this.userService.getUserByUsername(userDetails[0]);
       } else {
         return of(null);
@@ -70,7 +70,6 @@ export class LoginService {
   public setLoguedUser(user) {
     this.user = user;
     this.client.forEach(client => {
-      console.log(client);
       client.onLoguedUserChanged(this.user);
     });
   }

@@ -55,11 +55,6 @@ export class ContratationComponent implements OnInit {
     };
   }
 
-  print(event) {
-    console.log(this.limitDate);
-    console.log(event);
-  }
-
   private filter(value): string[] {
     const filterValue = value.toLowerCase();
     return ZONES.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
@@ -87,7 +82,6 @@ export class ContratationComponent implements OnInit {
     this.contract.date = this.date.getTime();
     this.contract.limitDate = this.limitDate.getTime();
     this.contractService.postContract(this.contract).subscribe((item) => {
-        console.log('Exito');
         if (item) {
           this.snackBar.open('Petición completada. Se ha enviado una notificación al artista.', 'Cerrar', {duration: 3000});
         } else {
@@ -95,7 +89,6 @@ export class ContratationComponent implements OnInit {
         }
       },
       error1 => {
-        console.log('Error');
         this.snackBar.open('Ha ocurrido un error', 'Cerrar', {duration: 3000});
       });
     modalRef.close();

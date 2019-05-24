@@ -1,7 +1,6 @@
-package com.ei104550.BookAnArtist.Services;
+package com.ei104550.BookAnArtist.services;
 
 import com.ei104550.BookAnArtist.Exceptions.RegistrationForbiddenException;
-import com.ei104550.BookAnArtist.daos.UserDao;
 import com.ei104550.BookAnArtist.model.Role;
 import com.ei104550.BookAnArtist.model.User;
 import com.ei104550.BookAnArtist.repositories.UserRepository;
@@ -16,8 +15,6 @@ public class UserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
-    @Autowired
-    private UserDao userDao;
     @Autowired
     private UserRepository userRepository;
 
