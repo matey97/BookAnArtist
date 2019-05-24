@@ -11,7 +11,7 @@
   <div class="form-row">
     <div>
       <h4 class="textPos">Foto de perfíl</h4>
-      <img src="data:image/PNG;base64,{{loggedUser.image}}">
+      <img *ngIf="loggedUser !== undefined" src="data:image/PNG;base64,{{loggedUser.image}}">
     </div>
 
   </div>

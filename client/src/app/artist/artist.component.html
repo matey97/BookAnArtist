@@ -4,7 +4,7 @@
       <div class="col-sm-3">
         <div class="card" style="text-align: center">
           <div class="card-header">
-            <img class="card-img-top" src="data:image/PNG;base64,{{profileImage}}">
+            <img *ngIf="profileImage !== undefined" class="card-img-top" [src]="domSanitizationService.bypassSecurityTrustUrl('data:image/PNG;base64,' + profileImage)">
           </div>
           <div class="card-body">
             <h1 class="card-title" >{{artist.artisticName}}</h1>
@@ -63,7 +63,7 @@
             <ngb-carousel>
               <div *ngFor="let rawImage of artist.images">
                 <ng-template ngbSlide>
-                <img class="w-100" src="data:image/PNG;base64,{{rawImage.image}}">
+                <img class="w-100" [src]="domSanitizationService.bypassSecurityTrustUrl('data:image/PNG;base64,' + rawImage.image)">
                 <div class="carousel-caption">
                 </div>
               </ng-template>
@@ -101,8 +101,8 @@
             <mat-card-header>
               <mat-card-title>
                 <div class="row">
-                  <div class="col-sm-3">
-                    <img class="profileValoration" src="data:image/PNG;base64,{{valoracion.imgProfileValorador}}">
+                  <div *ngIf="valoracion.imgProfileValorador !== undefined" class="col-sm-3">
+                    <img class="profileValoration" [src]="domSanitizationService.bypassSecurityTrustUrl('data:image/PNG;base64,' + valoracion.imgProfileValorador)">
                   </div>
                   <div class="col-sm-6">
                     {{valoracion.valorador}}

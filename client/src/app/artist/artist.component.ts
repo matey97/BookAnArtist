@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 import {Contract} from '../model/Contract';
 import {MatSnackBar} from '@angular/material';
 import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
+import {DomSanitizer} from '@angular/platform-browser';
 
 
 
@@ -47,7 +48,8 @@ export class ArtistComponent implements OnInit {
                private router: Router,
                private snackBar: MatSnackBar,
                private ngbCarrousel: NgbCarouselConfig,
-               private modalService: NgbModal) { }
+               private modalService: NgbModal,
+               private domSanitizationService: DomSanitizer) { }
 
   ngOnInit() {
     this.username = this.route.snapshot.paramMap.get('username');
@@ -63,7 +65,7 @@ export class ArtistComponent implements OnInit {
     this.ngbCarrousel.interval = 0;
   }
 
-  onLoguedUserChanged(user: User) {
+  public onLoguedUserChanged(user: User) {
     this.loguedUser = user;
   }
 

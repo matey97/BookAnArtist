@@ -6,6 +6,7 @@ import {NgForm} from '@angular/forms';
 import {Payment} from '../model/Payment';
 import {ContractService} from '../shared/contract/contract.service';
 import {HABILITIES, SCHEDULES, ZONES} from '../artist-profile/artist-profile.component';
+import {DomSanitizer} from '@angular/platform-browser';
 
 
 
@@ -39,7 +40,8 @@ export class ArtistListComponent implements OnInit {
   searchValue: string;
 
   constructor(private artistService: ArtistService,
-              private userService: UserService) { }
+              private userService: UserService,
+              private domSanitizationService: DomSanitizer) { }
 
   ngOnInit() {
     this.artistService.getAll().subscribe(data => {

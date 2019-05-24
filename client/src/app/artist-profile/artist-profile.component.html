@@ -1,4 +1,4 @@
-<header>
+<header *ngIf="user !== undefined">
   <h2>Perfil artísitco</h2>
   <p>Hola {{user.username}}, bienvenido a tu perfil artístico. Aquí debes introducir todos tus datos de interés a nivel artístico, como tu nombre artísitco
     una pequeña descripción, tus habilidades, videos, etc.</p>
@@ -46,7 +46,7 @@
         <div class="row">
           <div class="col-sm-6">
             <mat-form-field>
-              <input [disabled]="!firstTime && !editMode" [formControl]="myControl" [matAutocomplete]="auto" matInput
+              <input [formControl]="myControl" [matAutocomplete]="auto" matInput
                      name="zones" placeholder="Zonas de actuación" type="text" required>
               <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="zoneChange($event)">
                 <mat-option *ngFor="let zone of filteredZones | async" value="{{zone}}">

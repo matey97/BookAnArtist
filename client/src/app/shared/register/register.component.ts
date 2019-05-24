@@ -47,4 +47,8 @@ export class RegisterComponent implements OnInit {
       });
   }
 
+  public onLoguedUserChanged(user: User) {
+    this.loggedUser = user;
+  }
+
 }

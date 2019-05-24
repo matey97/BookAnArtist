@@ -43,7 +43,7 @@ export class ArtistProfileComponent implements OnInit {
               private loginService: LoginService) { }
 
   ngOnInit() {
-    const user = this.loginService.getLoguedUser(this).subscribe(user => {
+    this.loginService.getLoguedUser(this).subscribe(user => {
       if (user !== null) {
         this.user = user;
         this.artistService.getArtistByUsername(this.user.username).subscribe(artist => {
@@ -52,17 +52,24 @@ export class ArtistProfileComponent implements OnInit {
             artist.username = user.username;
           }
           this.artist = artist;
-          this.artist.artisticName = '';
-          this.artist.description = '';
-          this.artist.habilities = [];
-          this.artist.price = null;
-          this.artist.zones = [];
-          this.artist.schedules = [];
+
+          if (this.firstTime) {
+            this.artist.artisticName = '';
+            this.artist.description = '';
+            this.artist.habilities = [];
+            this.artist.price = null;
+            this.artist.zones = [];
+            this.artist.schedules = [];
+          }
           this.myControl = new FormControl({value: '', disabled: !this.firstTime});
           this.applyFilter();
         });
       }
     });
+  }
+
+  public onLoguedUserChanged(user: User) {
+    this.user = user;
   }
 
   public changeEditMode(mode: boolean) {

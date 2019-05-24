@@ -82,7 +82,7 @@
             </div>
             <div class="card flex-row flex-wrap cardStyle text-white bg-dark mb-3 " *ngFor="let artist of artistsFiltrate | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; ">
               <div class=" card-header border-0">
-                <img class="card-img-top" src="data:image/PNG;base64,{{artist.profileImage}}">
+                <img *ngIf="artist.profileImage !== undefined" class="card-img-top" [src]="domSanitizationService.bypassSecurityTrustUrl('data:image/PNG;base64,' + artist.profileImage)">
               </div>
               <div class="card-block px-2">
                 <h2 class="card-title">{{artist.artisticName}}</h2>

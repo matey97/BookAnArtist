@@ -52,6 +52,10 @@ export class HomeComponent implements OnInit {
         );
     }
 
+    public onLoguedUserChanged(user: User) {
+      this.loggedUser = user;
+    }
+
     private handleError(error: HttpErrorResponse) {
         if (error.error instanceof ErrorEvent) {
           console.error('An error occurred:', error.error.message);
