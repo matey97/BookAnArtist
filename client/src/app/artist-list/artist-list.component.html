@@ -5,11 +5,11 @@
 </div>
 <div *ngIf="artists != null">
 <mat-card >
-  <h1 align="center">Lista de artistas</h1>
+  <h1 align="center"><b>Lista de artistas</b></h1>
   <mat-divider></mat-divider>
   <br>
   <ngb-pagination class="d-flex justify-content-center" *ngIf="artists != null" [collectionSize]="artistsFiltrate.length" [pageSize]="pageSize" [(page)]="page" [boundaryLinks]="true"></ngb-pagination>
-    <div class="row">
+  <div class="row">
     <div class="col-sm-2">
       <mat-card>
         <mat-card-title><h3>Buscar artista</h3></mat-card-title>
@@ -65,7 +65,7 @@
           min="1"
           max="8000"></mat-slider>
         <br>
-        <mat-card-actions><button mat-raised-button>Filtrar</button></mat-card-actions>
+        <mat-card-actions><button mat-raised-button color="primary" >Filtrar</button></mat-card-actions>
       </form>
       <div class="row-fluid">
         <div class="col-xs-3">
@@ -82,22 +82,39 @@
             </div>
             <div class="card flex-row flex-wrap cardStyle text-white bg-dark mb-3 " *ngFor="let artist of artistsFiltrate | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; ">
               <div class=" card-header border-0">
-                <img *ngIf="artist.profileImage !== undefined" class="card-img-top" [src]="domSanitizationService.bypassSecurityTrustUrl('data:image/PNG;base64,' + artist.profileImage)">
+                <img *ngIf="artist.profileImage !== undefined" class="card-img-top img-circle" [src]="domSanitizationService.bypassSecurityTrustUrl('data:image/PNG;base64,' + artist.profileImage)">
               </div>
-              <div class="card-block px-2">
-                <h2 class="card-title">{{artist.artisticName}}</h2>
-                <p class = "card-text">{{artist.description}}</p>
-                <p class="card-text">{{artist.habilities}}</p>
-                <p class="card-text">{{artist.price}}€/h</p>
-                <a [routerLink]="['/artist',artist.username]" class="btn btn-outline-light">Ver perfil </a>
+              <div class="card-body">
+                <h2 class="card-title"><b>{{artist.artisticName}}</b></h2>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <p class = "card-text">Descripción: {{artist.description}}</p>
+                    <p class="card-text">Habilidades: {{artist.habilities}}</p>
+                  </div>
+                  <div class="col-sm-6">
+                    <p class = "card-text">Zonas: {{artist.zones}}</p>
+                    <p class="card-text">Horario: {{artist.schedules}}</p>
+                  </div>
+                </div>
               </div>
               <div class="w-100"></div>
-              <div class="card-footer w-100 text-muted">
-                <ngb-rating [rate]="artist.puntuation"  [readonly]=true disabled="true" >
-                  <ng-template let-fill="fill" >
-                    <span class="star" [class.filled]="fill === 100" >&#9733;</span>
-                  </ng-template>
-                </ngb-rating>
+              <div class="card-footer w-100">
+                <div class="row">
+                  <div class="col-sm-4">
+                    <ngb-rating  [rate]="artist.puntuation"  [readonly]=true disabled="true" >
+                      <ng-template let-fill="fill" >
+                        <span class="star" [class.filled]="fill === 100" >&#9733;</span>
+                      </ng-template>
+                    </ngb-rating>
+                  </div>
+                  <div class="col-sm-4" style="text-align: center; padding-top: 10px">
+                    <p><b>Precio por actuación: {{artist.price}}€/h</b></p>
+                  </div>
+                  <div class="col-sm-4" style="text-align: right; padding-right: 30px">
+
+                    <a [routerLink]="['/artist',artist.username]" class="btn btn-primary btn-md"><b>Ver perfil</b> </a>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

@@ -31,4 +31,23 @@ Estilo de las estrellas de valoración
 background-color: $greenButtons;
 }
 
+mat-form-field{
+  width: 100%;
+}
+
+a {
+  border: none;
+  outline: none;
+  padding: 10px 20px;
+  border-radius: 50px;
+  background: linear-gradient(1650deg,transparentize($purple,0.1),transparentize($greenButtons,0.1), transparentize($greenButtons,0.1));
+  box-shadow: 0 3px 10px 0 $blue;
+}
+a:hover{
+  cursor: pointer;
+}
+
+.img-circle {
+  border-radius: 45%;
+}
 
